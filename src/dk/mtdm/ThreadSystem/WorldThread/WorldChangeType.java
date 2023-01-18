@@ -1,6 +1,6 @@
 package dk.mtdm.ThreadSystem.WorldThread;
 
-public enum ChangeType {
+public enum WorldChangeType {
   destroyBlock,
   placeBlock,
   requestWorldGen,
