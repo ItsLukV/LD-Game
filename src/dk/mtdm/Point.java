@@ -1,17 +1,17 @@
 package dk.mtdm;
 
-public class Point {
-  private int x;
-  private int y;
+public class Point<T> {
+  private T x;
+  private T y;
   
-  public Point(int x,int y){
+  public Point(T x,T y){
     this.x = x;
     this.y = y;
   }
-  public int getX(){
+  public T getX(){
     return x;
   }
-  public int getY(){
+  public T getY(){
     return y;
   }
 }
