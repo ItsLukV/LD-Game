@@ -1,7 +1,11 @@
 package dk.mtdm;
 
+import processing.core.PApplet;
+
 public class Main {
     public static void main(String[] args) {
-        System.out.print("test");
+        String[] processingArgs = {"Sketch"};
+        Sketch mySketch = new Sketch();
+        PApplet.runSketch(processingArgs,mySketch);
     }
 }
