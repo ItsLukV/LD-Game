@@ -14,4 +14,7 @@ public class LDVector {
   public int getY(){
     return y;
   }
+  public int dotProduct(LDVector vector){
+    return this.getX()*vector.getX()+this.getY()*vector.getY();
+  }
 }

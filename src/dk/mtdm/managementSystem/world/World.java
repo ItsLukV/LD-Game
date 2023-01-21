@@ -38,9 +38,9 @@ public class World {
    *  THIS LIMIT <b>CAN</b> BE EXCEDED DURING WORLD GEN AND SHOULD <b>NOT</b> BE TAKEN AS AN ABSOLUTE MAX. <p>
    */
   public static void setup(int width,int height,int seed, int maxGeneration){
-    generateWorld(-width/2, width);
     HEIGHT = height;
     World.seed = seed;
+    generateWorld(-width/2, width);
   }
   /**
    * finds a block in the world from a global location
@@ -62,11 +62,10 @@ public class World {
     return (int) Math.floor(1-(Math.random()*2)*Integer.MAX_VALUE);
   }
   /**
-   * generates worlds
+   * generates worlds or world parts
    * @param GenerationStart the id of the first chunk in the list of chunks to be generated
    * @param generationWidth the number of chunks to generate
    */
-
   private static void generateWorld(int GenerationStart,int generationWidth){
     if (World.chunkAxisOffset < GenerationStart){
       World.world = new Chunk[World.world.length+(GenerationStart-chunkAxisOffset)];
@@ -76,5 +75,11 @@ public class World {
       World.world[i-chunkAxisOffset] = new Chunk(i, CHUNK_WIDTH, HEIGHT, World.seed);
       World.world[i-chunkAxisOffset].generate();
     }
+  }
+  public static int get_CHUNK_WIDTH(){
+    return World.CHUNK_WIDTH;
+  }
+  public static int get_HEIGHT(){
+    return World.HEIGHT;
   }
 }
