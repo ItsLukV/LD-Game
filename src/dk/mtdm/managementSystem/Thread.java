@@ -1,4 +1,4 @@
-package dk.mtdm.ThreadSystem;
+package dk.mtdm.managementSystem;
 
 public abstract class Thread extends java.lang.Thread{
   
@@ -11,11 +11,5 @@ public abstract class Thread extends java.lang.Thread{
     Run();
     atWork = false;
   }
-  @Override
-  public synchronized void start() {
-    super.start();
-    Start();
-  }
   protected abstract void Run();
-  protected abstract void Start();
 }
