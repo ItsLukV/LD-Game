@@ -23,7 +23,7 @@ public class Chunk {
     return containedBlocks[relativeLocation.getX()][relativeLocation.getY()];
   }
   public void generate(){
-    WorldGenThread t = new WorldGenThread();
+    WorldGenThread t = new WorldGenThread(ID,seed);
     t.start();
   }
 }

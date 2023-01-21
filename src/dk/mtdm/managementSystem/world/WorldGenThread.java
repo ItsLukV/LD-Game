@@ -33,5 +33,6 @@ public class WorldGenThread extends Thread{
     
   }
   private void worldGenerator(){
-
+    
+  }
 }

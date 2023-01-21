@@ -14,6 +14,7 @@ public class World {
   final private static int CHUNK_WIDTH = 32;
   private static int HEIGHT;
   private static int seed;
+  private static int GeneratorHeight;
   /**
    * starts the world without a set seed
    * @param width the starting width of the world. in chunks <p>
@@ -24,7 +25,7 @@ public class World {
    *  THIS LIMIT <b>CAN</b> BE EXCEDED DURING WORLD GEN AND SHOULD <b>NOT</b> BE TAKEN AS AN ABSOLUTE MAX. <p>
    */
   public static void setup(int width,int height, int maxGeneration){
-    setup(width, height, randomSeed());
+    setup(width, height, randomSeed(),maxGeneration);
   }
     /**
    * starts the world without a set seed
@@ -40,6 +41,7 @@ public class World {
   public static void setup(int width,int height,int seed, int maxGeneration){
     HEIGHT = height;
     World.seed = seed;
+    World.GeneratorHeight = maxGeneration;
     generateWorld(-width/2, width);
   }
   /**
@@ -72,7 +74,7 @@ public class World {
       chunkAxisOffset = GenerationStart;
     }
     for (int i = GenerationStart; i < Math.abs(generationWidth); i++){
-      World.world[i-chunkAxisOffset] = new Chunk(i, CHUNK_WIDTH, HEIGHT, World.seed);
+      World.world[i-chunkAxisOffset] = new Chunk(i, CHUNK_WIDTH, HEIGHT, World.seed,GeneratorHeight);
       World.world[i-chunkAxisOffset].generate();
     }
   }
