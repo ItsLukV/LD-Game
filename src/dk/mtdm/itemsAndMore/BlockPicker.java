@@ -1,6 +1,7 @@
 package dk.mtdm.itemsAndMore;
 
 import dk.mtdm.LDVector;
+import dk.mtdm.exceptions.MissingBlockTypeException;
 
 public class BlockPicker {
 	/**
@@ -8,7 +9,7 @@ public class BlockPicker {
 	* @param type the type of block
 	* @param x,y sets x,y-canvas location value of the block
 	*/
-	static public Block picker(BlockTypes type,int x,int y) throws Exception {
+	static public Block picker(BlockTypes type,int x,int y) throws MissingBlockTypeException {
 		return BlockPicker.picker(type, new LDVector(x, y));
 	}
 
@@ -17,7 +18,7 @@ public class BlockPicker {
 	* @param pos Sets the canvas location of the block
 	* @param id id/type of block
 	*/
-	static public Block picker(BlockTypes type, LDVector pos) throws Exception{
+	static public Block picker(BlockTypes type, LDVector pos) throws MissingBlockTypeException{
 		Block block = new Block(pos, type);		
 		switch (type) {
 			case air -> {
@@ -56,7 +57,7 @@ public class BlockPicker {
 				return block;
 			}
 			default -> {
-				throw new Exception("This is not a block type!!: " + type.toString());
+				throw new MissingBlockTypeException("This is not a block type!!: " + type.toString());
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 package dk.mtdm;
 
+import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.itemsAndMore.Block;
 import dk.mtdm.itemsAndMore.BlockPicker;
 import dk.mtdm.itemsAndMore.BlockTextures;
@@ -19,7 +20,7 @@ public class Sketch extends PApplet {
     BlockTextures.loadBlockTextures(this);
     try {
       block = BlockPicker.picker(BlockTypes.bedrock, new LDVector(100, 100));
-    } catch (Exception e) {
+    } catch (MissingBlockTypeException e) {
       // TODO: handle exception
     }
     // TODO Auto-generated method stub
