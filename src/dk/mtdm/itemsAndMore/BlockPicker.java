@@ -1,7 +1,5 @@
 package dk.mtdm.itemsAndMore;
 
-import javax.swing.text.html.HTMLDocument.RunElement;
-
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingBlockTypeException;
 
