@@ -40,6 +40,8 @@ public class WorldGenThread extends Thread{
   public void noiseGenerator(){
     PApplet p = new PApplet();
     p.noiseSeed(-1519604120685001364l);
+    
+    //inside noise
     for (int x = 0; x < World.get_CHUNK_WIDTH(); x++) {
       for (int y = 0; y < World.get_HEIGHT(); y++) {
         float tempNoise =p.noise(x+ID*World.get_CHUNK_WIDTH(), y, seed);
@@ -49,5 +51,20 @@ public class WorldGenThread extends Thread{
         System.out.println(y + ": " + noise[x][y]);
       }
     }
+
+    //outside noise
+    float[][] outNoise = new float[2][World.get_HEIGHT()];
+    for (int y = 0; y < World.get_HEIGHT(); y++) {
+      outNoise[0][y] = p.noise(ID*World.get_CHUNK_WIDTH()-1, y, seed);
+      outNoise[1][y] = p.noise((ID+1)*World.get_CHUNK_WIDTH(), y, seed);
+    }
+
+    for (int x = 0; x < noise.length; x++) {
+      for (int y = 0; y < noise[x].length; y++) {
+        detectNeighbor(x,y);
+      }
+    }
+  }
+  private void detectNeighbor(int x, int y) {
   }
 }

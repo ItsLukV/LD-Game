@@ -29,6 +29,7 @@ public class Chunk {
         t.start();
       } catch (Exception e) {
         t=null;
+        generate();
       }
     }
   }
