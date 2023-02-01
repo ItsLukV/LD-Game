@@ -17,54 +17,111 @@ public class BlockPicker {
 	}
 
 	/**
+	 * Returns a air block
+	 * 
+	 * @param type
+	 * @param pos
+	 * @return
+	 */
+	static public Block getAir(BlockTypes type, LDVector pos) {
+		Block block = new Block(pos, type);
+		block.setSolidity(false);
+		block.setBreakability(false);
+		block.setHoverability(false);
+		block.setItemDrop(null);
+		return block;
+	}
+
+	/**
+	 * Returns a grass block
+	 * 
+	 * @param type
+	 * @param pos
+	 * @return
+	 */
+	static public Block getGrass(BlockTypes type, LDVector pos) {
+		Block block = new Block(pos, type);
+		block.setSolidity(true);
+		block.setBreakability(true);
+		block.setHoverability(true);
+		block.setItemDrop(ItemTypes.dirt);
+		return block;
+	}
+
+	/**
+	 * Returns a dirt block
+	 * 
+	 * @param type
+	 * @param pos
+	 * @return
+	 */
+	static public Block getDirt(BlockTypes type, LDVector pos) {
+		Block block = new Block(pos, type);
+		block.setSolidity(true);
+		block.setBreakability(true);
+		block.setHoverability(true);
+		block.setItemDrop(ItemTypes.dirt);
+		return block;
+	}
+
+	/**
+	 * Returns a stone block
+	 * 
+	 * @param type
+	 * @param pos
+	 * @return
+	 */
+	static public Block getStone(BlockTypes type, LDVector pos) {
+		Block block = new Block(pos, type);
+		block.setSolidity(true);
+		block.setBreakability(true);
+		block.setHoverability(true);
+		block.setItemDrop(ItemTypes.stone);
+		return block;
+	}
+
+	/**
+	 * Returns a bedrock block
+	 * 
+	 * @param type
+	 * @param pos
+	 * @return
+	 */
+	static public Block getBedrock(BlockTypes type, LDVector pos) {
+		Block block = new Block(pos, type);
+		block.setSolidity(true);
+		block.setBreakability(true);
+		block.setHoverability(true);
+		block.setItemDrop(null);
+		return block;
+	}
+
+	/**
 	 * Creates a block from BlockTypes
 	 * 
 	 * @param pos Sets the canvas location of the block
 	 * @param id  id/type of block
 	 */
 	static public Block picker(BlockTypes type, LDVector pos) throws MissingBlockTypeException {
-		Block block = new Block(pos, type);
-
-		switch (type) {
+		return switch (type) {
 			case air -> {
-				block.setSolidity(false);
-				block.setBreakability(false);
-				block.setHoverability(false);
-				block.setItemDrop(null);
-				break;
+				yield BlockPicker.getAir(type, pos);
 			}
 			case grass -> {
-				block.setSolidity(true);
-				block.setBreakability(true);
-				block.setHoverability(true);
-				block.setItemDrop(ItemTypes.dirt);
-				break;
+				yield BlockPicker.getGrass(type, pos);
 			}
 			case dirt -> {
-				block.setSolidity(true);
-				block.setBreakability(true);
-				block.setHoverability(true);
-				block.setItemDrop(ItemTypes.dirt);
-				break;
+				yield BlockPicker.getDirt(type, pos);
 			}
 			case stone -> {
-				block.setSolidity(true);
-				block.setBreakability(true);
-				block.setHoverability(true);
-				block.setItemDrop(ItemTypes.stone);
-				break;
+				yield BlockPicker.getStone(type, pos);
 			}
 			case bedrock -> {
-				block.setSolidity(true);
-				block.setBreakability(true);
-				block.setHoverability(true);
-				block.setItemDrop(null);
-				break;
+				yield BlockPicker.getBedrock(type, pos);
 			}
 			default -> {
 				throw new MissingBlockTypeException("This is not a block type!!: " + type.toString());
 			}
-		}
-		return block;
+		};
 	}
 }
