@@ -5,30 +5,33 @@ import dk.mtdm.itemsAndMore.Block;
 import dk.mtdm.itemsAndMore.BlockPicker;
 import dk.mtdm.itemsAndMore.BlockTextures;
 import dk.mtdm.itemsAndMore.BlockTypes;
+import dk.mtdm.managementSystem.Entitys.Player;
+import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PApplet;
 
 public class Sketch extends PApplet {
   private Block block;
+  private Player player;
 
   @Override
   public void settings() {
-    size(1000,1000);
+    size(1000, 1000);
   }
 
   @Override
   public void setup() {
     BlockTextures.loadBlockTextures(this);
-    try {
-      block = BlockPicker.picker(BlockTypes.bedrock, new LDVector(100, 100));
-    } catch (MissingBlockTypeException e) {
-      // TODO: handle exception
-    }
-    // TODO Auto-generated method stub
+    MiscTextures.loadBlockTextures(this);
+
+    block = BlockPicker.getBedrock(BlockTypes.bedrock, new LDVector(100, 100));
+    player = new Player(new LDVector(0, 100));
+    System.out.println(player.collisionWith(block));
   }
 
   @Override
   public void draw() {
     block.show(this);
-    // TODO Auto-generated method stub
+    player.tick();
+    player.show(g);
   }
 }
