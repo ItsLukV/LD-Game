@@ -10,11 +10,11 @@ import dk.mtdm.itemsAndMore.BlockTypes;
 public class World {
   private static Chunk[] world;
   private static int chunkAxisOffset; // the amount of chunks that are on the left of the global 0, this is needed so that chunk ID can be allowed negative and all chunks can be saved in an array 
-  private static WorldGenThread[] worldGeneraters; 
+  // private static WorldGenThread[] worldGeneraters; 
   final private static int CHUNK_WIDTH = 32;
-  private static int HEIGHT;
-  private static int seed;
-  private static int GeneratorHeight;
+  private static int HEIGHT = 50;
+  private static int seed = 3;
+  private static int GeneratorHeight = HEIGHT/2;
   /**
    * starts the world without a set seed
    * @param width the starting width of the world. in chunks <p>
