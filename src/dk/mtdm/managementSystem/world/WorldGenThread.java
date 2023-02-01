@@ -69,6 +69,7 @@ public class WorldGenThread extends Thread{
   }
   private void ChooseBlock(int x, int y) {
     if(noise[x][y] < World.getBlockAir()) parent.setBlock(new LDVector(x, y), BlockTypes.air);
-    if(noise[x][y] > World.getBlockStone()) parent.setBlock(new LDVector(x, y), BlockTypes.air);
+    if(noise[x][y] > World.getBlockStone()) parent.setBlock(new LDVector(x, y), BlockTypes.stone);
+    parent.setBlock(new LDVector(x, y), BlockTypes.dirt);
   }
 }
