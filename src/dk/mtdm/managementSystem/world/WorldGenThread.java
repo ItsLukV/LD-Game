@@ -1,6 +1,8 @@
 package dk.mtdm.managementSystem.world;
 
 
+import dk.mtdm.LDVector;
+import dk.mtdm.itemsAndMore.BlockTypes;
 import dk.mtdm.managementSystem.Thread;
 import processing.core.PApplet;
 
@@ -61,10 +63,12 @@ public class WorldGenThread extends Thread{
 
     for (int x = 0; x < noise.length; x++) {
       for (int y = 0; y < noise[x].length; y++) {
-        detectNeighbor(x,y);
+        ChooseBlock(x,y);
       }
     }
   }
-  private void detectNeighbor(int x, int y) {
+  private void ChooseBlock(int x, int y) {
+    if(noise[x][y] < World.getBlockAir()) parent.setBlock(new LDVector(x, y), BlockTypes.air);
+    if(noise[x][y] > World.getBlockStone()) parent.setBlock(new LDVector(x, y), BlockTypes.air);
   }
 }

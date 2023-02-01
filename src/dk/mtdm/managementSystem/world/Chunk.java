@@ -33,4 +33,7 @@ public class Chunk {
       }
     }
   }
+  public void setBlock(LDVector location,BlockTypes block){
+    containedBlocks[location.getX()][location.getY()] = block;
+  }
 }

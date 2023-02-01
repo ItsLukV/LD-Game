@@ -15,6 +15,8 @@ public class World {
   private static int HEIGHT = 50;
   private static int seed = 3;
   private static int GeneratorHeight = HEIGHT/2;
+  private static float BlockStone = 0.5f;
+  private static float BlockAir = 0.2f;
   /**
    * starts the world without a set seed
    * @param width the starting width of the world. in chunks <p>
@@ -83,5 +85,11 @@ public class World {
   }
   public static int get_HEIGHT(){
     return World.HEIGHT;
+  }
+  public static float getBlockStone() {
+    return BlockStone;
+  }
+  public static float getBlockAir() {
+    return BlockAir;
   }
 }
