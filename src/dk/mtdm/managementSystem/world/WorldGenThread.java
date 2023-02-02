@@ -37,7 +37,12 @@ public class WorldGenThread extends Thread{
   }
   private void worldGenerator(){
     if(noise == null) noiseGenerator();
-    
+
+    for (int x = 0; x < noise.length; x++) {
+      for (int y = 0; y < noise[x].length; y++) {
+        ChooseBlock(x,y);
+      }
+    }
   }
   public void noiseGenerator(){
     PApplet p = new PApplet();
@@ -53,23 +58,48 @@ public class WorldGenThread extends Thread{
         System.out.println(y + ": " + noise[x][y]);
       }
     }
-
+  }
+  private void ChooseBlock(int x, int y) {    
+    PApplet p = new PApplet();
+    p.noiseSeed(-1519604120685001364l);
     //outside noise
     float[][] outNoise = new float[2][World.get_HEIGHT()];
-    for (int y = 0; y < World.get_HEIGHT(); y++) {
-      outNoise[0][y] = p.noise(ID*World.get_CHUNK_WIDTH()-1, y, seed);
-      outNoise[1][y] = p.noise((ID+1)*World.get_CHUNK_WIDTH(), y, seed);
+    for (int Y = 0; Y < World.get_HEIGHT(); Y++) {
+      outNoise[0][Y] = p.noise(ID*World.get_CHUNK_WIDTH()-1, Y, seed);
+      outNoise[1][Y] = p.noise((ID+1)*World.get_CHUNK_WIDTH(), Y, seed);
     }
 
-    for (int x = 0; x < noise.length; x++) {
-      for (int y = 0; y < noise[x].length; y++) {
-        ChooseBlock(x,y);
-      }
+    
+    if(noise[x][y] < World.getBlockAir()) {
+      parent.setBlock(new LDVector(x, y), BlockTypes.air);
+      return;
     }
-  }
-  private void ChooseBlock(int x, int y) {
-    if(noise[x][y] < World.getBlockAir()) parent.setBlock(new LDVector(x, y), BlockTypes.air);
-    if(noise[x][y] > World.getBlockStone()) parent.setBlock(new LDVector(x, y), BlockTypes.stone);
+    if(noise[x][y] > World.getBlockStone()) {
+      parent.setBlock(new LDVector(x, y), BlockTypes.stone);
+      return;
+    }
+    
+    if(x == 0){
+      if (noise[x][y-1] < World.getBlockAir() &&
+          noise[x][y-1] < World.getBlockAir() &&
+          noise[x+1][y] < World.getBlockAir() &&
+          outNoise[0][y]< World.getBlockAir()){
+            
+            parent.setBlock(new LDVector(x, y), BlockTypes.grass);
+            return;
+          }
+    }
+    if(x == World.get_CHUNK_WIDTH()-1){
+      if (noise[x][y-1] < World.getBlockAir() &&
+          noise[x][y-1] < World.getBlockAir() &&
+          noise[x-1][y] < World.getBlockAir() &&
+          outNoise[1][y]< World.getBlockAir()){
+            
+            parent.setBlock(new LDVector(x, y), BlockTypes.grass);
+            return;
+          }
+    }
     parent.setBlock(new LDVector(x, y), BlockTypes.dirt);
+    return;
   }
 }

@@ -23,9 +23,9 @@ public class Chunk {
     return containedBlocks[relativeLocation.getX()][relativeLocation.getY()];
   }
   public void generate(){
-    if(!t.atWork){
+    if(t == null) t = new WorldGenThread(ID,seed,creationHeight,this);
+        if(!t.atWork){
       try {
-        if(t == null) t = new WorldGenThread(ID,seed,creationHeight,this);
         t.start();
       } catch (Exception e) {
         t=null;
@@ -35,5 +35,9 @@ public class Chunk {
   }
   public void setBlock(LDVector location,BlockTypes block){
     containedBlocks[location.getX()][location.getY()] = block;
+  }
+
+  public BlockTypes[][] getAllBlocks(){
+    return containedBlocks;
   }
 }

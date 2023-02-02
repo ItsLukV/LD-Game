@@ -71,13 +71,41 @@ public class World {
    * @param generationWidth the number of chunks to generate
    */
   private static void generateWorld(int GenerationStart,int generationWidth){
-    if (World.chunkAxisOffset < GenerationStart){
-      World.world = new Chunk[World.world.length+(GenerationStart-chunkAxisOffset)];
-      chunkAxisOffset = GenerationStart;
+    if(world == null){
+      world = new Chunk[0];
     }
+    boolean change = false;
+    
+    int frontChange = 0;
+    if(GenerationStart < -World.chunkAxisOffset){
+      frontChange = -GenerationStart - World.chunkAxisOffset;
+      change = true;
+    }
+    int backChange = 0;
+    if(GenerationStart + generationWidth > World.world.length-World.chunkAxisOffset){
+      backChange = World.world.length-World.chunkAxisOffset - GenerationStart + generationWidth;
+      change = true;
+    }
+    if(change){
+      int newChunkOffset = World.chunkAxisOffset;
+      if(frontChange > 0){
+        newChunkOffset = World.chunkAxisOffset + frontChange;
+      }
+      Chunk[] newChunks = new Chunk[World.chunkAxisOffset + frontChange + World.world.length + backChange];
+      for (int chunkPlace = -(World.chunkAxisOffset + frontChange); chunkPlace < World.world.length + backChange; chunkPlace++) {
+        try {
+          newChunks[chunkPlace-newChunkOffset] = World.world[chunkPlace+World.chunkAxisOffset];
+        } catch (Exception e) {
+          newChunks[chunkPlace+newChunkOffset] = new Chunk(chunkPlace, World.CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
+        }
+      }
+      World.chunkAxisOffset = newChunkOffset;
+      World.world = newChunks;
+    }
+    
     for (int i = GenerationStart; i < Math.abs(generationWidth); i++){
-      World.world[i-chunkAxisOffset] = new Chunk(i, CHUNK_WIDTH, HEIGHT, World.seed,GeneratorHeight);
-      World.world[i-chunkAxisOffset].generate();
+      World.world[i+chunkAxisOffset] = new Chunk(i, CHUNK_WIDTH, HEIGHT, World.seed,GeneratorHeight);
+      World.world[i+chunkAxisOffset].generate();
     }
   }
   public static int get_CHUNK_WIDTH(){
