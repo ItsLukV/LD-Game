@@ -8,11 +8,9 @@ import processing.core.PGraphics;
 public class Player extends Entity {
   public int height = 32;
   public int width = 32;
-  private LDVector speed = new LDVector(0, 0);
 
   public Player(LDVector pos) {
     this.pos = pos;
-
   }
 
   @Override
