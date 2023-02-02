@@ -8,6 +8,12 @@ import processing.core.PGraphics;
 public class Player extends Entity {
   public int height = 32;
   public int width = 32;
+  private boolean down;
+  private boolean up;
+  private boolean right;
+  private boolean left;
+  private int moveSpeed = 2;
+  private float airRes = 0.8f;
 
   public Player(LDVector pos) {
     this.pos = pos;
@@ -20,7 +26,7 @@ public class Player extends Entity {
 
   @Override
   public void tick() {
-    pos.add(speed);
+    calcSpeed();
   }
 
   /**
@@ -41,4 +47,30 @@ public class Player extends Entity {
     return false;
   }
 
+  public void keyPressed(boolean left , boolean right, boolean up, boolean down) {
+    if (left) this.left = true;
+    if (right) this.right = true;
+    if (up) this.up = true;
+    if (down) this.down = true;
+  }
+
+  public void keyReleased(boolean left , boolean right, boolean up, boolean down) {
+    if (left) this.left = false;
+    if (right) this.right = false;
+    if (up) this.up = false;
+    if (down) this.down = false;
+  }
+
+  private void calcSpeed() {
+    if (left) speed.add(new LDVector(-moveSpeed, 0));
+    if (right) speed.add(new LDVector(moveSpeed, 0));
+    if (up) speed.add(new LDVector(0, -moveSpeed));
+    if (down) speed.add(new LDVector(0, moveSpeed));
+
+    speed.setX((int) (speed.getX() * airRes));
+    speed.setY((int) (speed.getY() * airRes));
+
+    pos.add(speed);
+
+  }
 }

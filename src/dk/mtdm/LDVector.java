@@ -17,6 +17,14 @@ public class LDVector {
     return y;
   }
 
+  public void setX(int x) {
+    this.x = x;
+  }
+
+  public void setY(int y) {
+    this.y = y;
+  }
+
   public int dotProduct(LDVector vector) {
     return this.getX() * vector.getX() + this.getY() * vector.getY();
   }
@@ -24,5 +32,10 @@ public class LDVector {
   public void add(LDVector vector) {
     x += vector.getX();
     y += vector.getY();
+  }
+
+  public void multiply(LDVector vector) {
+    x *= vector.getX();
+    y *= vector.getY();
   }
 }
