@@ -30,8 +30,18 @@ public class Sketch extends PApplet {
 
   @Override
   public void draw() {
+    background(220);
     block.show(this);
     player.tick();
     player.show(g);
+  }
+
+  @Override
+  public void keyReleased(){
+    player.keyReleased(keyCode == 37, keyCode == 39, keyCode == 38, keyCode == 40);
+  }
+
+  public void keyPressed() {
+    player.keyPressed(keyCode == 37, keyCode == 39, keyCode == 38, keyCode == 40);
   }
 }
