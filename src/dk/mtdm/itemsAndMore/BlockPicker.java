@@ -22,12 +22,20 @@ public class BlockPicker {
 	 * @return
 	 */
 	static public Block getAir(BlockTypes type, LDVector pos) {
-		Block block = new Block(pos, type);
-		block.setSolidity(false);
-		block.setBreakability(false);
-		block.setHoverability(false);
-		block.setItemDrop(null);
-		return block;
+		return new Block(pos, type) {
+			{
+				soild = true;
+				breakability = true;
+				hoverability = true;
+				itemDrop = null;
+			}
+		};
+		// Block block = new Block(pos, type);
+		// block.setSolidity(false);
+		// block.setBreakability(false);
+		// block.setHoverability(false);
+		// block.setItemDrop(null);
+		// return block;
 	}
 
 	/**
@@ -38,12 +46,20 @@ public class BlockPicker {
 	 * @return
 	 */
 	static public Block getGrass(BlockTypes type, LDVector pos) {
-		Block block = new Block(pos, type);
-		block.setSolidity(true);
-		block.setBreakability(true);
-		block.setHoverability(true);
-		block.setItemDrop(ItemTypes.dirt);
-		return block;
+		return new Block(pos, type) {
+			{
+				soild = true;
+				breakability = true;
+				hoverability = true;
+				itemDrop = ItemTypes.dirt;
+			}
+		};
+		// Block block = new Block(pos, type);
+		// block.setSolidity(true);
+		// block.setBreakability(true);
+		// block.setHoverability(true);
+		// block.setItemDrop(ItemTypes.dirt);
+		// return block;
 	}
 
 	/**
@@ -54,12 +70,20 @@ public class BlockPicker {
 	 * @return
 	 */
 	static public Block getDirt(BlockTypes type, LDVector pos) {
-		Block block = new Block(pos, type);
-		block.setSolidity(true);
-		block.setBreakability(true);
-		block.setHoverability(true);
-		block.setItemDrop(ItemTypes.dirt);
-		return block;
+		return new Block(pos, type) {
+			{
+				soild = true;
+				breakability = true;
+				hoverability = true;
+				itemDrop = ItemTypes.dirt;
+			}
+		};
+		// Block block = new Block(pos, type);
+		// block.setSolidity(true);
+		// block.setBreakability(true);
+		// block.setHoverability(true);
+		// block.setItemDrop(ItemTypes.dirt);
+		// return block;
 	}
 
 	/**
@@ -70,12 +94,20 @@ public class BlockPicker {
 	 * @return
 	 */
 	static public Block getStone(BlockTypes type, LDVector pos) {
-		Block block = new Block(pos, type);
-		block.setSolidity(true);
-		block.setBreakability(true);
-		block.setHoverability(true);
-		block.setItemDrop(ItemTypes.stone);
-		return block;
+		return new Block(pos, type) {
+			{
+				soild = true;
+				breakability = true;
+				hoverability = true;
+				itemDrop = ItemTypes.stone;
+			}
+		};
+		// Block block = new Block(pos, type);
+		// block.setSolidity(true);
+		// block.setBreakability(true);
+		// block.setHoverability(true);
+		// block.setItemDrop(ItemTypes.stone);
+		// return block;
 	}
 
 	/**
@@ -86,12 +118,20 @@ public class BlockPicker {
 	 * @return
 	 */
 	static public Block getBedrock(BlockTypes type, LDVector pos) {
-		Block block = new Block(pos, type);
-		block.setSolidity(true);
-		block.setBreakability(true);
-		block.setHoverability(true);
-		block.setItemDrop(null);
-		return block;
+		return new Block(pos, type) {
+			{
+				soild = true;
+				breakability = false;
+				hoverability = false;
+				itemDrop = null;
+			}
+		};
+		// Block block = new Block(pos, type);
+		// block.setSolidity(true);
+		// block.setBreakability(true);
+		// block.setHoverability(true);
+		// block.setItemDrop(null);
+		// return block;
 	}
 
 	/**

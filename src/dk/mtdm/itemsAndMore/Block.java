@@ -10,10 +10,10 @@ public class Block {
     private int width = 32;
     private int height = 32;
     private BlockTypes id;
-    private boolean soild;
-    private boolean breakability;
-    private boolean hoverability;
-    private ItemTypes itemDrop;
+    protected boolean soild;
+    protected boolean breakability;
+    protected boolean hoverability;
+    protected ItemTypes itemDrop;
 
     /**
      * Creates a block
