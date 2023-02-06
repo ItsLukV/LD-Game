@@ -1,6 +1,5 @@
 package dk.mtdm;
 
-import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.itemsAndMore.Block;
 import dk.mtdm.itemsAndMore.BlockPicker;
 import dk.mtdm.itemsAndMore.BlockTextures;
