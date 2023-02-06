@@ -2,6 +2,12 @@ package dk.mtdm.itemsAndMore;
 //TODO: add comments
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingBlockTypeException;
+import dk.mtdm.itemsAndMore.Blocks.AirBlock;
+import dk.mtdm.itemsAndMore.Blocks.BedrockBlock;
+import dk.mtdm.itemsAndMore.Blocks.DirtBlock;
+import dk.mtdm.itemsAndMore.Blocks.GrassBlock;
+import dk.mtdm.itemsAndMore.Blocks.StoneBlock;
+import dk.mtdm.itemsAndMore.items.ItemTypes;
 import processing.core.PGraphics;
 
 public class BlockPicker {
@@ -23,14 +29,7 @@ public class BlockPicker {
 	 * @return
 	 */
 	static public Block getAir(BlockTypes type, LDVector pos) {
-		return new Block(pos, type) {
-			{
-				soild = true;
-				breakability = true;
-				hoverability = true;
-				itemDrop = null;
-			}
-		};
+		return new AirBlock(pos);
 		// Block block = new Block(pos, type);
 		// block.setSolidity(false);
 		// block.setBreakability(false);
@@ -47,14 +46,7 @@ public class BlockPicker {
 	 * @return
 	 */
 	static public Block getGrass(BlockTypes type, LDVector pos) {
-		return new Block(pos, type) {
-			{
-				soild = true;
-				breakability = true;
-				hoverability = true;
-				itemDrop = ItemTypes.dirt;
-			}
-		};
+		return new GrassBlock(pos);
 		// Block block = new Block(pos, type);
 		// block.setSolidity(true);
 		// block.setBreakability(true);
@@ -71,14 +63,7 @@ public class BlockPicker {
 	 * @return
 	 */
 	static public Block getDirt(BlockTypes type, LDVector pos) {
-		return new Block(pos, type) {
-			{
-				soild = true;
-				breakability = true;
-				hoverability = true;
-				itemDrop = ItemTypes.dirt;
-			}
-		};
+		return new DirtBlock(pos);
 		// Block block = new Block(pos, type);
 		// block.setSolidity(true);
 		// block.setBreakability(true);
@@ -95,14 +80,7 @@ public class BlockPicker {
 	 * @return
 	 */
 	static public Block getStone(BlockTypes type, LDVector pos) {
-		return new Block(pos, type) {
-			{
-				soild = true;
-				breakability = true;
-				hoverability = true;
-				itemDrop = ItemTypes.stone;
-			}
-		};
+		return new StoneBlock(pos);
 		// Block block = new Block(pos, type);
 		// block.setSolidity(true);
 		// block.setBreakability(true);
@@ -119,14 +97,7 @@ public class BlockPicker {
 	 * @return
 	 */
 	static public Block getBedrock(BlockTypes type, LDVector pos) {
-		return new Block(pos, type) {
-			{
-				soild = true;
-				breakability = false;
-				hoverability = false;
-				itemDrop = null;
-			}
-		};
+		return new BedrockBlock(pos);
 		// Block block = new Block(pos, type);
 		// block.setSolidity(true);
 		// block.setBreakability(true);

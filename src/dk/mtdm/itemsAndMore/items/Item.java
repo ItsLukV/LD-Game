@@ -6,8 +6,8 @@ import processing.core.PGraphics;
 public abstract class Item {
   protected Ability ability;
   protected final int stackSize;
-  protected final ItemType itemType;
-  public Item(ItemType id,int stackSize) {
+  protected final ItemTypes itemType;
+  public Item(ItemTypes id,int stackSize) {
     this.itemType = id;
     this.stackSize = stackSize;
   }
@@ -16,7 +16,7 @@ public abstract class Item {
   public int getStackSize() {
     return stackSize;
   }
-  public ItemType getItemType() {
+  public ItemTypes getItemType() {
     return this.itemType;
   }
 }
