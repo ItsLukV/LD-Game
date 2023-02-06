@@ -1,8 +1,6 @@
 package dk.mtdm.itemsAndMore.items;
 //TODO: add comments
 
-import javax.swing.text.html.HTMLDocument.RunElement;
-
 public class ItemStack {
   private int itemCount;
   private final int maxSize;
@@ -23,7 +21,7 @@ public class ItemStack {
     itemCount++;
   }
 
-  public ItemType getItemType() {
+  public ItemTypes getItemType() {
     return item.getItemType();
   }
 }

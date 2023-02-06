@@ -6,8 +6,9 @@ package dk.mtdm.itemsAndMore;
 import processing.core.PGraphics;
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingTextureException;
+import dk.mtdm.itemsAndMore.items.ItemTypes;
 import dk.mtdm.managementSystem.world.World;
-public class Block {
+public abstract class Block {
     private LDVector pos;
     private int width = 8;
     private int height = 8;
@@ -24,20 +25,14 @@ public class Block {
      * @param y  sets y-canvas location value of the block
      * @param id id/type of block
      */
-    public Block(int x, int y, BlockTypes id) {
-        this.pos = new LDVector(x, y);
-        this.id = id;
-    }
-
-    /**
-     * Creates a block
-     * 
-     * @param pos Sets the canvas location of the block
-     * @param id  id/type of block
-     */
-    public Block(LDVector pos, BlockTypes id) {
+    public Block(LDVector pos, BlockTypes id, boolean soild, boolean breakability, boolean hoverability, ItemTypes itemDrop) {
         this.pos = pos;
+
         this.id = id;
+        this.soild = soild;
+        this.breakability = breakability;
+        this.hoverability =  hoverability;
+        this.itemDrop =  itemDrop;
     }
 
     /**

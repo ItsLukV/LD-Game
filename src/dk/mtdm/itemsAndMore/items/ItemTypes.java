@@ -1,7 +1,8 @@
-package dk.mtdm.itemsAndMore;
+package dk.mtdm.itemsAndMore.items;
 //TODO: add comments
 public enum ItemTypes {
     grass,
     dirt,
-    stone
+    stone,
+    Stick
 }

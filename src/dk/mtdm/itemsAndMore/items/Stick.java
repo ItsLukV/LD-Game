@@ -5,7 +5,7 @@ import processing.core.PGraphics;
 public class Stick extends Item {
 
   public Stick() {
-    super(ItemType.Stick, 99);
+    super(ItemTypes.Stick, 99);
   }
 
   @Override
