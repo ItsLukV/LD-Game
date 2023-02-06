@@ -12,8 +12,8 @@ import processing.core.PApplet;
 public class Sketch extends PApplet {
   private Block block;
   private static Player player;
-  public static int offsetX = player.getPos().getX() + Player.width / 2;
-  public static int offsetY = player.getPos().getY() + Player.height / 2;  
+  // public static int offsetX = player.getPos().getX() + Player.width / 2;
+  // public static int offsetY = player.getPos().getY() + Player.height / 2;  
   
   @Override
   public void settings() {
@@ -27,7 +27,7 @@ public class Sketch extends PApplet {
 
     block = BlockPicker.getBedrock(BlockTypes.bedrock, new LDVector(100, 100));
     player = new Player(new LDVector(0, 100));
-    System.out.println(player.collisionWith(block));
+    
     World.setup(100, 100, 20);
   }
 
@@ -38,7 +38,7 @@ public class Sketch extends PApplet {
     block.show(g);
     player.tick();
     player.show(g);
-    translate(offsetX, offsetY);
+    // translate(offsetX, offsetY);
   }
 
   @Override

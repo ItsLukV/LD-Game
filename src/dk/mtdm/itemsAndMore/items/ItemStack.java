@@ -1,4 +1,7 @@
 package dk.mtdm.itemsAndMore.items;
+//TODO: add comments
+
+import javax.swing.text.html.HTMLDocument.RunElement;
 
 public class ItemStack {
   private int itemCount;
@@ -18,5 +21,9 @@ public class ItemStack {
       throw new Exception("Full itemstack"); //TODO make custom Exception
     }
     itemCount++;
+  }
+
+  public ItemType getItemType() {
+    return item.getItemType();
   }
 }

@@ -19,6 +19,7 @@ public class Player extends Entity {
 
   public Player(LDVector pos) {
     this.pos = pos;
+    inventory.giveItem();
   }
 
   @Override
