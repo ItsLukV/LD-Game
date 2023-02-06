@@ -36,7 +36,7 @@ public class WorldGenThread extends Thread{
     super.start();
   }
   private void worldGenerator(){
-    if(noise == null) noiseGenerator();
+    noiseGenerator();
 
     for (int x = 0; x < noise.length; x++) {
       for (int y = 0; y < noise[x].length; y++) {
@@ -64,7 +64,6 @@ public class WorldGenThread extends Thread{
     float tempNoise =p.noise(x+ID*World.get_CHUNK_WIDTH(), y, seed);
     tempNoise += 1f/Math.ceil(1+(float)y/2f);
     if(y > maxcreation) tempNoise -= (1-1f/(1+y-maxcreation))/5f;
-    System.out.println(y + ": " + tempNoise);
     return tempNoise;
   }
   private void ChooseBlock(int x, int y) {    

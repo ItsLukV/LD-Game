@@ -123,7 +123,7 @@ public class World {
     return BlockAir;
   }
   public static void show(PGraphics g,int startChunkID, int endChunkID){
-    for (int i = startChunkID; i >= endChunkID; i++) {
+    for (int i = startChunkID; i <= endChunkID; i++) {
       World.world[i+chunkAxisOffset].show(g);
     }
   }
