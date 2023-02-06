@@ -19,7 +19,7 @@ public class WorldGenThread extends Thread{
  * generates a thread with the purpose of generating all blocks present in a chunk without lagging main thread
  * @param ID the id of the chunk, this is used to find the global coordinates of this chunk
  * @param seed the seed for the world, this is used as a seed in the noise function
- * @param creationHeight this is controlls where the generation bias function
+ * @param creationHeight this controlls where the generation bias function changes
  * @param attachedChunk the chunk all the generated blocks should be saved to
  */
   public WorldGenThread(int ID, int seed,int creationHeight,Chunk attachedChunk){
