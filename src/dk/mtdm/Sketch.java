@@ -27,7 +27,7 @@ public class Sketch extends PApplet {
 
     block = BlockPicker.getBedrock(BlockTypes.bedrock, new LDVector(100, 100));
     player = new Player(new LDVector(0, 100));
-    System.out.println(player.collisionWith(block));
+    
     World.setup(100, 100, 20);
   }
 
