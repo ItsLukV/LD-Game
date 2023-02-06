@@ -2,12 +2,11 @@ package dk.mtdm.managementSystem.world;
 
 import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.Block;
-import dk.mtdm.itemsAndMore.BlockTypes;
 import processing.core.PGraphics;
 /*
-//TODO canvas location = processing
-//TODO global location = gameWorld
-//TODO relative location = chunk
+//remember: canvas location = processing
+//remember: global location = gameWorld
+//remember: relative location = chunk
 */
 public class World {
   private static Chunk[] world;

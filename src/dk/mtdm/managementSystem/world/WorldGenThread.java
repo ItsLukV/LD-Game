@@ -115,6 +115,10 @@ public class WorldGenThread extends Thread{
       parent.setBlock(new LDVector(x, y), BlockTypes.air);
       return;
     }
+    if(noise[x][y] > World.getBlockStone()*3) {
+      parent.setBlock(new LDVector(x, y), BlockTypes.bedrock);
+      return;
+    }
     if(noise[x][y] > World.getBlockStone()) {
       parent.setBlock(new LDVector(x, y), BlockTypes.stone);
       return;

@@ -12,8 +12,8 @@ import processing.core.PApplet;
 public class Sketch extends PApplet {
   private Block block;
   private static Player player;
-  public static int offsetX = player.getPos().getX() + Player.width / 2;
-  public static int offsetY = player.getPos().getY() + Player.height / 2;  
+  // public static int offsetX = player.getPos().getX() + Player.width / 2;
+  // public static int offsetY = player.getPos().getY() + Player.height / 2;  
   
   @Override
   public void settings() {
@@ -33,12 +33,12 @@ public class Sketch extends PApplet {
 
   @Override
   public void draw() {
-    background(220);
+    background(0,0,255);
     World.show(g,-1,1);
     block.show(g);
     player.tick();
     player.show(g);
-    translate(offsetX, offsetY);
+    // translate(offsetX, offsetY);
   }
 
   @Override

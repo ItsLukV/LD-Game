@@ -4,7 +4,6 @@ import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.Block;
 import dk.mtdm.itemsAndMore.BlockTypes;
 import processing.core.PGraphics;
-
 public class Chunk {
   final private int ID;
   private Block[][] containedBlocks;
@@ -54,6 +53,12 @@ public class Chunk {
   public Block getBlock(int x, int y){
     if(containedBlocks[x][y] == null){
       t.singleBlockNoise(null,x,y);
+      try {
+        System.out.println("failed get block");
+        Thread.sleep(20);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
       return getBlock(x, y);
     }
     return containedBlocks[x][y];
