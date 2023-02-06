@@ -110,6 +110,28 @@ public class World {
       World.world[i+chunkAxisOffset].generate();
     }
   }
+  /**
+   * draws entire chunks to the screen
+   * @param g
+   * @param startChunkID the location of  the first chunk to be drawn
+   * @param endChunkID the location of the last chunk to be draw
+   */
+  public static void show(PGraphics g,int startChunkID, int endChunkID){
+    for (int i = startChunkID; i <= endChunkID; i++) {
+      World.world[i+chunkAxisOffset].show(g);
+    }
+  }
+  /**
+   * draws entire chunks to the screen
+   * @param startGlobal the location of  the first block to be drawn
+   * @param endGlobal the location of the last block to be draw
+   * @param g
+   */
+  public static void show(int startGlobal, int endGlobal,PGraphics g){
+    int start = (int) Math.floor(startGlobal/World.CHUNK_WIDTH);
+    int end = (int) Math.floor(endGlobal/World.CHUNK_WIDTH);
+    show(g, start, end);
+  }
   public static int get_CHUNK_WIDTH(){
     return World.CHUNK_WIDTH;
   }
@@ -121,15 +143,5 @@ public class World {
   }
   public static float getBlockAir() {
     return BlockAir;
-  }
-  public static void show(PGraphics g,int startChunkID, int endChunkID){
-    for (int i = startChunkID; i <= endChunkID; i++) {
-      World.world[i+chunkAxisOffset].show(g);
-    }
-  }
-  public static void show(int startGlobal, int endGlobal,PGraphics g){
-    int start = (int) Math.floor(startGlobal/World.CHUNK_WIDTH);
-    int end = (int) Math.floor(endGlobal/World.CHUNK_WIDTH);
-    show(g, start, end);
   }
 }
