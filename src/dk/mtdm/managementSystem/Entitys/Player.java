@@ -2,6 +2,7 @@ package dk.mtdm.managementSystem.Entitys;
 
 import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.Block;
+import dk.mtdm.itemsAndMore.inventory.InventoryManager;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PGraphics;
 
@@ -14,6 +15,7 @@ public class Player extends Entity {
   private boolean left;
   private int moveSpeed = 2;
   private float airRes = 0.8f;
+  private InventoryManager inventory = new InventoryManager();
 
   public Player(LDVector pos) {
     this.pos = pos;
