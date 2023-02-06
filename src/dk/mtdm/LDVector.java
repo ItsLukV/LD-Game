@@ -13,6 +13,10 @@ public class LDVector {
     return x;
   }
 
+  public LDVector copy(){
+    return new LDVector(x, y);
+  }
+
   public int getY() {
     return y;
   }

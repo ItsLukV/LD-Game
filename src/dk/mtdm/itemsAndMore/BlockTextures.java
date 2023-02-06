@@ -1,5 +1,6 @@
 package dk.mtdm.itemsAndMore;
 
+import dk.mtdm.exceptions.MissingTextureException;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -14,7 +15,7 @@ public class BlockTextures {
         grass = p.loadImage(path+"grass.png");
         stone = p.loadImage(path+"stone.png");
     }
-    public static PImage picker(BlockTypes type) throws Exception {
+    public static PImage picker(BlockTypes type) throws MissingTextureException {
         switch(type) {
             case air:
                 return air;
@@ -27,7 +28,7 @@ public class BlockTextures {
             case stone:
                 return stone;
             default: 
-                throw new Exception(type.name() + " does not have a texture");
+                throw new MissingTextureException(type.name() + " does not have a texture");
         }
     }
 }
