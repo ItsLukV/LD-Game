@@ -1,11 +1,11 @@
 package dk.mtdm.itemsAndMore;
+//TODO: add comments
 
 // import java.util.concurrent.BlockingDeque;
 
 import processing.core.PGraphics;
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingTextureException;
-
 public class Block {
     private LDVector pos;
     private int width = 32;

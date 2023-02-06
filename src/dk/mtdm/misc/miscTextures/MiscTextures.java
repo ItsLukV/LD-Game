@@ -1,5 +1,5 @@
 package dk.mtdm.misc.miscTextures;
-
+//TODO: add comments
 import processing.core.PApplet;
 import processing.core.PImage;
 

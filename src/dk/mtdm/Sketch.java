@@ -1,5 +1,5 @@
 package dk.mtdm;
-
+//TODO: add comments
 import dk.mtdm.itemsAndMore.Block;
 import dk.mtdm.itemsAndMore.BlockPicker;
 import dk.mtdm.itemsAndMore.BlockTextures;
