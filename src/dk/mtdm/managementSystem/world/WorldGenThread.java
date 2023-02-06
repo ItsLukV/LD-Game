@@ -15,7 +15,13 @@ public class WorldGenThread extends Thread{
   Chunk parent;
 
 
-
+/**
+ * generates a thread with the purpose of generating all blocks present in a chunk without lagging main thread
+ * @param ID the id of the chunk, this is used to find the global coordinates of this chunk
+ * @param seed the seed for the world, this is used as a seed in the noise function
+ * @param creationHeight this is controlls where the generation bias function
+ * @param attachedChunk the chunk all the generated blocks should be saved to
+ */
   public WorldGenThread(int ID, int seed,int creationHeight,Chunk attachedChunk){
     this.seed = seed; 
     this.ID = ID;
@@ -23,18 +29,31 @@ public class WorldGenThread extends Thread{
     this.noise = new float[World.get_CHUNK_WIDTH()][World.get_HEIGHT()];
     this.parent= attachedChunk;
   }
-  public synchronized void changeID(int ID){
+  /**
+   * allows one to change the location of the chunk
+   * @param ID the ID of the chunk
+   * @param attachedChunk the chunk that 
+   */
+  public synchronized void changeID(int ID,Chunk attachedChunk){
     this.ID = ID;
+    this.parent = attachedChunk;
   }
-
+  /**
+   * starts the world generator
+   */
   @Override
   public void Run() {
     worldGenerator();
   }
-  
+  /**
+   * starts the thread
+   */
   public synchronized void start() {
     super.start();
   }
+  /**
+   * generates the world 
+   */
   private void worldGenerator(){
     noiseGenerator();
 
@@ -44,6 +63,9 @@ public class WorldGenThread extends Thread{
       }
     }
   }
+  /**
+   * generates the noise for all  coordinates in the chunk
+   */
   public void noiseGenerator(){
     PApplet p = new PApplet();
     p.noiseSeed(-1519604120685001364l);
@@ -55,6 +77,13 @@ public class WorldGenThread extends Thread{
       }
     }
   }
+  /**
+   * generates the noise of a singel block in the  chunk
+   * @param p a Papplet used for storing/generating noise
+   * @param x the relative x coordinate of the block
+   * @param y the relative y coordinate of the block
+   * @return the noise of this block
+   */
   public synchronized float singleBlockNoise(PApplet p, int x, int y) {
     if(p == null){
       p = new PApplet();
@@ -66,6 +95,11 @@ public class WorldGenThread extends Thread{
     if(y > maxcreation) tempNoise -= (1-1f/(1+y-maxcreation))/5f;
     return tempNoise;
   }
+  /**
+   * chooses and sets the block from noise
+   * @param x the relative x coordinate of the block
+   * @param y the relative y coordinate of the block
+   */
   private void ChooseBlock(int x, int y) {    
     PApplet p = new PApplet();
     p.noiseSeed(-1519604120685001364l);
