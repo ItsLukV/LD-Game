@@ -6,8 +6,8 @@ import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PGraphics;
 
 public class Player extends Entity {
-  public int height = 32;
-  public int width = 32;
+  public static int height = 32;
+  public static int width = 32;
   private boolean down;
   private boolean up;
   private boolean right;
@@ -71,6 +71,9 @@ public class Player extends Entity {
     speed.setY((int) (speed.getY() * airRes));
 
     pos.add(speed);
+  }
 
+  public LDVector getPos() {
+    return pos;
   }
 }
