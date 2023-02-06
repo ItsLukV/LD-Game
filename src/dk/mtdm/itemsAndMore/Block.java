@@ -9,8 +9,8 @@ import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.managementSystem.world.World;
 public class Block {
     private LDVector pos;
-    private int width = 16;
-    private int height = 16;
+    private int width = 8;
+    private int height = 8;
     private BlockTypes id;
     protected boolean soild;
     protected boolean breakability;

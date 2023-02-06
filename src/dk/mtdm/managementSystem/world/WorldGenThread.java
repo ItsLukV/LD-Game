@@ -68,7 +68,7 @@ public class WorldGenThread extends Thread{
    */
   public void noiseGenerator(){
     PApplet p = new PApplet();
-    p.noiseSeed(-1519604120685001364l);
+    p.noiseSeed(seed);
     
     //inside noise
     for (int x = 0; x < World.get_CHUNK_WIDTH(); x++) {
@@ -87,10 +87,10 @@ public class WorldGenThread extends Thread{
   public synchronized float singleBlockNoise(PApplet p, int x, int y) {
     if(p == null){
       p = new PApplet();
-      p.noiseSeed(-1519604120685001364l);
+      p.noiseSeed(seed);
     }
     
-    float tempNoise =p.noise(x+ID*World.get_CHUNK_WIDTH(), y, seed);
+    float tempNoise =p.noise(x+(ID*World.get_CHUNK_WIDTH()), y);
     tempNoise += 1f/Math.ceil(1+(float)y/2f);
     if(y > maxcreation) tempNoise -= (1-1f/(1+y-maxcreation))/5f;
     return tempNoise;
@@ -102,12 +102,12 @@ public class WorldGenThread extends Thread{
    */
   private void ChooseBlock(int x, int y) {    
     PApplet p = new PApplet();
-    p.noiseSeed(-1519604120685001364l);
+    p.noiseSeed(seed);
     //outside noise
     float[][] outNoise = new float[2][World.get_HEIGHT()];
     for (int Y = 0; Y < World.get_HEIGHT(); Y++) {
-      outNoise[0][Y] = p.noise(ID*World.get_CHUNK_WIDTH()-1, Y, seed);
-      outNoise[1][Y] = p.noise((ID+1)*World.get_CHUNK_WIDTH(), Y, seed);
+      outNoise[0][Y] = p.noise(ID*World.get_CHUNK_WIDTH()-1, Y);
+      outNoise[1][Y] = p.noise((ID+1)*World.get_CHUNK_WIDTH(), Y);
     }
 
     
@@ -125,24 +125,40 @@ public class WorldGenThread extends Thread{
     }
     
     if(x == 0){
-      if (noise[x][y-1] < World.getBlockAir() &&
-          noise[x][y-1] < World.getBlockAir() &&
-          noise[x+1][y] < World.getBlockAir() &&
-          outNoise[0][y]< World.getBlockAir()){
-            
-            parent.setBlock(new LDVector(x, y), BlockTypes.grass);
-            return;
-          }
+      try {
+        if (noise[x][y-1] < World.getBlockAir() ||
+            noise[x][y+1] < World.getBlockAir() ||
+            noise[x+1][y] < World.getBlockAir() ||
+            outNoise[0][y]< World.getBlockAir()){
+              parent.setBlock(new LDVector(x, y), BlockTypes.grass);
+              return;
+            }
+      } catch (Exception e) {
+        // System.out.println("edge");
+      }
     }
     if(x == World.get_CHUNK_WIDTH()-1){
-      if (noise[x][y-1] < World.getBlockAir() &&
-          noise[x][y-1] < World.getBlockAir() &&
-          noise[x-1][y] < World.getBlockAir() &&
-          outNoise[1][y]< World.getBlockAir()){
-            
-            parent.setBlock(new LDVector(x, y), BlockTypes.grass);
-            return;
-          }
+      try {
+        if (noise[x][y-1] < World.getBlockAir() ||
+            noise[x][y-1] < World.getBlockAir() ||
+            noise[x-1][y] < World.getBlockAir() ||
+            outNoise[1][y]< World.getBlockAir()){
+              
+              parent.setBlock(new LDVector(x, y), BlockTypes.grass);
+              return;
+            }
+        
+      } catch (Exception e) {
+        // System.out.println("edge");
+      }
+    }
+    try {
+      if(noise[x][y-1] < World.getBlockAir() || noise[x][y-1] < World.getBlockAir() || noise[x-1][y] < World.getBlockAir() || noise[x+1][y]< World.getBlockAir()){
+        parent.setBlock(new LDVector(x, y), BlockTypes.grass);
+        return;
+      }
+    } catch (Exception e) {
+      // System.out.println("edge");
     }
     parent.setBlock(new LDVector(x, y), BlockTypes.dirt);
     return;
