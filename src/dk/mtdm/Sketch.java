@@ -1,6 +1,5 @@
 package dk.mtdm;
 
-import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.itemsAndMore.Block;
 import dk.mtdm.itemsAndMore.BlockPicker;
 import dk.mtdm.itemsAndMore.BlockTextures;
@@ -12,9 +11,10 @@ import processing.core.PApplet;
 
 public class Sketch extends PApplet {
   private Block block;
-  private Player player;
-  private World world;
-
+  private static Player player;
+  public static int offsetX = player.getPos().getX() + Player.width / 2;
+  public static int offsetY = player.getPos().getY() + Player.height / 2;  
+  
   @Override
   public void settings() {
     size(1000, 1000);
@@ -37,6 +37,7 @@ public class Sketch extends PApplet {
     block.show(this);
     player.tick();
     player.show(g);
+    translate(offsetX, offsetY);
   }
 
   @Override
