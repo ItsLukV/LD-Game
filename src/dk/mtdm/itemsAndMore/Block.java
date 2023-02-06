@@ -3,7 +3,9 @@ package dk.mtdm.itemsAndMore;
 // import java.util.concurrent.BlockingDeque;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import dk.mtdm.LDVector;
+import dk.mtdm.exceptions.MissingTextureException;
 
 public class Block {
     private LDVector pos;
@@ -43,10 +45,10 @@ public class Block {
      * 
      * @param p
      */
-    public void show(PApplet p) {
+    public void show(PGraphics p) {
         try {
-            p.image(BlockTextures.picker(id), pos.getX(), pos.getY(), width, height);
-        } catch (Exception e) {
+            p.image(BlockTextures.picker(id), pos.getX()*width, pos.getY()*height, width, height);
+        } catch (MissingTextureException e) {
             e.printStackTrace();
         }
     }

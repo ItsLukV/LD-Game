@@ -1,7 +1,9 @@
 package dk.mtdm.managementSystem.world;
 
 import dk.mtdm.LDVector;
+import dk.mtdm.itemsAndMore.Block;
 import dk.mtdm.itemsAndMore.BlockTypes;
+import processing.core.PGraphics;
 /*
 //TODO canvas location = processing
 //TODO global location = gameWorld
@@ -52,7 +54,7 @@ public class World {
    * the location of a block that wants to be accessed in the world, this alows acces to blocks whitout needing to find a specific chunk
    * @return // the enum blocktype coresponding to the block at the given position
    */
-  public static BlockTypes getBlock(LDVector location){
+  public static Block getBlock(LDVector location){
     
     int chunkID = (location.getX() - location.getX() % CHUNK_WIDTH) / CHUNK_WIDTH - chunkAxisOffset;
     int relativeX = location.getX()%CHUNK_WIDTH;
@@ -119,5 +121,15 @@ public class World {
   }
   public static float getBlockAir() {
     return BlockAir;
+  }
+  public static void show(PGraphics g,int startChunkID, int endChunkID){
+    for (int i = startChunkID; i >= endChunkID; i++) {
+      World.world[i+chunkAxisOffset].show(g);
+    }
+  }
+  public static void show(int startGlobal, int endGlobal,PGraphics g){
+    int start = (int) Math.floor(startGlobal/World.CHUNK_WIDTH);
+    int end = (int) Math.floor(endGlobal/World.CHUNK_WIDTH);
+    show(g, start, end);
   }
 }

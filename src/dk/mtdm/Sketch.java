@@ -13,7 +13,6 @@ import processing.core.PApplet;
 public class Sketch extends PApplet {
   private Block block;
   private Player player;
-  private World world;
 
   @Override
   public void settings() {
@@ -34,7 +33,7 @@ public class Sketch extends PApplet {
   @Override
   public void draw() {
     background(220);
-    block.show(this);
+    block.show(g);
     player.tick();
     player.show(g);
   }

@@ -51,13 +51,21 @@ public class WorldGenThread extends Thread{
     //inside noise
     for (int x = 0; x < World.get_CHUNK_WIDTH(); x++) {
       for (int y = 0; y < World.get_HEIGHT(); y++) {
-        float tempNoise =p.noise(x+ID*World.get_CHUNK_WIDTH(), y, seed);
-        noise[x][y] = tempNoise;
-        noise[x][y] += 1f/Math.ceil(1+(float)y/2f);
-        if(y > maxcreation) noise[x][y] -= (1-1f/(1+y-maxcreation))/5f;
-        System.out.println(y + ": " + noise[x][y]);
+        noise[x][y] = singleBlockNoise(p, x, y);
       }
     }
+  }
+  public synchronized float singleBlockNoise(PApplet p, int x, int y) {
+    if(p == null){
+      p = new PApplet();
+      p.noiseSeed(-1519604120685001364l);
+    }
+    
+    float tempNoise =p.noise(x+ID*World.get_CHUNK_WIDTH(), y, seed);
+    tempNoise += 1f/Math.ceil(1+(float)y/2f);
+    if(y > maxcreation) tempNoise -= (1-1f/(1+y-maxcreation))/5f;
+    System.out.println(y + ": " + tempNoise);
+    return tempNoise;
   }
   private void ChooseBlock(int x, int y) {    
     PApplet p = new PApplet();
