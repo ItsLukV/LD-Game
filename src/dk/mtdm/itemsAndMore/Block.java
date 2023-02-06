@@ -6,12 +6,9 @@ package dk.mtdm.itemsAndMore;
 import processing.core.PGraphics;
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingTextureException;
-<<<<<<< HEAD
-public abstract class Block {
-=======
+import dk.mtdm.itemsAndMore.items.ItemTypes;
 import dk.mtdm.managementSystem.world.World;
-public class Block {
->>>>>>> ffcca656fc714f3ad7e6f8daceef6a5a78fa9634
+public abstract class Block {
     private LDVector pos;
     private int width = 16;
     private int height = 16;
