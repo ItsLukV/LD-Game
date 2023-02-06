@@ -1,5 +1,5 @@
 package dk.mtdm.itemsAndMore;
-
+//TODO: add comments
 import dk.mtdm.exceptions.MissingTextureException;
 import processing.core.PApplet;
 import processing.core.PImage;

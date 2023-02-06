@@ -1,5 +1,5 @@
 package dk.mtdm.managementSystem.Entitys;
-
+//TODO: add comments
 import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.Block;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;

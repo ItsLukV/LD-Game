@@ -1,5 +1,5 @@
 package dk.mtdm.exceptions;
-
+//TODO: add comments
 public class MissingBlockTypeException extends Throwable{
   private String e;
   public MissingBlockTypeException(String exception){

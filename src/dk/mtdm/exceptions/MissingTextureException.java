@@ -1,5 +1,5 @@
 package dk.mtdm.exceptions;
-
+//TODO: add comments
 public class MissingTextureException extends Throwable{
   private String e;
   public MissingTextureException(String exception){

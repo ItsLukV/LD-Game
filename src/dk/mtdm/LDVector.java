@@ -1,5 +1,5 @@
 package dk.mtdm;
-
+//TODO: add comments
 public class LDVector {
   private int x;
   private int y;

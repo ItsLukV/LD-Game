@@ -1,5 +1,4 @@
 package dk.mtdm;
-
 import processing.core.PApplet;
 
 public class Main {

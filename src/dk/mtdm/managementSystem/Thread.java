@@ -1,5 +1,5 @@
 package dk.mtdm.managementSystem;
-
+//TODO: add comments
 public abstract class Thread extends java.lang.Thread{
   
   public boolean atWork = false;
