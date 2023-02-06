@@ -33,7 +33,7 @@ public class Sketch extends PApplet {
 
   @Override
   public void draw() {
-    background(220);
+    background(0,0,255);
     World.show(g,-1,1);
     block.show(g);
     player.tick();

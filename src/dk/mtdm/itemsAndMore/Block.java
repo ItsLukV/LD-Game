@@ -6,10 +6,15 @@ package dk.mtdm.itemsAndMore;
 import processing.core.PGraphics;
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingTextureException;
+<<<<<<< HEAD
 public abstract class Block {
+=======
+import dk.mtdm.managementSystem.world.World;
+public class Block {
+>>>>>>> ffcca656fc714f3ad7e6f8daceef6a5a78fa9634
     private LDVector pos;
-    private int width = 32;
-    private int height = 32;
+    private int width = 16;
+    private int height = 16;
     private BlockTypes id;
     protected boolean soild;
     protected boolean breakability;
@@ -40,7 +45,7 @@ public abstract class Block {
      */
     public void show(PGraphics g) {
         try {
-            g.image(BlockTextures.picker(id), pos.getX()*width, pos.getY()*height, width, height);
+            g.image(BlockTextures.picker(id), pos.getX()*width, World.get_HEIGHT()*height-pos.getY()*height, width, height);
         } catch (MissingTextureException e) {
             e.printStackTrace();
         }
