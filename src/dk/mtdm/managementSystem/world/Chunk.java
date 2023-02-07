@@ -1,7 +1,9 @@
 package dk.mtdm.managementSystem.world;
 
 import dk.mtdm.LDVector;
+import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.itemsAndMore.Block;
+import dk.mtdm.itemsAndMore.BlockPicker;
 import dk.mtdm.itemsAndMore.BlockTypes;
 import processing.core.PGraphics;
 public class Chunk {
@@ -52,6 +54,9 @@ public class Chunk {
    */
   public Block getBlock(int x, int y){
     if(containedBlocks[x][y] == null){
+      if (t == null) {
+        t = new WorldGenThread(ID, seed, creationHeight, this);
+      }
       t.singleBlockNoise(null,x,y);
       try {
         System.out.println("failed get block");
@@ -85,7 +90,11 @@ public class Chunk {
   public void setBlock(LDVector location,BlockTypes block){
     LDVector globalLocation = location.copy();
     globalLocation.add(ChunkVector);;
-    containedBlocks[location.getX()][location.getY()] = new Block(globalLocation, block);
+    try {
+      containedBlocks[location.getX()][location.getY()] = BlockPicker.picker(block,globalLocation);
+    } catch (MissingBlockTypeException e) {
+      e.printStackTrace();
+    }
   }
   /**
    * @return a clone array of all blocks in the chunk

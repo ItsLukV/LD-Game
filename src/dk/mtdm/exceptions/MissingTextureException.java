@@ -1,11 +1,18 @@
 package dk.mtdm.exceptions;
-//TODO: add comments
+
 public class MissingTextureException extends Throwable{
   private String e;
+  
+  /**
+ * TODO: write javadoc
+ */
   public MissingTextureException(String exception){
     super(exception);
     e = exception;
   }
+  /**
+ * TODO: write javadoc
+ */
   @Override
   public void printStackTrace(){
     System.out.println("\nno texture found for this block");

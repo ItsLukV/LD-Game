@@ -1,16 +1,20 @@
 package dk.mtdm.itemsAndMore.items;
-//TODO: add comments
 
 public class ItemStack {
   private int itemCount;
   private final int maxSize;
   private final Item item;
 
+  /**
+ * TODO: write javadoc
+ */
   public ItemStack(Item item) {
     maxSize = item.getStackSize();
     this.item = item;
   }
-
+  /**
+ * TODO: write javadoc
+ */
   public void add(Item item) throws Exception {
     if(this.item.getItemType() != item.getItemType()) {
       throw new Exception("Not the same item type"); //TODO make custom Exception
@@ -20,7 +24,9 @@ public class ItemStack {
     }
     itemCount++;
   }
-
+  /**
+ * TODO: write javadoc
+ */
   public ItemTypes getItemType() {
     return item.getItemType();
   }

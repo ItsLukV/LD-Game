@@ -12,7 +12,7 @@ public class World {
   private static Chunk[] world;
   private static int chunkAxisOffset; // the amount of chunks that are on the left of the global 0, this is needed so that chunk ID can be allowed negative and all chunks can be saved in an array 
   // private static WorldGenThread[] worldGeneraters; 
-  final private static int CHUNK_WIDTH = 32;
+  final private static int CHUNK_WIDTH = 6;
   private static int HEIGHT = 50;
   private static int seed = 3;
   private static int GeneratorHeight = HEIGHT/3;
@@ -119,6 +119,7 @@ public class World {
    */
   public static void show(PGraphics g,int startChunkID, int endChunkID){
     for (int i = startChunkID; i <= endChunkID; i++) {
+      
       World.world[i+chunkAxisOffset].show(g);
     }
   }
@@ -132,6 +133,18 @@ public class World {
     int start = (int) Math.floor(startGlobal/World.CHUNK_WIDTH);
     int end = (int) Math.floor(endGlobal/World.CHUNK_WIDTH);
     show(g, start, end);
+  }
+  /**
+   * @param ID the ID of the checked chunk
+   * @return whether this chunk is in range
+   */
+  public static boolean chunkOutOfRange(int ID){
+    try {
+      World.world[ID+chunkAxisOffset] = World.world[ID+chunkAxisOffset];
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
   }
   public static int get_CHUNK_WIDTH(){
     return World.CHUNK_WIDTH;

@@ -1,11 +1,13 @@
 package dk.mtdm.misc.miscTextures;
-//TODO: add comments
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
 public class MiscTextures {
   private static PImage player;
-
+  /**
+   * TODO: write javadoc
+   */
   public static void loadBlockTextures(PApplet p) {
     player = p.loadImage("src/dk/mtdm/misc/miscTextures/Player.png");
   }

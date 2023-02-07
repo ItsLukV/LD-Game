@@ -15,7 +15,7 @@ public class WorldGenThread extends Thread{
   Chunk parent;
 
 
-/**
+  /**
  * generates a thread with the purpose of generating all blocks present in a chunk without lagging main thread
  * @param ID the id of the chunk, this is used to find the global coordinates of this chunk
  * @param seed the seed for the world, this is used as a seed in the noise function

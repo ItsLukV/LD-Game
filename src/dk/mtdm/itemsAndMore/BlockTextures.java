@@ -1,12 +1,14 @@
 package dk.mtdm.itemsAndMore;
-//TODO: add comments
+
 import dk.mtdm.exceptions.MissingTextureException;
 import processing.core.PApplet;
 import processing.core.PImage;
 
 public class BlockTextures {
     private static PImage air, bedrock, dirt, grass, stone;
-
+    /**
+   * TODO: write javadoc
+   */
     public static void loadBlockTextures(PApplet p) {
         String path = "src/dk/mtdm/itemsAndMore/texureFiles/";
         air = p.loadImage(path+"air.png");
@@ -15,6 +17,9 @@ public class BlockTextures {
         grass = p.loadImage(path+"grass.png");
         stone = p.loadImage(path+"stone.png");
     }
+    /**
+   * TODO: write javadoc
+   */
     public static PImage picker(BlockTypes type) throws MissingTextureException {
         switch(type) {
             case air:

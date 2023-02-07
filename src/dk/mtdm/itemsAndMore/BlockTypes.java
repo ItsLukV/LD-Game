@@ -1,5 +1,7 @@
 package dk.mtdm.itemsAndMore;
-//TODO: add comments
+  /**
+ * TODO: write javadoc
+ */
 public enum BlockTypes {
   air,
   grass,
