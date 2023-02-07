@@ -12,8 +12,8 @@ public class World {
   private static Chunk[] world;
   private static int chunkAxisOffset; // the amount of chunks that are on the left of the global 0, this is needed so that chunk ID can be allowed negative and all chunks can be saved in an array 
   // private static WorldGenThread[] worldGeneraters; 
-  final private static int CHUNK_WIDTH = 6;
-  private static int HEIGHT = 50;
+  final private static int CHUNK_WIDTH = 32;
+  private static int HEIGHT = 100;
   private static int seed = 3;
   private static int GeneratorHeight = HEIGHT/3;
   private static float BlockStone = 0.5f;
@@ -119,14 +119,16 @@ public class World {
    */
   public static void show(PGraphics g,int startChunkID, int endChunkID){
     for (int i = startChunkID; i <= endChunkID; i++) {
-    try {
+    if(i == 2){
+      int j = 1+1;
+    }
+      try {
       World.world[i+chunkAxisOffset].show(g);
     } catch (IndexOutOfBoundsException e) {
       generateWorld(i, 1);
       World.world[i+chunkAxisOffset].show(g);
     }catch (NullPointerException e){
       System.out.println("nullpointer chunk: " + i);
-      generateWorld(i, 1);
       world[i+chunkAxisOffset] = new Chunk(i, CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
       world[i+chunkAxisOffset].generate();
     }
@@ -143,18 +145,7 @@ public class World {
     int end = (int) Math.floor(endGlobal/World.CHUNK_WIDTH);
     show(g, start, end);
   }
-  /**
-   * @param ID the ID of the checked chunk
-   * @return whether this chunk is in range
-   */
-  public static boolean chunkOutOfRange(int ID){
-    try {
-      World.world[ID+chunkAxisOffset] = World.world[ID+chunkAxisOffset];
-      return true;
-    } catch (Exception e) {
-      return false;
-    }
-  }
+  // getters and setters
   public static int get_CHUNK_WIDTH(){
     return World.CHUNK_WIDTH;
   }

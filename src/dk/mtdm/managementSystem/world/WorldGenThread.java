@@ -90,7 +90,7 @@ public class WorldGenThread extends Thread{
       p.noiseSeed(seed);
     }
     
-    float tempNoise =p.noise(x+(ID*World.get_CHUNK_WIDTH()), y);
+    float tempNoise = noisePoint(x+(ID*World.get_CHUNK_WIDTH()), y,p);
     tempNoise += 1f/Math.ceil(1+(float)y/2f);
     if(y > maxcreation) tempNoise -= (1-1f/(1+y-maxcreation))/3f;
     return tempNoise;
@@ -110,8 +110,8 @@ public class WorldGenThread extends Thread{
     //outside noise
     float[][] outNoise = new float[2][World.get_HEIGHT()];
     for (int Y = 0; Y < World.get_HEIGHT(); Y++) {
-      outNoise[0][Y] = p.noise(ID*World.get_CHUNK_WIDTH()-1, Y);
-      outNoise[1][Y] = p.noise((ID+1)*World.get_CHUNK_WIDTH(), Y);
+      outNoise[0][Y] = noisePoint(ID*World.get_CHUNK_WIDTH()-1, Y,p);
+      outNoise[1][Y] = noisePoint((ID+1)*World.get_CHUNK_WIDTH(), Y,p);
     }
 
     
@@ -166,5 +166,9 @@ public class WorldGenThread extends Thread{
     }
     parent.setBlock(new LDVector(x, y), BlockTypes.dirt);
     return;
+  }
+  private float noisePoint(int globalX, int globalY, PApplet p){
+    final float discrep = 16f;
+    return p.noise(((float) globalX)/discrep, ((float) globalY)/discrep);
   }
 }

@@ -4,11 +4,10 @@ import processing.core.PGraphics;
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
-import dk.mtdm.managementSystem.world.World;
 public abstract class Block {
     private LDVector pos;
-    private int width = 8;
-    private int height = 8;
+    private static int width = 8;
+    private static int height = 8;
     private BlockTypes id;
     protected boolean soild;
     protected boolean breakability;
@@ -39,7 +38,7 @@ public abstract class Block {
      */
     public void show(PGraphics g) {
         try {
-            g.image(BlockTextures.picker(id), pos.getX()*width, World.get_HEIGHT()*height-pos.getY()*height, width, height);
+            g.image(BlockTextures.picker(id), pos.getX()*width,/* World.get_HEIGHT()*/height-pos.getY()*height, width, height);
         } catch (MissingTextureException e) {
             e.printStackTrace();
         }
@@ -76,16 +75,16 @@ public abstract class Block {
     public void setPos(LDVector vector) {
         this.pos = vector;
     }
-    public int getWidth() {
+    public static int getWidth() {
         return width;
     }
-    public void setWidth(int width) {
-        this.width = width;
+    public static void setWidth(int width) {
+        Block.width = width;
     }
-    public int getHeight() {
+    public static int getHeight() {
         return height;
     }
-    public void setHeight(int height) {
-        this.height = height;
+    public static void setHeight(int height) {
+        Block.height = height;
     }
 }

@@ -59,8 +59,8 @@ public class Chunk {
     if (t == null) {
       t = new WorldGenThread(ID, seed, creationHeight, this);
     }
-    t.ChooseBlock(t.singleBlockNoise(null,x,y),x,y);
-    System.out.print("failed get block: "+ ID + ";(" + x +","+ y + ")\t");
+    // t.ChooseBlock(t.singleBlockNoise(null,x,y),x,y);
+    // System.out.print("\tfailed get block: "+ ID + ";(" + x +","+ y + ")");
     LDVector tempBlockVector = new LDVector(x, y);
     tempBlockVector.add(ChunkVector);
     return BlockPicker.getAir(BlockTypes.air, tempBlockVector);

@@ -1,5 +1,6 @@
 package dk.mtdm;
 
+import dk.mtdm.itemsAndMore.Block;
 import dk.mtdm.itemsAndMore.BlockTextures;
 import dk.mtdm.managementSystem.Entitys.Player;
 import dk.mtdm.managementSystem.world.World;
@@ -15,7 +16,7 @@ public class Sketch extends PApplet {
    */
   @Override
   public void settings() {
-    size(1000, 1000);
+    size(800, 450);
   }
   /**
    * TODO: write javadoc
@@ -27,7 +28,7 @@ public class Sketch extends PApplet {
 
     player = new Player(new LDVector(0, 100));
     
-    World.setup(3,World.get_HEIGHT(), 20);
+    World.setup(3,World.get_HEIGHT(), 13000,20);
   }
   /**
    * TODO: write javadoc
@@ -35,9 +36,12 @@ public class Sketch extends PApplet {
   @Override
   public void draw() {
     background(0,0,255);
-    World.show(g,0,10);
+    push();
+    translate(-player.getPos().getX()-Player.width/2+width/2, -player.getPos().getY()-Player.height/2+height/2);
+    World.show(g,(int) (player.getPos().getX()/World.get_CHUNK_WIDTH()/Block.getWidth())-2,(int) (player.getPos().getX()/World.get_CHUNK_WIDTH()/Block.getWidth())+1);
     player.tick();
     player.show(g);
+    pop();
   }
   /**
    * TODO: write javadoc
