@@ -92,7 +92,7 @@ public class WorldGenThread extends Thread{
     
     float tempNoise =p.noise(x+(ID*World.get_CHUNK_WIDTH()), y);
     tempNoise += 1f/Math.ceil(1+(float)y/2f);
-    if(y > maxcreation) tempNoise -= (1-1f/(1+y-maxcreation))/5f;
+    if(y > maxcreation) tempNoise -= (1-1f/(1+y-maxcreation))/3f;
     return tempNoise;
   }
   /**
@@ -101,6 +101,10 @@ public class WorldGenThread extends Thread{
    * @param y the relative y coordinate of the block
    */
   private void ChooseBlock(int x, int y) {    
+    ChooseBlock(noise[x][y],x, y);
+  }
+
+  public synchronized void ChooseBlock(float noise, int x, int y){
     PApplet p = new PApplet();
     p.noiseSeed(seed);
     //outside noise
@@ -111,24 +115,24 @@ public class WorldGenThread extends Thread{
     }
 
     
-    if(noise[x][y] < World.getBlockAir()) {
+    if(noise < World.getBlockAir()) {
       parent.setBlock(new LDVector(x, y), BlockTypes.air);
       return;
     }
-    if(noise[x][y] > World.getBlockStone()*3) {
+    if(noise > World.getBlockStone()*3) {
       parent.setBlock(new LDVector(x, y), BlockTypes.bedrock);
       return;
     }
-    if(noise[x][y] > World.getBlockStone()) {
+    if(noise > World.getBlockStone()) {
       parent.setBlock(new LDVector(x, y), BlockTypes.stone);
       return;
     }
     
     if(x == 0){
       try {
-        if (noise[x][y-1] < World.getBlockAir() ||
-            noise[x][y+1] < World.getBlockAir() ||
-            noise[x+1][y] < World.getBlockAir() ||
+        if (this.noise[x][y-1] < World.getBlockAir() ||
+            this.noise[x][y+1] < World.getBlockAir() ||
+            this.noise[x+1][y] < World.getBlockAir() ||
             outNoise[0][y]< World.getBlockAir()){
               parent.setBlock(new LDVector(x, y), BlockTypes.grass);
               return;
@@ -139,9 +143,9 @@ public class WorldGenThread extends Thread{
     }
     if(x == World.get_CHUNK_WIDTH()-1){
       try {
-        if (noise[x][y-1] < World.getBlockAir() ||
-            noise[x][y-1] < World.getBlockAir() ||
-            noise[x-1][y] < World.getBlockAir() ||
+        if (this.noise[x][y-1] < World.getBlockAir() ||
+            this.noise[x][y-1] < World.getBlockAir() ||
+            this.noise[x-1][y] < World.getBlockAir() ||
             outNoise[1][y]< World.getBlockAir()){
               
               parent.setBlock(new LDVector(x, y), BlockTypes.grass);
@@ -153,7 +157,7 @@ public class WorldGenThread extends Thread{
       }
     }
     try {
-      if(noise[x][y-1] < World.getBlockAir() || noise[x][y-1] < World.getBlockAir() || noise[x-1][y] < World.getBlockAir() || noise[x+1][y]< World.getBlockAir()){
+      if(this.noise[x][y-1] < World.getBlockAir() || this.noise[x][y-1] < World.getBlockAir() || this.noise[x-1][y] < World.getBlockAir() || this.noise[x+1][y]< World.getBlockAir()){
         parent.setBlock(new LDVector(x, y), BlockTypes.grass);
         return;
       }

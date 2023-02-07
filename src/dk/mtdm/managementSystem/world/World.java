@@ -119,8 +119,17 @@ public class World {
    */
   public static void show(PGraphics g,int startChunkID, int endChunkID){
     for (int i = startChunkID; i <= endChunkID; i++) {
-      
+    try {
       World.world[i+chunkAxisOffset].show(g);
+    } catch (IndexOutOfBoundsException e) {
+      generateWorld(i, 1);
+      World.world[i+chunkAxisOffset].show(g);
+    }catch (NullPointerException e){
+      System.out.println("nullpointer chunk: " + i);
+      generateWorld(i, 1);
+      world[i+chunkAxisOffset] = new Chunk(i, CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
+      world[i+chunkAxisOffset].generate();
+    }
     }
   }
   /**

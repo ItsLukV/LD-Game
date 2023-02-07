@@ -53,20 +53,17 @@ public class Chunk {
    * @return the block stored at the given location
    */
   public Block getBlock(int x, int y){
-    if(containedBlocks[x][y] == null){
-      if (t == null) {
-        t = new WorldGenThread(ID, seed, creationHeight, this);
-      }
-      t.singleBlockNoise(null,x,y);
-      try {
-        System.out.println("failed get block");
-        Thread.sleep(20);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      }
-      return getBlock(x, y);
-    }
+    if(containedBlocks[x][y] != null)
     return containedBlocks[x][y];
+    
+    if (t == null) {
+      t = new WorldGenThread(ID, seed, creationHeight, this);
+    }
+    t.ChooseBlock(t.singleBlockNoise(null,x,y),x,y);
+    System.out.print("failed get block: "+ ID + ";(" + x +","+ y + ")\t");
+    LDVector tempBlockVector = new LDVector(x, y);
+    tempBlockVector.add(ChunkVector);
+    return BlockPicker.getAir(BlockTypes.air, tempBlockVector);
   }
   /**
    * resets the chunk by restarting the worldGenThread
