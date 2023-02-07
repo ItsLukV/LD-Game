@@ -1,5 +1,5 @@
 package dk.mtdm.itemsAndMore;
-//TODO: add comments
+
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.itemsAndMore.Blocks.AirBlock;
@@ -7,8 +7,6 @@ import dk.mtdm.itemsAndMore.Blocks.BedrockBlock;
 import dk.mtdm.itemsAndMore.Blocks.DirtBlock;
 import dk.mtdm.itemsAndMore.Blocks.GrassBlock;
 import dk.mtdm.itemsAndMore.Blocks.StoneBlock;
-import dk.mtdm.itemsAndMore.items.ItemTypes;
-import processing.core.PGraphics;
 
 public class BlockPicker {
 	/**
@@ -20,7 +18,6 @@ public class BlockPicker {
 	static public Block picker(BlockTypes type, int x, int y) throws MissingBlockTypeException {
 		return BlockPicker.picker(type, new LDVector(x, y));
 	}
-
 	/**
 	 * Returns a air block
 	 * 
@@ -37,7 +34,6 @@ public class BlockPicker {
 		// block.setItemDrop(null);
 		// return block;
 	}
-
 	/**
 	 * Returns a grass block
 	 * 
@@ -54,7 +50,6 @@ public class BlockPicker {
 		// block.setItemDrop(ItemTypes.dirt);
 		// return block;
 	}
-
 	/**
 	 * Returns a dirt block
 	 * 
@@ -71,7 +66,6 @@ public class BlockPicker {
 		// block.setItemDrop(ItemTypes.dirt);
 		// return block;
 	}
-
 	/**
 	 * Returns a stone block
 	 * 
@@ -88,7 +82,6 @@ public class BlockPicker {
 		// block.setItemDrop(ItemTypes.stone);
 		// return block;
 	}
-
 	/**
 	 * Returns a bedrock block
 	 * 
@@ -105,7 +98,6 @@ public class BlockPicker {
 		// block.setItemDrop(null);
 		// return block;
 	}
-
 	/**
 	 * Creates a block from BlockTypes
 	 * 

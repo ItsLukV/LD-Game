@@ -1,5 +1,5 @@
 package dk.mtdm.managementSystem.Entitys;
-//TODO: add comments
+
 import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.Block;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;
@@ -17,25 +17,31 @@ public class Player extends Entity {
   private float airRes = 0.8f;
   private InventoryManager inventory = new InventoryManager();
 
+  /**
+ * TODO: write javadoc
+ */
   public Player(LDVector pos) {
     this.pos = pos;
     inventory.giveItem();
   }
-
+  /**
+   * TODO: write javadoc
+   */
   @Override
   public void show(PGraphics g) {
     g.image(MiscTextures.getPlayerTexture(), pos.getX(), pos.getY());
   }
-
+  /**
+   * TODO: write javadoc
+   */
   @Override
   public void tick() {
     calcSpeed();
   }
-
   /**
-   * Checks if player collides with a block
+   * Checks if player collision
    * 
-   * @param block
+   * @param block the block the player will check collision against
    * @return
    */
   public boolean collisionWith(Block block) {
@@ -49,21 +55,27 @@ public class Player extends Entity {
     }
     return false;
   }
-
+  /**
+   * TODO: write javadoc
+   */
   public void keyPressed(boolean left , boolean right, boolean up, boolean down) {
     if (left) this.left = true;
     if (right) this.right = true;
     if (up) this.up = true;
     if (down) this.down = true;
   }
-
+  /**
+   * TODO: write javadoc
+   */
   public void keyReleased(boolean left , boolean right, boolean up, boolean down) {
     if (left) this.left = false;
     if (right) this.right = false;
     if (up) this.up = false;
     if (down) this.down = false;
   }
-
+  /**
+   * TODO: write javadoc
+   */
   private void calcSpeed() {
     if (left) speed.add(new LDVector(-moveSpeed, 0));
     if (right) speed.add(new LDVector(moveSpeed, 0));

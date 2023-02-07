@@ -6,7 +6,9 @@ import dk.mtdm.itemsAndMore.BlockTypes;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
 
 public class GrassBlock extends Block{
-
+  /**
+ * TODO: write javadoc
+ */
   public GrassBlock(LDVector pos) {
     super(pos, BlockTypes.grass, true, true, true, ItemTypes.grass);
   }
