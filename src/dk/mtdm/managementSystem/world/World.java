@@ -9,7 +9,10 @@ import processing.core.PGraphics;
 //remember: relative location = chunk
 */
 public class World {
-  private static Chunk[] world;
+  // private static Chunk[] world;
+  private static Chunk[] worldPositive = new Chunk[0];
+  private static Chunk[] worldNegative = new Chunk[0];
+  private static Chunk worldCentral = null;
   private static int chunkAxisOffset; // the amount of chunks that are on the left of the global 0, this is needed so that chunk ID can be allowed negative and all chunks can be saved in an array 
   // private static WorldGenThread[] worldGeneraters; 
   final private static int CHUNK_WIDTH = 32;
@@ -55,10 +58,10 @@ public class World {
    */
   public static Block getBlock(LDVector location){
     
-    int chunkID = (location.getX() - location.getX() % CHUNK_WIDTH) / CHUNK_WIDTH - chunkAxisOffset;
+    int chunkID = (location.getX() - location.getX() % CHUNK_WIDTH) / CHUNK_WIDTH;
     int relativeX = location.getX()%CHUNK_WIDTH;
     
-    return world[chunkID].getBlock(new LDVector(relativeX, location.getY()));
+    return getChunk(chunkID).getBlock(new LDVector(relativeX, location.getY()));
   }
   /**
    * @return a random int between 'Integer.MAX_VALUE' and 'Integer.MIN_VALUE'
@@ -74,42 +77,45 @@ public class World {
    * @param generationWidth the number of chunks to generate
    */
   private static void generateWorld(int GenerationStart,int generationWidth){
-    if(world == null){
-      world = new Chunk[0];
-    }
-    boolean change = false;
-    
-    int frontChange = 0;
-    if(GenerationStart < -World.chunkAxisOffset){
-      frontChange = -GenerationStart - World.chunkAxisOffset;
-      change = true;
-    }
-    int backChange = 0;
-    if(GenerationStart + generationWidth > World.world.length-World.chunkAxisOffset){
-      backChange = World.world.length-World.chunkAxisOffset - GenerationStart + generationWidth;
-      change = true;
-    }
-    if(change){
-      int newChunkOffset = World.chunkAxisOffset;
-      if(frontChange > 0){
-        newChunkOffset = World.chunkAxisOffset + frontChange;
-      }
-      Chunk[] newChunks = new Chunk[World.chunkAxisOffset + frontChange + World.world.length + backChange];
-      for (int chunkPlace = -(World.chunkAxisOffset + frontChange); chunkPlace < World.world.length + backChange; chunkPlace++) {
-        try {
-          newChunks[chunkPlace-newChunkOffset] = World.world[chunkPlace+World.chunkAxisOffset];
-        } catch (Exception e) {
-          newChunks[chunkPlace+newChunkOffset] = new Chunk(chunkPlace, World.CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
+    if(GenerationStart >= 0){
+      GenerationStart = GenerationStart-1;
+      if (GenerationStart+generationWidth > worldPositive.length){
+        Chunk[] tempWorldPositive = new Chunk[GenerationStart+generationWidth];
+        
+        //adds the old chunks
+        for (int i = 0; i < worldPositive.length; i++) {
+          if(i < GenerationStart && i > GenerationStart+generationWidth){
+            tempWorldPositive[i] = worldPositive[i];
+          }// i < GenerationStart && i > GenerationStart+generationWidth end
         }
-      }
-      World.chunkAxisOffset = newChunkOffset;
-      World.world = newChunks;
-    }
-    
-    for (int i = GenerationStart; i < Math.abs(generationWidth); i++){
-      World.world[i+chunkAxisOffset] = new Chunk(i, CHUNK_WIDTH, HEIGHT, World.seed,GeneratorHeight);
-      World.world[i+chunkAxisOffset].generate();
-    }
+        
+        //adds teh new chunks
+        for (int i = GenerationStart; i < GenerationStart+generationWidth; i++) {
+          tempWorldPositive[i] = new Chunk(i, CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
+          tempWorldPositive[i].generate();
+        }
+        worldPositive = tempWorldPositive;
+      }//GenerationStart+generationWidth > worldPositive.length end
+    }else{//GenerationStart >= 0 end
+      GenerationStart = -GenerationStart + 1;
+      if (GenerationStart+generationWidth > worldNegative.length){
+        Chunk[] tempWorldNegative = new Chunk[GenerationStart+generationWidth];
+        
+        //adds the old chunks
+        for (int i = 0; i < worldNegative.length; i++) {
+          if(i < GenerationStart && i > GenerationStart+generationWidth){
+            tempWorldNegative[i] = worldNegative[i];
+          }// i < GenerationStart && i > GenerationStart+generationWidth end
+        }
+        
+        //adds teh new chunks
+        for (int i = GenerationStart; i < GenerationStart+generationWidth; i++) {
+          tempWorldNegative[i] = new Chunk(i, CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
+          tempWorldNegative[i].generate();
+        }
+        worldNegative = tempWorldNegative;
+      }//GenerationStart+generationWidth > worldPositive.length end
+    }//GenerationStart < 0 end
   }
   /**
    * draws entire chunks to the screen
@@ -119,18 +125,15 @@ public class World {
    */
   public static void show(PGraphics g,int startChunkID, int endChunkID){
     for (int i = startChunkID; i <= endChunkID; i++) {
-    if(i == 2){
-      int j = 1+1;
-    }
       try {
-      World.world[i+chunkAxisOffset].show(g);
+      getChunk(i).show(g);
     } catch (IndexOutOfBoundsException e) {
       generateWorld(i, 1);
-      World.world[i+chunkAxisOffset].show(g);
+      getChunk(i).show(g);
     }catch (NullPointerException e){
       System.out.println("nullpointer chunk: " + i);
-      world[i+chunkAxisOffset] = new Chunk(i, CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
-      world[i+chunkAxisOffset].generate();
+      // world[i+chunkAxisOffset] = new Chunk(i, CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
+      // world[i+chunkAxisOffset].generate();
     }
     }
   }
@@ -157,5 +160,29 @@ public class World {
   }
   public static float getBlockAir() {
     return BlockAir;
+  }
+
+  private static Chunk getChunk(int ID) {
+    Chunk out; 
+    
+    if(ID < 0)
+      out = worldNegative[-ID+1];
+    else if(ID > 0)
+      out = worldPositive[ID-1];
+    else 
+      out = worldCentral;
+
+    if(out != null) return out;
+    
+    out = new Chunk(ID, CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
+    
+    if (ID > 0)
+      worldPositive[ID] = out;
+    else if (ID < 0)
+      worldNegative[-ID] = out;
+    else
+      worldCentral = out;
+    
+    return out;
   }
 }
