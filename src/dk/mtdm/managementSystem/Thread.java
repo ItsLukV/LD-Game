@@ -12,6 +12,7 @@ public abstract class Thread extends java.lang.Thread{
     super.run();
     Run();
     atWork = false;
+    return;
   }
-  public abstract void Run();
+  protected abstract void Run();
 }

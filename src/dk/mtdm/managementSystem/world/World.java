@@ -2,6 +2,7 @@ package dk.mtdm.managementSystem.world;
 
 import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.Block;
+import lib.NoiseGenerator;
 import processing.core.PGraphics;
 /*
 //remember: canvas location = processing
@@ -13,7 +14,7 @@ public class World {
   private static Chunk[] worldPositive = new Chunk[0];
   private static Chunk[] worldNegative = new Chunk[0];
   private static Chunk worldCentral = null;
-  private static int chunkAxisOffset; // the amount of chunks that are on the left of the global 0, this is needed so that chunk ID can be allowed negative and all chunks can be saved in an array 
+  // private static int chunkAxisOffset; // the amount of chunks that are on the left of the global 0, this is needed so that chunk ID can be allowed negative and all chunks can be saved in an array 
   // private static WorldGenThread[] worldGeneraters; 
   final private static int CHUNK_WIDTH = 32;
   private static int HEIGHT = 100;
@@ -48,6 +49,7 @@ public class World {
     HEIGHT = height;
     World.seed = seed;
     World.GeneratorHeight = maxGeneration;
+    NoiseGenerator.setup(seed);
     generateWorld(-width/2, width);
   }
   /**
@@ -124,6 +126,7 @@ public class World {
    * @param endChunkID the location of the last chunk to be draw
    */
   public static void show(PGraphics g,int startChunkID, int endChunkID){
+    System.out.println(startChunkID + " " + endChunkID);
     for (int i = startChunkID; i <= endChunkID; i++) {
       try {
       getChunk(i).show(g);
@@ -175,6 +178,7 @@ public class World {
     if(out != null) return out;
     
     out = new Chunk(ID, CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
+    out.generate();
     
     if (ID > 0)
       worldPositive[ID] = out;
