@@ -47,9 +47,9 @@ public class Player extends Entity {
   public boolean collisionWith(Block block) {
     LDVector blockPos = block.getPos();
     if (pos.getX() + width >= blockPos.getX() && // player right edge past block left
-        pos.getX() <= blockPos.getX() + block.getWidth() && // player left edge past block right
+        pos.getX() <= blockPos.getX() + Block.getWidth() && // player left edge past block right
         pos.getY() + height >= blockPos.getY() && // player top edge past block bottom
-        pos.getY() <= blockPos.getY() + block.getHeight() // player bottom edge past block top
+        pos.getY() <= blockPos.getY() + Block.getHeight() // player bottom edge past block top
     ) {
       return true;
     }
