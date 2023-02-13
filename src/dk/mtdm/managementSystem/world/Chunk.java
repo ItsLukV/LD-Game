@@ -9,7 +9,6 @@ import processing.core.PGraphics;
 public class Chunk {
   final private int ID;
   private Block[][] containedBlocks;
-  final private int seed;
   final private int creationHeight;
   private LDVector ChunkVector;
   private int chunkError = 0;
@@ -23,10 +22,9 @@ public class Chunk {
    * @param seed the seed used to generate the world
    * @param maxCreation this controlls where the generation bias function changes
    */
-  public Chunk(int ID, int CHUNK_WIDTH, int CHUNK_HEIGHT, int seed, int maxCreation){
+  public Chunk(int ID, int CHUNK_WIDTH, int CHUNK_HEIGHT, int maxCreation){
     this.ID=ID;
     this.containedBlocks = new Block [CHUNK_WIDTH][CHUNK_HEIGHT];
-    this.seed = seed;
     this.creationHeight = maxCreation;
     this.ChunkVector = new LDVector(this.ID*CHUNK_WIDTH, 0);
   }
@@ -58,7 +56,7 @@ public class Chunk {
     return containedBlocks[x][y];
     
     if (t == null) {
-      t = new WorldGenThread(ID, seed, creationHeight, this);
+      t = new WorldGenThread(ID, creationHeight, this);
     }
     if(!t.atWork){
       if(chunkError > 500){
@@ -78,13 +76,10 @@ public class Chunk {
    * resets the chunk by restarting the worldGenThread
    */
   public void generate(){
-    if(t == null) t = new WorldGenThread(ID,seed,creationHeight,this);
+    if(t == null) t = new WorldGenThread(ID,creationHeight,this);
         if(!t.atWork){
       try {
-        System.out.println(t.atWork);
-        if(!t.atWork){
           t.start();
-        }
       } catch (Exception e) {
         t=null;
         generate();

@@ -4,18 +4,18 @@ package dk.mtdm.managementSystem.world;
 import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.BlockTypes;
 import dk.mtdm.managementSystem.Thread;
-import lib.NoiseGenerator;
 import processing.core.PApplet;
 /**
  * @author @dendersen
  */
 public class WorldGenThread extends Thread{
   
-  int seed;
-  int ID;
-  float[][] noise;
-  int maxcreation;
-  Chunk parent;
+  private int seed;
+  private int ID;
+  private float[][] noise;
+  private int maxcreation;
+  private Chunk parent;
+  private static PApplet p = new PApplet();
 
 
   /**
@@ -25,8 +25,7 @@ public class WorldGenThread extends Thread{
  * @param creationHeight this controlls where the generation bias function changes
  * @param attachedChunk the chunk all the generated blocks should be saved to
  */
-  public WorldGenThread(int ID, int seed,int creationHeight,Chunk attachedChunk){
-    this.seed = seed; 
+  public WorldGenThread(int ID,int creationHeight,Chunk attachedChunk){
     this.ID = ID;
     this.maxcreation = creationHeight;
     this.noise = new float[World.get_CHUNK_WIDTH()][World.get_HEIGHT()];
@@ -164,7 +163,8 @@ public class WorldGenThread extends Thread{
     return;
   }
   private float noisePoint(int globalX, int globalY){
-    // final double discrep = 16;
-    return (float) NoiseGenerator.noise(globalX, globalY);
+    final float discrep = 16f;
+    p.noiseSeed(seed);
+    return PerlinNoise.getNoise((float)globalX/discrep, (float)globalY/discrep);
   }
 }

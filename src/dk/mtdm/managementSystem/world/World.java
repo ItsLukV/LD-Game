@@ -2,7 +2,6 @@ package dk.mtdm.managementSystem.world;
 
 import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.Block;
-import lib.NoiseGenerator;
 import processing.core.PGraphics;
 /*
 //remember: canvas location = processing
@@ -18,7 +17,8 @@ public class World {
   // private static WorldGenThread[] worldGeneraters; 
   final private static int CHUNK_WIDTH = 32;
   private static int HEIGHT = 100;
-  private static int seed = 3;
+  private static int seed1 = 3;
+  private static int seed2 = 30;
   private static int GeneratorHeight = HEIGHT/3;
   private static float BlockStone = 0.5f;
   private static float BlockAir = 0.3f;
@@ -32,7 +32,7 @@ public class World {
    *  THIS LIMIT <b>CAN</b> BE EXCEDED DURING WORLD GEN AND SHOULD <b>NOT</b> BE TAKEN AS AN ABSOLUTE MAX. <p>
    */
   public static void setup(int width,int height, int maxGeneration){
-    setup(width, height, randomSeed(),maxGeneration);
+    setup(width, height, randomSeed(),randomSeed(),maxGeneration);
   }
     /**
    * starts the world without a set seed
@@ -45,11 +45,12 @@ public class World {
    * @param maxGeneration determines how high the expected maximum build height for terain generation will be.<p>
    *  THIS LIMIT <b>CAN</b> BE EXCEDED DURING WORLD GEN AND SHOULD <b>NOT</b> BE TAKEN AS AN ABSOLUTE MAX. <p>
    */
-  public static void setup(int width,int height,int seed, int maxGeneration){
+  public static void setup(int width,int height,int seed1, int seed2, int maxGeneration){
     HEIGHT = height;
-    World.seed = seed;
+    World.seed1 = seed1;
+    World.seed2 = seed2;
     World.GeneratorHeight = maxGeneration;
-    NoiseGenerator.setup(seed);
+    PerlinNoise.start(World.seed1,World.seed2);
     generateWorld(-width/2, width);
   }
   /**
@@ -93,7 +94,7 @@ public class World {
         
         //adds teh new chunks
         for (int i = GenerationStart; i < GenerationStart+generationWidth; i++) {
-          tempWorldPositive[i] = new Chunk(i, CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
+          tempWorldPositive[i] = new Chunk(i, CHUNK_WIDTH, HEIGHT, GeneratorHeight);
           tempWorldPositive[i].generate();
         }
         worldPositive = tempWorldPositive;
@@ -112,7 +113,7 @@ public class World {
         
         //adds teh new chunks
         for (int i = GenerationStart; i < GenerationStart+generationWidth; i++) {
-          tempWorldNegative[i] = new Chunk(i, CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
+          tempWorldNegative[i] = new Chunk(i, CHUNK_WIDTH, HEIGHT, GeneratorHeight);
           tempWorldNegative[i].generate();
         }
         worldNegative = tempWorldNegative;
@@ -177,7 +178,7 @@ public class World {
 
     if(out != null) return out;
     
-    out = new Chunk(ID, CHUNK_WIDTH, HEIGHT, seed, GeneratorHeight);
+    out = new Chunk(ID, CHUNK_WIDTH, HEIGHT, GeneratorHeight);
     out.generate();
     
     if (ID > 0)
