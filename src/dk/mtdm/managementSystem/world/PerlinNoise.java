@@ -32,7 +32,4 @@ public class PerlinNoise {
     }
     return  rollover/seed;
   }
-  public static LDVector generateVector(float Radians){
-    return new LDVector((float)Math.cos(Radians), (float)Math.sin(seed));
-  }
 }
