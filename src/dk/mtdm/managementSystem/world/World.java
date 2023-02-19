@@ -165,7 +165,9 @@ public class World {
   public static float getBlockAir() {
     return BlockAir;
   }
-
+  public static int getGeneratorHeight(){
+    return GeneratorHeight;
+  }
   private static Chunk getChunk(int ID) {
     Chunk out; 
     
@@ -189,5 +191,8 @@ public class World {
       worldCentral = out;
     
     return out;
+  }
+  public static Chunk standardChunk(int ID){
+    return new Chunk(ID, World.get_CHUNK_WIDTH(), World.get_HEIGHT(), World.getGeneratorHeight());
   }
 }

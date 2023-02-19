@@ -79,7 +79,7 @@ public class Chunk {
     if(t == null) t = new WorldGenThread(ID,creationHeight,this);
         if(!t.atWork){
       try {
-          t.start();
+        t.start();
       } catch (Exception e) {
         t=null;
         generate();
@@ -123,7 +123,7 @@ public class Chunk {
     g.push();
     g.noFill();
     g.stroke(255,0,0);
-    g.rect(ID*World.get_CHUNK_WIDTH()*Block.getWidth(),0,World.get_CHUNK_WIDTH()*Block.getWidth(),World.get_HEIGHT()*Block.getWidth());
+    g.rect(ID*World.get_CHUNK_WIDTH()*Block.getWidth(),-g.height,World.get_CHUNK_WIDTH()*Block.getWidth(),World.get_HEIGHT()*Block.getWidth());
     g.pop();
   } 
 }
