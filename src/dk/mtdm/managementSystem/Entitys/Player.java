@@ -30,7 +30,6 @@ public class Player extends Entity {
   @Override
   public void show(PGraphics g) {
     g.image(MiscTextures.getPlayerTexture(), pos.getX(), pos.getY());
-    System.out.println(pos.getX() + " , " + pos.getY());
   }
   /**
    * TODO: write javadoc
