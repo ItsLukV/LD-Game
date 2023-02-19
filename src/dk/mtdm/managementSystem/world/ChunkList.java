@@ -2,26 +2,26 @@ package dk.mtdm.managementSystem.world;
 
 public class ChunkList {
   private static chunkContainer chunks;
-  public void setup(Chunk firstChunk){
-    chunks = new chunkContainer(firstChunk);
+  public static void setup(Chunk firstChunk){
+    ChunkList.chunks = new chunkContainer(firstChunk);
   }
-  public Chunk getChunk(int ID){
+  public static Chunk getChunk(int ID){
     return chunks.get(ID);
   }
-  public void generate(int ID){
+  public static void generate(int ID){
     chunks.generate(ID);
   }
-  public void extendRight(Chunk chunk){
+  public static void extendRight(Chunk chunk){
     chunks.extendAfter(chunk);
   }
-  public void extendLeft(Chunk chunk){
+  public static void extendLeft(Chunk chunk){
     chunks.extendBefore(chunk);
   }
-  public void replace(int ID,Chunk chunk){
+  public static void replace(int ID,Chunk chunk){
     chunks.replace(ID, chunk);
   }
 
-  class chunkContainer {
+  static class chunkContainer {
     private Chunk containedChunk;
     private chunkContainer after; //higher ID
     private chunkContainer before; //lower ID
