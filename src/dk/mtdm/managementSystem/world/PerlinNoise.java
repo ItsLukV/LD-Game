@@ -1,7 +1,5 @@
 package dk.mtdm.managementSystem.world;
 
-import dk.mtdm.LDVector;
-
 public class PerlinNoise {
   private  static int seed;
   private  static int seed2;
