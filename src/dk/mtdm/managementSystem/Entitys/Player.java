@@ -1,7 +1,7 @@
 package dk.mtdm.managementSystem.Entitys;
 
 import dk.mtdm.LDVector;
-import dk.mtdm.itemsAndMore.Block;
+import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PGraphics;

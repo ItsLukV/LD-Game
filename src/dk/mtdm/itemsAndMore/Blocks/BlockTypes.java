@@ -1,4 +1,4 @@
-package dk.mtdm.itemsAndMore;
+package dk.mtdm.itemsAndMore.Blocks;
   /**
  * TODO: write javadoc
  */

@@ -2,9 +2,9 @@ package dk.mtdm.managementSystem.world;
 
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingBlockTypeException;
-import dk.mtdm.itemsAndMore.Block;
-import dk.mtdm.itemsAndMore.BlockPicker;
-import dk.mtdm.itemsAndMore.BlockTypes;
+import dk.mtdm.itemsAndMore.Blocks.Block;
+import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
+import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import processing.core.PGraphics;
 public class Chunk {
   final private int ID;

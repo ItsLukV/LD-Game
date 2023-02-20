@@ -2,7 +2,7 @@ package dk.mtdm.managementSystem.world;
 
 
 import dk.mtdm.LDVector;
-import dk.mtdm.itemsAndMore.BlockTypes;
+import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.managementSystem.Thread;
 import processing.core.PApplet;
 /**

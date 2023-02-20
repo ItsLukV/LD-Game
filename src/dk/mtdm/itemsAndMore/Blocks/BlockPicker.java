@@ -1,12 +1,7 @@
-package dk.mtdm.itemsAndMore;
+package dk.mtdm.itemsAndMore.Blocks;
 
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingBlockTypeException;
-import dk.mtdm.itemsAndMore.Blocks.AirBlock;
-import dk.mtdm.itemsAndMore.Blocks.BedrockBlock;
-import dk.mtdm.itemsAndMore.Blocks.DirtBlock;
-import dk.mtdm.itemsAndMore.Blocks.GrassBlock;
-import dk.mtdm.itemsAndMore.Blocks.StoneBlock;
 
 public class BlockPicker {
 	/**

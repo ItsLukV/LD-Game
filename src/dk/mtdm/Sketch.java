@@ -1,7 +1,7 @@
 package dk.mtdm;
 
-import dk.mtdm.itemsAndMore.Block;
-import dk.mtdm.itemsAndMore.BlockTextures;
+import dk.mtdm.itemsAndMore.Blocks.Block;
+import dk.mtdm.itemsAndMore.Blocks.BlockTextures;
 import dk.mtdm.managementSystem.Entitys.Player;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.misc.miscTextures.MiscTextures;

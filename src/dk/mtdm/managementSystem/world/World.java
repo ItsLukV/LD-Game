@@ -1,7 +1,7 @@
 package dk.mtdm.managementSystem.world;
 
 import dk.mtdm.LDVector;
-import dk.mtdm.itemsAndMore.Block;
+import dk.mtdm.itemsAndMore.Blocks.Block;
 import processing.core.PGraphics;
 /*
 //remember: canvas location = processing

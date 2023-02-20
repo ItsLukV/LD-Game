@@ -1,4 +1,4 @@
-package dk.mtdm.itemsAndMore;
+package dk.mtdm.itemsAndMore.Blocks;
 
 import dk.mtdm.exceptions.MissingTextureException;
 import processing.core.PApplet;
