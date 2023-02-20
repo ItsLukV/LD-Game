@@ -4,6 +4,9 @@ import processing.core.PGraphics;
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
+/**
+ * @author @ItsLukV
+ */
 public abstract class Block {
     private LDVector pos;
     private static int width = 8;
