@@ -53,8 +53,8 @@ public class World {
     ChunkList.setup(standardChunk(0));
     ChunkList.generate(0);
     PerlinNoise.start(World.seed1,World.seed2);
-    generateToChunk(width/2);
-    generateToChunk(-width/2);
+    generateTowardsChunk(width/2);
+    generateTowardsChunk(-width/2);
   }
   /**
    * finds a block in the world from a global location
@@ -82,7 +82,7 @@ public class World {
    * @param GenerationStart the id of the first chunk in the list of chunks to be generated
    * @param generationWidth the number of chunks to generate
    */
-  private static void generateToChunk(int ID){
+  private static void generateTowardsChunk(int ID){
     ChunkList.generate(ID);
   }
   /**
