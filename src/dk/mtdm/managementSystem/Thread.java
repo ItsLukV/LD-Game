@@ -8,10 +8,12 @@ public abstract class Thread extends java.lang.Thread{
  */
   @Override
   public void run() {
+    if(atWork) return;
     atWork = true;
     super.run();
     Run();
     atWork = false;
+    return;
   }
-  public abstract void Run();
+  protected abstract void Run();
 }

@@ -9,9 +9,9 @@ import processing.core.PGraphics;
 public class Chunk {
   final private int ID;
   private Block[][] containedBlocks;
-  final private int seed;
   final private int creationHeight;
   private LDVector ChunkVector;
+  private int chunkError = 0;
   WorldGenThread t;
   
   /**
@@ -22,10 +22,9 @@ public class Chunk {
    * @param seed the seed used to generate the world
    * @param maxCreation this controlls where the generation bias function changes
    */
-  public Chunk(int ID, int CHUNK_WIDTH, int CHUNK_HEIGHT, int seed, int maxCreation){
+  public Chunk(int ID, int CHUNK_WIDTH, int CHUNK_HEIGHT, int maxCreation){
     this.ID=ID;
     this.containedBlocks = new Block [CHUNK_WIDTH][CHUNK_HEIGHT];
-    this.seed = seed;
     this.creationHeight = maxCreation;
     this.ChunkVector = new LDVector(this.ID*CHUNK_WIDTH, 0);
   }
@@ -41,7 +40,7 @@ public class Chunk {
    */
   public Block getBlock(LDVector relativeLocation){
     if(containedBlocks[relativeLocation.getX()][relativeLocation.getY()] == null){
-      t.singleBlockNoise(null,relativeLocation.getX(),relativeLocation.getY());
+      t.singleBlockNoise(relativeLocation.getX(),relativeLocation.getY());
       return getBlock(relativeLocation);
     }
     return containedBlocks[relativeLocation.getX()][relativeLocation.getY()];
@@ -57,10 +56,18 @@ public class Chunk {
     return containedBlocks[x][y];
     
     if (t == null) {
-      t = new WorldGenThread(ID, seed, creationHeight, this);
+      t = new WorldGenThread(ID, creationHeight, this);
     }
-    // t.ChooseBlock(t.singleBlockNoise(null,x,y),x,y);
-    // System.out.print("\tfailed get block: "+ ID + ";(" + x +","+ y + ")");
+    if(!t.atWork){
+      if(chunkError > 500){
+        generate();
+        chunkError = -1;
+      }
+      chunkError++;
+      // System.out.print("\tfailed get block: "+ ID + ";(" + x +","+ y + ")");
+    }
+    if(containedBlocks[x][y] != null)
+    return containedBlocks[x][y];
     LDVector tempBlockVector = new LDVector(x, y);
     tempBlockVector.add(ChunkVector);
     return BlockPicker.getAir(BlockTypes.air, tempBlockVector);
@@ -69,7 +76,7 @@ public class Chunk {
    * resets the chunk by restarting the worldGenThread
    */
   public void generate(){
-    if(t == null) t = new WorldGenThread(ID,seed,creationHeight,this);
+    if(t == null) t = new WorldGenThread(ID,creationHeight,this);
         if(!t.atWork){
       try {
         t.start();
@@ -109,5 +116,14 @@ public class Chunk {
         getBlock(x,y).show(g); 
       }
     }
+    border(g);
   }
+
+  public void border(PGraphics g){
+    g.push();
+    g.noFill();
+    g.stroke(255,0,0);
+    g.rect(ID*World.get_CHUNK_WIDTH()*Block.getWidth(),-g.height,World.get_CHUNK_WIDTH()*Block.getWidth(),World.get_HEIGHT()*Block.getWidth());
+    g.pop();
+  } 
 }

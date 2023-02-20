@@ -5,14 +5,17 @@ import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.BlockTypes;
 import dk.mtdm.managementSystem.Thread;
 import processing.core.PApplet;
-
+/**
+ * @author @dendersen
+ */
 public class WorldGenThread extends Thread{
   
-  int seed;
-  int ID;
-  float[][] noise;
-  int maxcreation;
-  Chunk parent;
+  private int seed;
+  private int ID;
+  private float[][] noise;
+  private int maxcreation;
+  private Chunk parent;
+  private static PApplet p = new PApplet();
 
 
   /**
@@ -22,8 +25,7 @@ public class WorldGenThread extends Thread{
  * @param creationHeight this controlls where the generation bias function changes
  * @param attachedChunk the chunk all the generated blocks should be saved to
  */
-  public WorldGenThread(int ID, int seed,int creationHeight,Chunk attachedChunk){
-    this.seed = seed; 
+  public WorldGenThread(int ID,int creationHeight,Chunk attachedChunk){
     this.ID = ID;
     this.maxcreation = creationHeight;
     this.noise = new float[World.get_CHUNK_WIDTH()][World.get_HEIGHT()];
@@ -42,7 +44,7 @@ public class WorldGenThread extends Thread{
    * starts the world generator
    */
   @Override
-  public void Run() {
+  protected void Run() {
     worldGenerator();
   }
   /**
@@ -67,13 +69,11 @@ public class WorldGenThread extends Thread{
    * generates the noise for all  coordinates in the chunk
    */
   public void noiseGenerator(){
-    PApplet p = new PApplet();
-    p.noiseSeed(seed);
     
     //inside noise
     for (int x = 0; x < World.get_CHUNK_WIDTH(); x++) {
       for (int y = 0; y < World.get_HEIGHT(); y++) {
-        noise[x][y] = singleBlockNoise(p, x, y);
+        noise[x][y] = singleBlockNoise(x, y);
       }
     }
   }
@@ -84,13 +84,9 @@ public class WorldGenThread extends Thread{
    * @param y the relative y coordinate of the block
    * @return the noise of this block
    */
-  public synchronized float singleBlockNoise(PApplet p, int x, int y) {
-    if(p == null){
-      p = new PApplet();
-      p.noiseSeed(seed);
-    }
+  public float singleBlockNoise(int x, int y) {
     
-    float tempNoise = noisePoint(x+(ID*World.get_CHUNK_WIDTH()), y,p);
+    float tempNoise = noisePoint(x+(ID*World.get_CHUNK_WIDTH()), y);
     tempNoise += 1f/Math.ceil(1+(float)y/2f);
     if(y > maxcreation) tempNoise -= (1-1f/(1+y-maxcreation))/3f;
     return tempNoise;
@@ -104,14 +100,13 @@ public class WorldGenThread extends Thread{
     ChooseBlock(noise[x][y],x, y);
   }
 
-  public synchronized void ChooseBlock(float noise, int x, int y){
-    PApplet p = new PApplet();
-    p.noiseSeed(seed);
+  public void ChooseBlock(float noise, int x, int y){
+    
     //outside noise
     float[][] outNoise = new float[2][World.get_HEIGHT()];
     for (int Y = 0; Y < World.get_HEIGHT(); Y++) {
-      outNoise[0][Y] = noisePoint(ID*World.get_CHUNK_WIDTH()-1, Y,p);
-      outNoise[1][Y] = noisePoint((ID+1)*World.get_CHUNK_WIDTH(), Y,p);
+      outNoise[0][Y] = noisePoint(ID*World.get_CHUNK_WIDTH()-1, Y);
+      outNoise[1][Y] = noisePoint((ID+1)*World.get_CHUNK_WIDTH(), Y);
     }
 
     
@@ -167,8 +162,9 @@ public class WorldGenThread extends Thread{
     parent.setBlock(new LDVector(x, y), BlockTypes.dirt);
     return;
   }
-  private float noisePoint(int globalX, int globalY, PApplet p){
+  private float noisePoint(int globalX, int globalY){
     final float discrep = 16f;
-    return p.noise(((float) globalX)/discrep, ((float) globalY)/discrep);
+    p.noiseSeed(seed);
+    return PerlinNoise.getNoise((float)globalX/discrep, (float)globalY/discrep);
   }
 }

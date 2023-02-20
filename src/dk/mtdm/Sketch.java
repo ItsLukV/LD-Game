@@ -28,7 +28,7 @@ public class Sketch extends PApplet {
 
     player = new Player(new LDVector(0, 100));
     
-    World.setup(3,World.get_HEIGHT(), 13000,20);
+    World.setup(3,World.get_HEIGHT(),20);
   }
   /**
    * TODO: write javadoc
