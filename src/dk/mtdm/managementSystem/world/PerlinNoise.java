@@ -1,33 +1,29 @@
 package dk.mtdm.managementSystem.world;
 
+
 public class PerlinNoise {
-  private  static int seed;
-  private  static int seed2;
+  private  static int seed = 1;
   /**
    * starts the noise generator
    * @param seed
    * @param seed2
    */
-  public static void start(int seed,int seed2){
+  public static void start(int seed){
     PerlinNoise.seed = seed;
-    PerlinNoise.seed2= seed2;
   }
-  public static float getNoise(float x, float y){
+  public synchronized static float getNoise(float x, float y){
     
-    float BotLeft = (float)(PerlinNoise.pseudoRandom((int)Math.pow(Math.floor(x), Math.floor(y))));
-    float TopRight = (float)(PerlinNoise.pseudoRandom((int)Math.pow(Math.ceil(x), Math.ceil(y))));
-    float TopLeft = (float)(PerlinNoise.pseudoRandom((int)Math.pow(Math.floor(x), Math.ceil(y))));
-    float BotRight = (float)(PerlinNoise.pseudoRandom((int)Math.pow(Math.ceil(x), Math.floor(y))));
-    float Top = TopLeft + ((TopLeft-TopRight) * x % 1);
-    float Bot = BotLeft + ((BotLeft-BotRight) * x % 1);
-    return Bot + ((Bot-Top) * y % 1);
+    float BotLeft = pseudoRandom((int) Math.floor(x), (int) Math.floor(y));
+    float BotRight = pseudoRandom((int) Math.ceil(x), (int) Math.floor(y));
+    float TopLeft = pseudoRandom((int) Math.floor(x), (int) Math.ceil(y));
+    float TopRight = pseudoRandom((int) Math.ceil(x), (int) Math.ceil(y));
+    
+    float Top = TopLeft + ((TopRight-TopLeft) * (x - (float) Math.floor(x)));
+    float Bot = BotLeft + ((BotRight-BotLeft) * (x - (float) Math.floor(x)));
+    return Bot + ((Top-Bot) * (y -  (float) Math.floor(y)));
   }
-  public static float pseudoRandom(int dist){
-    float rollover = 0;
-    for (int i = 0; i < dist; i++) {
-      rollover += seed2;
-      rollover%=seed;
-    }
-    return  rollover/seed;
+  public synchronized static float pseudoRandom(int x, int y){
+    return PseudeRandom.attractor_3Cell_CNN(x, y, seed);
+    // return PseudeRandom.Float(x, y,seed);
   }
 }

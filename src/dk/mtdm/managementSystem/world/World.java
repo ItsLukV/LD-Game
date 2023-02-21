@@ -32,7 +32,7 @@ public class World {
    *  THIS LIMIT <b>CAN</b> BE EXCEDED DURING WORLD GEN AND SHOULD <b>NOT</b> BE TAKEN AS AN ABSOLUTE MAX. <p>
    */
   public static void setup(int width,int height, int maxGeneration){
-    setup(width, height, randomSeed(),randomSeed(),maxGeneration);
+    setup(width, height, randomSeed(),maxGeneration);
   }
   /**
    * starts the world without a set seed
@@ -45,14 +45,13 @@ public class World {
    * @param maxGeneration determines how high the expected maximum build height for terain generation will be.<p>
    *  THIS LIMIT <b>CAN</b> BE EXCEDED DURING WORLD GEN AND SHOULD <b>NOT</b> BE TAKEN AS AN ABSOLUTE MAX. <p>
    */
-  public static void setup(int width,int height,int seed1, int seed2, int maxGeneration){
+  public static void setup(int width,int height,int seed1, int maxGeneration){
     HEIGHT = height;
     World.seed1 = seed1;
-    World.seed2 = seed2;
     World.GeneratorHeight = maxGeneration;
     ChunkList.setup(standardChunk(0));
     ChunkList.generate(0);
-    PerlinNoise.start(World.seed1,World.seed2);
+    PerlinNoise.start(World.seed1);
     generateTowardsChunk(width/2);
     generateTowardsChunk(-width/2);
   }
