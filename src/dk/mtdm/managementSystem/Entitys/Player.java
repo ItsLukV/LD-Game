@@ -108,6 +108,11 @@ public class Player extends Entity {
   }
 
   private void calcCollision() {
+    if(pos.getY()<0){
+      pos.setY(1);
+    }else if(World.translate_CanvasToGlobal(pos).getY()>World.get_HEIGHT()*Block.getHeight()){
+      pos.setY(World.get_HEIGHT()*Block.getHeight());
+    }
     Block block = World.getBlock(new LDVector(pos.getX(), pos.getY()));
     if(block.getSolidity()) {
       speed.setY(0);

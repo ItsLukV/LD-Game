@@ -4,9 +4,9 @@ import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import processing.core.PGraphics;
 /*
-//remember: canvas location = processing
-//remember: global location = gameWorld
-//remember: relative location = chunk
+//remember: canvas location = processing (pixels)
+//remember: global location = gameWorld (blocks)
+//remember: relative location = chunk (blocks relativ to chunk)
 */
 public class World {
   // private static Chunk[] world;
@@ -18,7 +18,6 @@ public class World {
   final private static int CHUNK_WIDTH = 32;
   private static int HEIGHT = 100;
   private static int seed1 = 3;
-  private static int seed2 = 30;
   private static int GeneratorHeight = HEIGHT/3;
   private static float BlockStone = 0.5f;
   private static float BlockAir = 0.3f;
@@ -64,9 +63,12 @@ public class World {
   public static Block getBlock(LDVector location){
     
     int chunkID = (location.getX() - location.getX() % CHUNK_WIDTH) / CHUNK_WIDTH;
-    int relativeX = location.getX()%CHUNK_WIDTH;
+    int relativeX = Math.abs(location.getX()%CHUNK_WIDTH);
     
     return getChunk(chunkID).getBlock(new LDVector(relativeX, location.getY()));
+  }
+  public static Block getBlockCanvas(LDVector location){
+    return getBlock(translate_CanvasToGlobal(location));
   }
   /**
    * @return a random int between 'Integer.MAX_VALUE' and 'Integer.MIN_VALUE'
@@ -141,5 +143,15 @@ public class World {
   }
   public static Chunk standardChunk(int ID){
     return new Chunk(ID, World.get_CHUNK_WIDTH(), World.get_HEIGHT(), World.getGeneratorHeight());
+  }
+  public static LDVector translate_CanvasToGlobal(LDVector location){
+    LDVector newLocation = location.copy();
+    newLocation.divide(new LDVector(Block.getWidth(), -Block.getHeight()));
+    return newLocation;
+  }
+  public static LDVector translate_GlobalToCanvas(LDVector location){
+    LDVector newLocation = location.copy();
+    newLocation.multiply(new LDVector(Block.getWidth(), -Block.getHeight()));
+    return newLocation;
   }
 }

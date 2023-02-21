@@ -9,8 +9,7 @@ import dk.mtdm.itemsAndMore.items.ItemTypes;
  */
 public abstract class Block {
     private LDVector pos;
-    private static int width = 32;
-    private static int height = 32;
+    private static LDVector size = new LDVector(32, 32);
     private BlockTypes id;
     protected boolean soild;
     protected boolean breakability;
@@ -41,7 +40,7 @@ public abstract class Block {
      */
     public void show(PGraphics g) {
         try {
-            g.image(BlockTextures.picker(id), pos.getX()*width,/* World.get_HEIGHT()*/height-pos.getY()*height, width, height);
+            g.image(BlockTextures.picker(id), pos.getX()*size.getX(),/* World.get_HEIGHT()*/size.getY()-pos.getY()*size.getY(), size.getX(), size.getY());
         } catch (MissingTextureException e) {
             e.printStackTrace();
         }
@@ -79,15 +78,15 @@ public abstract class Block {
         this.pos = vector;
     }
     public static int getWidth() {
-        return width;
+        return size.getX();
     }
     public static void setWidth(int width) {
-        Block.width = width;
+        size.setX(width);
     }
     public static int getHeight() {
-        return height;
+        return size.getY();
     }
     public static void setHeight(int height) {
-        Block.height = height;
+        size.setY(height);
     }
 }
