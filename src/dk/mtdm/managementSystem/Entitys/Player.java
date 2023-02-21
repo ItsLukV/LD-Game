@@ -3,6 +3,7 @@ package dk.mtdm.managementSystem.Entitys;
 import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;
+import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PGraphics;
 
@@ -13,31 +14,41 @@ public class Player extends Entity {
   private boolean up;
   private boolean right;
   private boolean left;
-  private int moveSpeed = 2;
+  private int moveSpeed = 5;
   private float airRes = 0.8f;
   private InventoryManager inventory = new InventoryManager();
+  public static boolean noClip = false;
+  public static int gravityAcc = 2;
 
   /**
- * TODO: write javadoc
- */
+   * Creates a player object
+   * @param pos start pos
+   */
   public Player(LDVector pos) {
     this.pos = pos;
     inventory.giveItem();
   }
   /**
-   * TODO: write javadoc
+   * Creates a player object
+   * @param pos start pos
    */
   @Override
   public void show(PGraphics g) {
     g.image(MiscTextures.getPlayerTexture(), pos.getX(), pos.getY());
   }
+
   /**
-   * TODO: write javadoc
+   * This is a method that updates the player (this needs to be updated every frame)
    */
   @Override
   public void tick() {
     calcSpeed();
+    if(!noClip) {
+      addGravity();
+      calcCollision();
+    }
   }
+
   /**
    * Checks if player collision
    * 
@@ -90,5 +101,16 @@ public class Player extends Entity {
 
   public LDVector getPos() {
     return pos;
+  }
+
+  private void addGravity() {
+    speed.add(new LDVector(0, gravityAcc));
+  }
+
+  private void calcCollision() {
+    Block block = World.getBlock(new LDVector(pos.getX(), pos.getY()));
+    if(block.getSolidity()) {
+      speed.setY(0);
+    }
   }
 }

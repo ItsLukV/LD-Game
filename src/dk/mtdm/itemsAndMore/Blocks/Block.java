@@ -9,8 +9,8 @@ import dk.mtdm.itemsAndMore.items.ItemTypes;
  */
 public abstract class Block {
     private LDVector pos;
-    private static int width = 8;
-    private static int height = 8;
+    private static int width = 32;
+    private static int height = 32;
     private BlockTypes id;
     protected boolean soild;
     protected boolean breakability;
