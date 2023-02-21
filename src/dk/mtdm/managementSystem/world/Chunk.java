@@ -2,6 +2,7 @@ package dk.mtdm.managementSystem.world;
 
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingBlockTypeException;
+import dk.mtdm.itemsAndMore.Blocks.AirBlock;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
@@ -39,11 +40,7 @@ public class Chunk {
    * @return the block stored at the given location
    */
   public Block getBlock(LDVector relativeLocation){
-    if(containedBlocks[relativeLocation.getX()][relativeLocation.getY()] == null){
-      t.singleBlockNoise(relativeLocation.getX(),relativeLocation.getY());
-      return getBlock(relativeLocation);
-    }
-    return containedBlocks[relativeLocation.getX()][relativeLocation.getY()];
+    return getBlock(relativeLocation.getX(), relativeLocation.getY());
   }
   /**
    * 

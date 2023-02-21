@@ -132,7 +132,12 @@ public class World {
     return GeneratorHeight;
   }
   private static Chunk getChunk(int ID) {
-    return ChunkList.getChunk(ID);
+    Chunk out = ChunkList.getChunk(ID);
+    if(out == null){
+      ChunkList.generate(ID);
+      out = ChunkList.getChunk(ID);
+    }
+    return out;
   }
   public static Chunk standardChunk(int ID){
     return new Chunk(ID, World.get_CHUNK_WIDTH(), World.get_HEIGHT(), World.getGeneratorHeight());
