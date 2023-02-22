@@ -2,9 +2,10 @@ package dk.mtdm.managementSystem.world;
 
 import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingBlockTypeException;
-import dk.mtdm.itemsAndMore.Blocks.AirBlock;
+import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
+import dk.mtdm.itemsAndMore.Blocks.BlockTextures;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import processing.core.PGraphics;
 public class Chunk {
@@ -63,8 +64,8 @@ public class Chunk {
       chunkError++;
       // System.out.print("\tfailed get block: "+ ID + ";(" + x +","+ y + ")");
     }
-    if(containedBlocks[x][y] != null)
-    return containedBlocks[x][y];
+    if(containedBlocks[x][y] != null) return containedBlocks[x][y];
+    
     LDVector tempBlockVector = new LDVector(x, y);
     tempBlockVector.add(ChunkVector);
     return BlockPicker.getAir(BlockTypes.air, tempBlockVector);
@@ -90,7 +91,7 @@ public class Chunk {
    */
   public void setBlock(LDVector location,BlockTypes block){
     LDVector globalLocation = location.copy();
-    globalLocation.add(ChunkVector);;
+    globalLocation.add(ChunkVector);
     try {
       containedBlocks[location.getX()][location.getY()] = BlockPicker.picker(block,globalLocation);
     } catch (MissingBlockTypeException e) {
@@ -114,13 +115,26 @@ public class Chunk {
       }
     }
     border(g);
+    LDVector progress = null;
+    try {
+      progress = t.progress.copy();
+    } catch (NullPointerException e) {}
+    if (progress == null) return;
+    progress = World.GlobalToCanvas(progress);
+    try {
+      g.image(BlockTextures.picker(BlockTypes.inWork),progress.getX(),progress.getY(), Block.getWidth(), Block.getHeight());
+    } catch (MissingTextureException e) {
+      System.out.println(e);
+    } catch (NullPointerException f){
+      System.out.println(f);
+    }
   }
 
   public void border(PGraphics g){
     g.push();
     g.noFill();
     g.stroke(255,0,0);
-    g.rect(ID*World.get_CHUNK_WIDTH()*Block.getWidth(),-g.height,World.get_CHUNK_WIDTH()*Block.getWidth(),World.get_HEIGHT()*Block.getWidth());
+    g.rect(ID*World.get_CHUNK_WIDTH()*Block.getWidth(),0,World.get_CHUNK_WIDTH()*Block.getWidth(),-World.get_HEIGHT()*Block.getHeight());
     g.pop();
   } 
 }

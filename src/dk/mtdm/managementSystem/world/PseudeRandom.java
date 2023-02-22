@@ -4,12 +4,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class PseudeRandom {
-  private final static double runs = 2;
-  private final static double a = 10;
-  private final static double alpha = 10;
-  private final static double b = 10;
-  private final static double beta = 10;
-  private final static double step = 0.1;
+  private final static float dist = 2f;
+  private final static float a = 10f;
+  private final static float alpha = 10f;
+  private final static float b = 10f;
+  private final static float beta = 10f;
+  private final static float step = 0.1f;
   /**
    * 
    * @param x
@@ -17,20 +17,21 @@ public class PseudeRandom {
    * @param z seed
    * @return
    */
-  public static float attractor_3Cell_CNN(double x, double y, double z){
-    double out = 0;
-    for (int i = 0; i < runs; i++) {
+  public static float attractor_3Cell_CNN(float x, float y, float z){
+    float out = 0;
+    // System.out.println(x + " " + y + " " + z);
+    for (float i = 0; i < dist; i++){
       x=(-x+alpha*f(x)-b*f(y)-b*f(z))*step;
       y=(-y+b*f(x)-beta*f(y)-a*f(z))*step;
-      z=(-z+b*f(x)-a*f(y)-f(z));
+      z=(-z+b*f(x)-a*f(y)-f(z))*step;
     }
     out = Math.abs(x*y*z);
-    out = (out%1)*2-1;
-    // System.out.println(out);
+    out = (float)(out-Math.floor(out));
+    // System.out.println(out + " " + x + " " + y + " " + z);
     return (float)out; 
   }
-  private synchronized static double f(double x){
-    return 0.5*(Math.abs(x+1)-Math.abs(x-1));
+  private synchronized static float f(float x){
+    return 0.5f*(Math.abs(x+1)-Math.abs(x-1));
   }
   
   public synchronized static float Float(int x, int y,int seed) {

@@ -10,5 +10,4 @@ public class GrassBlock extends Block{
   public GrassBlock(LDVector pos) {
     super(pos, BlockTypes.grass, true, true, true, ItemTypes.grass);
   }
-  
 }

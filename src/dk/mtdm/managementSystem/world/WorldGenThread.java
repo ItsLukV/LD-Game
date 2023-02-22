@@ -4,18 +4,15 @@ package dk.mtdm.managementSystem.world;
 import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.managementSystem.Thread;
-import processing.core.PApplet;
 /**
  * @author @dendersen
  */
 public class WorldGenThread extends Thread{
-  
-  private int seed;
+  public LDVector progress = null;
   private int ID;
   private float[][] noise;
   private int maxcreation;
   private Chunk parent;
-  private static PApplet p = new PApplet();
 
 
   /**
@@ -46,6 +43,7 @@ public class WorldGenThread extends Thread{
   @Override
   protected void Run() {
     worldGenerator();
+    progress = null;
   }
   /**
    * starts the thread
@@ -85,7 +83,7 @@ public class WorldGenThread extends Thread{
    * @return the noise of this block
    */
   public float singleBlockNoise(int x, int y) {
-    
+    progress = new LDVector(x, y);
     float tempNoise = noisePoint(x+(ID*World.get_CHUNK_WIDTH()), y);
     tempNoise += 1f/Math.ceil(1+(float)y/2f);
     if(y > maxcreation) tempNoise -= (1-1f/(1+y-maxcreation))/3f;
@@ -97,6 +95,7 @@ public class WorldGenThread extends Thread{
    * @param y the relative y coordinate of the block
    */
   private void ChooseBlock(int x, int y) {    
+    progress = new LDVector(x, y);
     ChooseBlock(noise[x][y],x, y);
   }
 
@@ -164,7 +163,6 @@ public class WorldGenThread extends Thread{
   }
   private float noisePoint(int globalX, int globalY){
     final float discrep = 16f;
-    p.noiseSeed(seed);
     return PerlinNoise.getNoise((float)globalX/discrep, (float)globalY/discrep);
   }
 }

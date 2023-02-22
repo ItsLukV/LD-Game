@@ -53,7 +53,7 @@ public class LDVector {
     this.y = y;
   }
   public void divide(LDVector vector) {
-    this.x /= vector.getX();
-    this.y /= vector.getY();
+    this.x = (int) ((float)this.x/(float)vector.getX());
+    this.y = (int) ((float)this.y/(float)vector.getY());
   }
 }

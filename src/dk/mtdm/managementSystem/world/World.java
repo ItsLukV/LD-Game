@@ -62,13 +62,18 @@ public class World {
    */
   public static Block getBlock(LDVector location){
     
-    int chunkID = (location.getX() - location.getX() % CHUNK_WIDTH) / CHUNK_WIDTH;
-    int relativeX = Math.abs(location.getX()%CHUNK_WIDTH);
+    int chunkID = (location.getX() - (Math.abs(location.getX()) % CHUNK_WIDTH)) / CHUNK_WIDTH;
+    int relativeX;
+    if(location.getX()>=0){
+      relativeX = location.getX()%CHUNK_WIDTH;
+    }else{
+      relativeX = CHUNK_WIDTH - (Math.abs(location.getX())%CHUNK_WIDTH) - 1;
+    }
     
     return getChunk(chunkID).getBlock(new LDVector(relativeX, location.getY()));
   }
   public static Block getBlockCanvas(LDVector location){
-    return getBlock(translate_CanvasToGlobal(location));
+    return getBlock(CanvasToGlobal(location));
   }
   /**
    * @return a random int between 'Integer.MAX_VALUE' and 'Integer.MIN_VALUE'
@@ -144,12 +149,20 @@ public class World {
   public static Chunk standardChunk(int ID){
     return new Chunk(ID, World.get_CHUNK_WIDTH(), World.get_HEIGHT(), World.getGeneratorHeight());
   }
-  public static LDVector translate_CanvasToGlobal(LDVector location){
+  public static LDVector CanvasToGlobal(LDVector location){
     LDVector newLocation = location.copy();
-    newLocation.divide(new LDVector(Block.getWidth(), -Block.getHeight()));
+    newLocation.divide(new LDVector(Block.getWidth(), Block.getHeight()));
+    newLocation.setY(-newLocation.getY());
+    if (newLocation.getY() < 0){
+      newLocation.setY(-newLocation.getY());
+    }
+    if (newLocation.getY() > get_HEIGHT()){
+      newLocation.setY(get_HEIGHT()-2);
+    }
+    newLocation.add(new LDVector(0, 1));
     return newLocation;
   }
-  public static LDVector translate_GlobalToCanvas(LDVector location){
+  public static LDVector GlobalToCanvas(LDVector location){
     LDVector newLocation = location.copy();
     newLocation.multiply(new LDVector(Block.getWidth(), -Block.getHeight()));
     return newLocation;

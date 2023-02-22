@@ -1,7 +1,12 @@
 package dk.mtdm.managementSystem.Entitys;
 
+import javax.security.auth.x500.X500Principal;
+
 import dk.mtdm.LDVector;
+import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
+import dk.mtdm.itemsAndMore.Blocks.BlockTextures;
+import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.misc.miscTextures.MiscTextures;
@@ -34,18 +39,30 @@ public class Player extends Entity {
    */
   @Override
   public void show(PGraphics g) {
+    g.push();
     g.image(MiscTextures.getPlayerTexture(), pos.getX(), pos.getY());
+    g.strokeWeight(10);
+    g.point(pos.getX(), pos.getY());
+    g.pop();
   }
 
   /**
    * This is a method that updates the player (this needs to be updated every frame)
    */
   @Override
-  public void tick() {
+  public void tick(){
     calcSpeed();
     if(!noClip) {
       addGravity();
-      calcCollision();
+      calcCollision(null);
+    }
+  }
+
+  public void tick(PGraphics g) {
+    calcSpeed();
+    if(!noClip) {
+      addGravity();
+      calcCollision(g);
     }
   }
 
@@ -107,15 +124,20 @@ public class Player extends Entity {
     speed.add(new LDVector(0, gravityAcc));
   }
 
-  private void calcCollision() {
-    if(pos.getY()<0){
-      pos.setY(1);
-    }else if(World.translate_CanvasToGlobal(pos).getY()>World.get_HEIGHT()*Block.getHeight()){
-      pos.setY(World.get_HEIGHT()*Block.getHeight());
-    }
-    Block block = World.getBlock(new LDVector(pos.getX(), pos.getY()));
+  private void calcCollision(PGraphics g) {
+    Block block = World.getBlockCanvas(new LDVector(pos.getX(), pos.getY()));
     if(block.getSolidity()) {
       speed.setY(0);
+      try {
+        LDVector canvas = World.GlobalToCanvas(block.getPos());
+        g.image(BlockTextures.picker(BlockTypes.inWork),canvas.getX(),
+                canvas.getY(), Block.getWidth(), Block.getHeight());
+        // System.out.println(canvas.getX() + " " + canvas.getY());
+        // System.out.println((float)this.getPos().getX()/(float)World.getBlockCanvas(new LDVector(pos.getX(), pos.getY())).getPos().getX());
+      } catch (MissingTextureException e) {
+        // TODO Auto-generated catch block
+        e.printStackTrace();
+      } catch (Exception e){}
     }
   }
 }

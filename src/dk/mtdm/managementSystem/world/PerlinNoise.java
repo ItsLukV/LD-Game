@@ -2,11 +2,10 @@ package dk.mtdm.managementSystem.world;
 
 
 public class PerlinNoise {
-  private  static int seed = 1;
+  private static int seed = 1;
   /**
    * starts the noise generator
    * @param seed
-   * @param seed2
    */
   public static void start(int seed){
     PerlinNoise.seed = seed;

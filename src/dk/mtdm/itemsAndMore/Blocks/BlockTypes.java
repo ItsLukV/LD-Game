@@ -8,4 +8,5 @@ public enum BlockTypes {
   dirt,
   stone,
   bedrock,
+  inWork,
 }

@@ -5,7 +5,7 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class BlockTextures {
-    private static PImage air, bedrock, dirt, grass, stone;
+    private static PImage air, bedrock, dirt, grass, stone,inWork;
     /**
    * TODO: write javadoc
    */
@@ -16,6 +16,7 @@ public class BlockTextures {
         dirt = p.loadImage(path+"dirt.png");
         grass = p.loadImage(path+"grass.png");
         stone = p.loadImage(path+"stone.png");
+        inWork = p.loadImage(path+"work.png");
     }
     /**
    * TODO: write javadoc
@@ -32,6 +33,8 @@ public class BlockTextures {
                 return grass;
             case stone:
                 return stone;
+            case inWork:
+                return inWork;
             default: 
                 throw new MissingTextureException(type.name() + " does not have a texture");
         }
