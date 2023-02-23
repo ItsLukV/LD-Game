@@ -1,7 +1,7 @@
 package dk.mtdm.itemsAndMore.Blocks;
 
-import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingBlockTypeException;
+import dk.mtdm.location.LDVector;
 
 public class BlockPicker {
 	/**

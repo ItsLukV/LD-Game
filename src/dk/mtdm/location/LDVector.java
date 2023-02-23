@@ -1,4 +1,4 @@
-package dk.mtdm;
+package dk.mtdm.location;
 /**
  * a class capable of operating either  as a point in space or a vector of movement.<br>
  * contains the methods needed to move change the vector.

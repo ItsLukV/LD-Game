@@ -95,7 +95,7 @@ public class ChunkList {
           before.generator();
           return;
         }
-        before.generate(ID-1);
+        before.generate(ID+1);
         return;
       }else{
         generator();

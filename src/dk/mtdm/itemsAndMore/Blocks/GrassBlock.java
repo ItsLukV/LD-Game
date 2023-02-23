@@ -1,7 +1,7 @@
 package dk.mtdm.itemsAndMore.Blocks;
 
-import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
+import dk.mtdm.location.LDVector;
 
 public class GrassBlock extends Block{
   /**

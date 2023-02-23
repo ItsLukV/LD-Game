@@ -1,8 +1,8 @@
 package dk.mtdm.managementSystem.world;
 
 
-import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
+import dk.mtdm.location.LDVector;
 import dk.mtdm.managementSystem.Thread;
 /**
  * @author @dendersen

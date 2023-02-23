@@ -1,15 +1,15 @@
 package dk.mtdm.itemsAndMore.Blocks;
 
 import processing.core.PGraphics;
-import dk.mtdm.LDVector;
 import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
+import dk.mtdm.location.LDVector;
 /**
  * @author @ItsLukV
  */
 public abstract class Block {
     private LDVector pos;
-    private static LDVector size = new LDVector(16, 16);
+    private static LDVector size = new LDVector(32, 32);
     private BlockTypes id;
     protected boolean soild;
     protected boolean breakability;

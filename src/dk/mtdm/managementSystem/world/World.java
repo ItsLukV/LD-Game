@@ -1,7 +1,7 @@
 package dk.mtdm.managementSystem.world;
 
-import dk.mtdm.LDVector;
 import dk.mtdm.itemsAndMore.Blocks.Block;
+import dk.mtdm.location.LDVector;
 import processing.core.PGraphics;
 /*
 //remember: canvas location = processing (pixels)
@@ -62,14 +62,13 @@ public class World {
    */
   public static Block getBlock(LDVector location){
     
-    int chunkID = (location.getX() - (Math.abs(location.getX()) % CHUNK_WIDTH)) / CHUNK_WIDTH;
+    int chunkID = (int)Math.floor((float)location.getX() / (float)CHUNK_WIDTH);
     int relativeX;
-    if(location.getX()>=0){
-      relativeX = location.getX()%CHUNK_WIDTH;
+    if(location.getX() > 0){
+      relativeX = Math.abs(location.getX()%CHUNK_WIDTH);
     }else{
-      relativeX = CHUNK_WIDTH - (Math.abs(location.getX())%CHUNK_WIDTH) - 1;
+      relativeX = CHUNK_WIDTH-Math.abs(location.getX()%CHUNK_WIDTH)-1;
     }
-    
     return getChunk(chunkID).getBlock(new LDVector(relativeX, location.getY()));
   }
   public static Block getBlockCanvas(LDVector location){

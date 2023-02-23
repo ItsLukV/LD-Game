@@ -1,6 +1,6 @@
 package dk.mtdm.managementSystem.Entitys;
 
-import dk.mtdm.LDVector;
+import dk.mtdm.location.LDVector;
 import processing.core.PGraphics;
 
 public abstract class Entity {
