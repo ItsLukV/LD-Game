@@ -68,6 +68,7 @@ public class Sketch extends PApplet {
     boolean right = keyCode == 39 || keyCode == 68;
     boolean up = keyCode == 38 || keyCode == 87;
     boolean down = keyCode == 40 || keyCode == 83;
+    boolean e = keyCode == 69;
     player.keyReleased(left, right, up, down);
   }
 
@@ -80,6 +81,7 @@ public class Sketch extends PApplet {
     boolean right = keyCode == 39 || keyCode == 68;
     boolean up = keyCode == 38 || keyCode == 87;
     boolean down = keyCode == 40 || keyCode == 83;
-    player.keyPressed(left, right, up, down);
+    boolean e = keyCode == 69;
+    player.keyPressed(left, right, up, down, e);
   }
 }

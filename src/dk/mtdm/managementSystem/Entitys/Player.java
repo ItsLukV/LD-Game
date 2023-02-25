@@ -89,11 +89,12 @@ public class Player extends Entity {
   /**
    * TODO: write javadoc
    */
-  public void keyPressed(boolean left , boolean right, boolean up, boolean down) {
+  public void keyPressed(boolean left , boolean right, boolean up, boolean down, boolean e) {
     if (left) this.left = true;
     if (right) this.right = true;
     if (up) this.up = true;
     if (down) this.down = true;
+    if(e) inventory.changeMenu();
   }
   /**
    * TODO: write javadoc
