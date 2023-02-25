@@ -1,5 +1,7 @@
 package dk.mtdm.itemsAndMore.items;
 
+import processing.core.PImage;
+
 public class ItemStack {
   private int itemCount;
   private final int maxSize;
@@ -29,5 +31,9 @@ public class ItemStack {
  */
   public ItemTypes getItemType() {
     return item.getItemType();
+  }
+
+  public PImage getItemTexture() {
+    return item.getTexture();
   }
 }

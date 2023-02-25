@@ -1,6 +1,7 @@
-package dk.mtdm.itemsAndMore.Blocks;
+package dk.mtdm.itemsAndMore.texureFiles;
 
 import dk.mtdm.exceptions.MissingTextureException;
+import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import processing.core.PApplet;
 import processing.core.PImage;
 
@@ -22,21 +23,14 @@ public class BlockTextures {
    * TODO: write javadoc
    */
     public static PImage picker(BlockTypes type) throws MissingTextureException {
-        switch(type) {
-            case air:
-                return air;
-            case bedrock:
-                return bedrock;
-            case dirt:
-                return dirt;
-            case grass: 
-                return grass;
-            case stone:
-                return stone;
-            case inWork:
-                return inWork;
-            default: 
-                throw new MissingTextureException(type.name() + " does not have a texture");
-        }
+        return switch (type) {
+            case air -> air;
+            case bedrock -> bedrock;
+            case dirt -> dirt;
+            case grass -> grass;
+            case stone -> stone;
+            case inWork -> inWork;
+            default -> throw new MissingTextureException(type.name() + " does not have a texture");
+        };
     }
 }

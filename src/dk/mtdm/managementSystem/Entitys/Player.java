@@ -1,10 +1,8 @@
 package dk.mtdm.managementSystem.Entitys;
 
-import javax.security.auth.x500.X500Principal;
-
 import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
-import dk.mtdm.itemsAndMore.Blocks.BlockTextures;
+import dk.mtdm.itemsAndMore.texureFiles.BlockTextures;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;
 import dk.mtdm.location.LDVector;
@@ -38,14 +36,18 @@ public class Player extends Entity {
    * @param pos start pos
    */
   @Override
-  public void show(PGraphics g) {
+  public void draw(PGraphics g) {
     g.push();
     g.image(MiscTextures.getPlayerTexture(), pos.getX(), pos.getY());
     g.strokeWeight(10);
     g.point(pos.getX(), pos.getY());
     g.pop();
+
   }
 
+  public void drawWithoutTranslate(PGraphics g) {
+    inventory.draw(g);
+  }
   /**
    * This is a method that updates the player (this needs to be updated every frame)
    */
@@ -64,6 +66,7 @@ public class Player extends Entity {
       addGravity();
       calcCollision(g);
     }
+    inventory.tick();
   }
 
   /**
@@ -126,6 +129,8 @@ public class Player extends Entity {
 
   private void calcCollision(PGraphics g) {
     Block block = World.getBlockCanvas(new LDVector(pos.getX(), pos.getY()));
+//    if(!block.getSolidity()) {return; }
+//    if(collisionWith(block)) {
     if(block.getSolidity()) {
       speed.setY(0);
       try {

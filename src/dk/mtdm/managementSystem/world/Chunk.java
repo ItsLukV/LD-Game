@@ -4,7 +4,7 @@ import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
-import dk.mtdm.itemsAndMore.Blocks.BlockTextures;
+import dk.mtdm.itemsAndMore.texureFiles.BlockTextures;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.location.LDVector;
 import processing.core.PGraphics;

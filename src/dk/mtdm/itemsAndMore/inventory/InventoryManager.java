@@ -2,15 +2,17 @@ package dk.mtdm.itemsAndMore.inventory;
 
 import dk.mtdm.itemsAndMore.items.ItemStack;
 import dk.mtdm.itemsAndMore.items.Stick;
+import processing.core.PGraphics;
 
 public class InventoryManager {
-  private ItemStack[][] slots;
+  private final ItemStack[][] slots = new ItemStack[5][3];
+  private final Hotbar hotbar = new Hotbar();
   
   /**
  * TODO: write javadoc
  */
   public InventoryManager() {
-    slots = new ItemStack[5][3];
+
   }
   /**
  * TODO: write javadoc
@@ -33,4 +35,12 @@ public class InventoryManager {
     }
     return emptySlot;
   }
+
+  public void draw(PGraphics g) {
+    hotbar.show(g);
+  }
+  public void tick() {
+    hotbar.tick();
+  }
+
 }

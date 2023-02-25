@@ -13,7 +13,7 @@ public abstract class Entity {
  * shows the entity
  * @param g
  */
-  abstract public void show(PGraphics g);
+  abstract public void draw(PGraphics g);
   /**
    * Updates the entity
    */
