@@ -1,11 +1,14 @@
 package dk.mtdm.managementSystem.Entitys;
 
+import dk.mtdm.exceptions.MissingDataException;
 import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.texureFiles.BlockTextures;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;
 import dk.mtdm.location.LDVector;
+import dk.mtdm.location.LocationTypes;
+import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PGraphics;
@@ -27,7 +30,7 @@ public class Player extends Entity {
    * Creates a player object
    * @param pos start pos
    */
-  public Player(LDVector pos) {
+  public Player(WorldWideLocation pos) {
     this.pos = pos;
     inventory.giveItem();
   }
@@ -38,9 +41,13 @@ public class Player extends Entity {
   @Override
   public void draw(PGraphics g) {
     g.push();
-    g.image(MiscTextures.getPlayerTexture(), pos.getX(), pos.getY());
-    g.strokeWeight(10);
-    g.point(pos.getX(), pos.getY());
+    try {
+      g.image(MiscTextures.getPlayerTexture(), pos.getCanvas().getX(), pos.getCanvas().getY());
+      g.strokeWeight(10);
+      g.point(pos.getCanvas().getX(), pos.getCanvas().getY());
+    } catch (MissingDataException e) {
+      e.printStackTrace();
+    }
     g.pop();
 
   }
@@ -76,13 +83,17 @@ public class Player extends Entity {
    * @return
    */
   public boolean collisionWith(Block block) {
-    LDVector blockPos = block.getPos();
-    if (pos.getX() + width >= blockPos.getX() && // player right edge past block left
-        pos.getX() <= blockPos.getX() + Block.getWidth() && // player left edge past block right
-        pos.getY() + height >= blockPos.getY() && // player top edge past block bottom
-        pos.getY() <= blockPos.getY() + Block.getHeight() // player bottom edge past block top
-    ) {
-      return true;
+    try{
+      LDVector blockPos = block.getCanvas();
+      if (pos.getCanvas().getX() + width >= blockPos.getX() && // player right edge past block left
+          pos.getCanvas().getX() <= blockPos.getX() + Block.getWidth() && // player left edge past block right
+          pos.getCanvas().getY() + height >= blockPos.getY() && // player top edge past block bottom
+          pos.getCanvas().getY() <= blockPos.getY() + Block.getHeight() // player bottom edge past block top
+      ) {
+        return true;
+      }
+    }catch(MissingDataException e){
+      e.printStackTrace();
     }
     return false;
   }
@@ -116,11 +127,16 @@ public class Player extends Entity {
     speed.setX((int) (speed.getX() * airRes));
     speed.setY((int) (speed.getY() * airRes));
 
-    pos.add(speed);
+    pos.add(speed,LocationTypes.canvas);
   }
 
-  public LDVector getPos() {
-    return pos;
+  public LDVector getCanvas() {
+    try {
+      return pos.getCanvas();
+    } catch (MissingDataException e) {
+      e.printStackTrace();
+      return new LDVector(0, 0);
+    }
   }
 
   private void addGravity() {
@@ -128,13 +144,18 @@ public class Player extends Entity {
   }
 
   private void calcCollision(PGraphics g) {
-    Block block = World.getBlockCanvas(new LDVector(pos.getX(), pos.getY()));
+    Block block = null;
+    try {
+      block = World.getBlockCanvas(new LDVector(pos.getCanvas().getX(), pos.getCanvas().getY()));
+    } catch (MissingDataException e) {
+      e.printStackTrace();
+    }
 //    if(!block.getSolidity()) {return; }
 //    if(collisionWith(block)) {
     if(block.getSolidity()) {
       speed.setY(0);
       try {
-        LDVector canvas = World.GlobalToCanvas(block.getPos());
+        LDVector canvas = block.getCanvas();
         g.image(BlockTextures.picker(BlockTypes.inWork),canvas.getX(),
                 canvas.getY(), Block.getWidth(), Block.getHeight());
         // System.out.println(canvas.getX() + " " + canvas.getY());

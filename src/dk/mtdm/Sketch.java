@@ -3,7 +3,8 @@ package dk.mtdm;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.texureFiles.BlockTextures;
 import dk.mtdm.itemsAndMore.texureFiles.ItemTexture;
-import dk.mtdm.location.LDVector;
+import dk.mtdm.location.LocationTypes;
+import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.Entitys.Player;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.misc.miscTextures.MiscTextures;
@@ -33,7 +34,7 @@ public class Sketch extends PApplet {
     ItemTexture.loadBlockTextures(this);
 
     World.setup(3, World.get_HEIGHT(), 20);
-    player = new Player(new LDVector(0, -300));
+    player = new Player(WorldWideLocation.create(0, -300, LocationTypes.canvas));
   }
 
   /**
@@ -43,13 +44,13 @@ public class Sketch extends PApplet {
   public void draw() {
     background(0,0,0);
     push();
-    translate(-player.getPos().getX() - Player.width / 2 + width / 2,
-        -player.getPos().getY() - Player.height / 2 + height / 2);
+    translate(-player.getCanvas().getX() - Player.width / 2 + width / 2,
+        -player.getCanvas().getY() - Player.height / 2 + height / 2);
     // System.out.println(World.CanvasToGlobal(player.getPos()).getX() + " " +
     // World.CanvasToGlobal(player.getPos()).getY() + "\n" + player.getPos().getX()
     // + " " + player.getPos().getY() + "\n");
-    World.show(g, (int) (player.getPos().getX() / World.get_CHUNK_WIDTH() / Block.getWidth()) - 2,
-        (int) (player.getPos().getX() / World.get_CHUNK_WIDTH() / Block.getWidth()) + 1);
+    World.show(g, (int) (player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth()) - 2,
+        (int) (player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth()) + 1);
     player.draw(g);
     pop();
     player.drawWithoutTranslate(g);

@@ -2,6 +2,8 @@ package dk.mtdm.managementSystem.world;
 
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.location.LDVector;
+import dk.mtdm.location.LocationTypes;
+import dk.mtdm.location.WorldWideLocation;
 import processing.core.PGraphics;
 /*
 //remember: canvas location = processing (pixels)
@@ -69,7 +71,7 @@ public class World {
     }else{
       relativeX = CHUNK_WIDTH-Math.abs(location.getX()%CHUNK_WIDTH)-1;
     }
-    return getChunk(chunkID).getBlock(new LDVector(relativeX, location.getY()));
+    return getChunk(chunkID).getBlock(WorldWideLocation.create(relativeX, location.getY(),LocationTypes.relative));
   }
   public static Block getBlockCanvas(LDVector location){
     return getBlock(CanvasToGlobal(location));

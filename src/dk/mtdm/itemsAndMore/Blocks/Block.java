@@ -2,14 +2,17 @@ package dk.mtdm.itemsAndMore.Blocks;
 
 import dk.mtdm.itemsAndMore.texureFiles.BlockTextures;
 import processing.core.PGraphics;
+import dk.mtdm.exceptions.MissingDataException;
 import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
 import dk.mtdm.location.LDVector;
+import dk.mtdm.location.LocationTypes;
+import dk.mtdm.location.WorldWideLocation;
 /**
  * @author @ItsLukV
  */
 public abstract class Block {
-    private LDVector pos;
+    private WorldWideLocation pos;
     private static LDVector size = new LDVector(32, 32);
     private BlockTypes id;
     protected boolean soild;
@@ -24,7 +27,7 @@ public abstract class Block {
      * @param y  sets y-canvas location value of the block
      * @param id id/type of block
      */
-    public Block(LDVector pos, BlockTypes id, boolean soild, boolean breakability, boolean hoverability, ItemTypes itemDrop) {
+    public Block(WorldWideLocation pos, BlockTypes id, boolean soild, boolean breakability, boolean hoverability, ItemTypes itemDrop) {
         this.pos = pos;
 
         this.id = id;
@@ -41,7 +44,11 @@ public abstract class Block {
      */
     public void show(PGraphics g) {
         try {
-            g.image(BlockTextures.picker(id), pos.getX()*size.getX(),/* World.get_HEIGHT()*/size.getY()-pos.getY()*size.getY(), size.getX(), size.getY());
+            try {
+                g.image(BlockTextures.picker(id), pos.getCanvas().getX()*size.getX(),/* World.get_HEIGHT()*/size.getY()-pos.getCanvas().getY()*size.getY(), size.getX(), size.getY());
+            } catch (MissingDataException e) {
+                e.printStackTrace();
+            }
         } catch (MissingTextureException e) {
             e.printStackTrace();
         }
@@ -72,11 +79,24 @@ public abstract class Block {
     public ItemTypes getItemDrop() throws NullPointerException {
         return this.itemDrop;
     }
-    public LDVector getPos() {
-        return pos;
+    public LDVector getCanvas() {
+        try {
+            return this.pos.getCanvas();
+        } catch (MissingDataException e) {
+            e.printStackTrace();
+            return new LDVector(0, 0);
+        }
     }
-    public void setPos(LDVector vector) {
-        this.pos = vector;
+    public LDVector getGlobal() {
+        try {
+            return this.pos.getGlobal();
+        } catch (MissingDataException e) {
+            e.printStackTrace();
+            return new LDVector(0, 0);
+        }
+    }
+    public void setCanvas(LDVector vector) {
+        this.pos.setPosition(vector, LocationTypes.canvas);
     }
     public static int getWidth() {
         return size.getX();
