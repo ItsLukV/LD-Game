@@ -84,4 +84,8 @@ public class Sketch extends PApplet {
     boolean e = keyCode == 69;
     player.keyPressed(left, right, up, down, e);
   }
+
+  public void mousePressed() {
+    player.mousePressed(this);
+  }
 }

@@ -19,10 +19,14 @@ public class ItemStack {
  * TODO: write javadoc
  */
   public void add(Item item) throws Exception {
+    if(this.item == null) {
+      this.item = item;
+      maxSize = item.getStackSize();
+    }
     if(this.item.getItemType() != item.getItemType()) {
       throw new Exception("Not the same item type"); //TODO make custom Exception
     }
-    if(itemCount + 1 > maxSize) {
+    if(!(itemCount < maxSize)) {
       throw new Exception("Full itemstack"); //TODO make custom Exception
     }
     itemCount++;
@@ -43,7 +47,7 @@ public class ItemStack {
    * @return
    */
   public boolean hasItem() {
-    return item == null;
+    return item != null;
   }
 
   public void setItem(Item item) {

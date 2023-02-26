@@ -32,7 +32,7 @@ public class Hotbar {
 
     // Show Items on hotbar
     for (int i = 0; i < itemStacks.length; i++) {
-      if(itemStacks[i].hasItem()) continue;
+      if(!itemStacks[i].hasItem()) continue;
       PImage texture = itemStacks[i].getItemTexture();
       g.image(texture,x + (margin + slotSize) * i + margin,y + margin,slotSize,slotSize);
     }
@@ -62,4 +62,16 @@ public class Hotbar {
   public void setItem(int slot, Item item) {
     itemStacks[slot].setItem(item);
   }
+
+  public void giveItem(Item item) throws Exception {
+    for(int i = 0; i < itemStacks.length; i++) {
+      if(itemStacks[i].hasItem()) continue;
+      else {
+        setItem(i, item);
+        return;
+      }
+    }
+    throw new Exception("No empty slot");
+  }
+
 }
