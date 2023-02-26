@@ -1,5 +1,6 @@
 package dk.mtdm;
 
+import dk.mtdm.Commands.TextInputBox;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.texureFiles.BlockTextures;
 import dk.mtdm.itemsAndMore.texureFiles.ItemTexture;
@@ -34,7 +35,10 @@ public class Sketch extends PApplet {
 
     World.setup(3, World.get_HEIGHT(), 20);
     player = new Player(new LDVector(0, -300));
+
   }
+
+  private TextInputBox textInputBox = new TextInputBox(this);
 
   /**
    * TODO: write javadoc
@@ -57,6 +61,8 @@ public class Sketch extends PApplet {
     // System.out.println(player.getPos().getX() + " " + player.getPos().getY() +
     // "\n" + World.CanvasToGlobal(player.getPos()).getX() + " " +
     // World.CanvasToGlobal(player.getPos()).getY() + "\n");
+
+    textInputBox.show(g);
   }
 
   /**
@@ -83,6 +89,7 @@ public class Sketch extends PApplet {
     boolean down = keyCode == 40 || keyCode == 83;
     boolean e = keyCode == 69;
     player.keyPressed(left, right, up, down, e);
+    textInputBox.keyPressed(keyCode);
   }
 
   public void mousePressed() {
