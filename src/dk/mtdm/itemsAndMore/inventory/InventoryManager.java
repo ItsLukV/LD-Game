@@ -3,8 +3,8 @@ package dk.mtdm.itemsAndMore.inventory;
 import dk.mtdm.Pair;
 import dk.mtdm.itemsAndMore.items.Item;
 import dk.mtdm.itemsAndMore.items.ItemStack;
+import dk.mtdm.itemsAndMore.items.ItemTypes;
 import dk.mtdm.itemsAndMore.items.Pickaxe;
-import dk.mtdm.itemsAndMore.items.Stick;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -32,15 +32,30 @@ public class InventoryManager {
  * TODO: write javadoc
  */
   public void giveItem(Item item) {
-
     Pair<Integer, Integer> slot = null;
     try {
-      slot = getEmptySlot();
+      slot = getSlot(item.getItemType());
     } catch (Exception e) {
       e.printStackTrace();
     }
     try {
+      assert slot != null;
       slots[slot.getFirst()][slot.getSecond()].add(item);
+    } catch (Exception e) {
+      e.printStackTrace();
+
+    }
+  }
+
+  public void giveItem(Item item, int amount) {
+    Pair<Integer, Integer> slot = null;
+    try {
+      slot = getSlot(item.getItemType());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    try {
+      slots[slot.getFirst()][slot.getSecond()].add(item, amount);
     } catch (Exception e) {
       e.printStackTrace();
 
@@ -58,7 +73,17 @@ public class InventoryManager {
   /**
  * TODO: write javadoc
  */
-  private Pair<Integer, Integer> getEmptySlot() throws Exception {
+  private Pair<Integer, Integer> getSlot(ItemTypes type) throws Exception {
+    for(int i = 0; i < slots.length; ++i) {
+      for(int j = 0; j < slots[i].length; ++j) {
+        if(slots[i][j].hasItem()) {
+          if(slots[i][j].getItemType() == type) {
+            return new Pair<>(i,j);
+          }
+        }
+      }
+    }
+
     for(int i = 0; i < slots.length; ++i) {
       for(int j = 0; j < slots[i].length; ++j) {
         if(!slots[i][j].hasItem()) {

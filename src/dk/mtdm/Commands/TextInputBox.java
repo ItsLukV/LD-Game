@@ -20,7 +20,7 @@ public class TextInputBox {
     }
 
     public void show(PGraphics g) {
-        LDVector pos = new LDVector(20,g.height - height); // Canvas pos
+        LDVector pos = new LDVector(0,g.height - height); // Canvas pos
         g.rect(pos.getX(), pos.getY(), g.width, height);
         int margin = 5;
         g.push();
@@ -29,9 +29,13 @@ public class TextInputBox {
         g.pop();
     }
 
-    public void keyPressed(int c) {
-        if(charLookUp.get(c) != null) {
-            text += charLookUp.get(c);
+    public void keyPressed(int keyCode) {
+        if(keyCode == 8 && text.length() > 0) {
+            text = text.substring(0, text.length() - 1);
+            return;
+        }
+        if(charLookUp.get(keyCode) != null) {
+            text += charLookUp.get(keyCode);
         }
     }
 
@@ -39,6 +43,9 @@ public class TextInputBox {
         return text;
     }
 
+    public void restartText() {
+        text = "";
+    }
     private void loadHashmap() {
         charLookUp.put(81,'q');
         charLookUp.put(87,'w');
@@ -71,8 +78,8 @@ public class TextInputBox {
         charLookUp.put(66,'b');
         charLookUp.put(78,'n');
         charLookUp.put(77,'m');
-        charLookUp.put(188,',');
-        charLookUp.put(190,'.');
+        charLookUp.put(44,',');
+        charLookUp.put(46,'.');
 
         charLookUp.put(49,'1');
         charLookUp.put(50,'2');
@@ -84,5 +91,7 @@ public class TextInputBox {
         charLookUp.put(56,'8');
         charLookUp.put(57,'9');
         charLookUp.put(48,'0');
+
+        charLookUp.put(32,' ');
     }
 }

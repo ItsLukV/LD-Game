@@ -22,7 +22,7 @@ public class Player extends Entity {
   private boolean left;
   private int moveSpeed = 5;
   private float airRes = 0.8f;
-  private InventoryManager inventory = new InventoryManager();
+  public static InventoryManager inventory = new InventoryManager();
   public static boolean noClip = false;
   public static int gravityAcc = 2;
 
@@ -131,8 +131,7 @@ public class Player extends Entity {
 
   private void calcCollision(PGraphics g) {
     Block block = World.getBlockCanvas(new LDVector(pos.getX(), pos.getY()));
-//    if(!block.getSolidity()) {return; }
-//    if(collisionWith(block)) {
+
     if(block.getSolidity()) {
       speed.setY(0);
       try {
@@ -146,6 +145,10 @@ public class Player extends Entity {
         e.printStackTrace();
       } catch (Exception e){}
     }
+  }
+
+  public InventoryManager getInventory() {
+    return inventory;
   }
 
   public void mousePressed(PApplet p) {

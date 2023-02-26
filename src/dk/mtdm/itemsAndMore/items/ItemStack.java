@@ -31,6 +31,21 @@ public class ItemStack {
     }
     itemCount++;
   }
+
+  public void add(Item item, int amount) throws Exception {
+    if(this.item == null) {
+      this.item = item;
+      maxSize = item.getStackSize();
+    }
+    if(this.item.getItemType() != item.getItemType()) {
+      throw new Exception("Not the same item type"); //TODO make custom Exception
+    }
+    if(!(itemCount < maxSize)) {
+      throw new Exception("Full itemstack"); //TODO make custom Exception
+    }
+    itemCount += amount;
+  }
+
   /**
  * TODO: write javadoc
  */
