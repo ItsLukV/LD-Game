@@ -4,28 +4,48 @@ import processing.core.PImage;
 
 public class ItemStack {
   private int itemCount;
-  private final int maxSize;
-  private final Item item;
+  private int maxSize;
+  private Item item;
 
   /**
  * TODO: write javadoc
  */
   public ItemStack(Item item) {
-    maxSize = item.getStackSize();
+    if(item == null) {return;}
     this.item = item;
+    maxSize = item.getStackSize();
   }
   /**
  * TODO: write javadoc
  */
   public void add(Item item) throws Exception {
+    if(this.item == null) {
+      this.item = item;
+      maxSize = item.getStackSize();
+    }
     if(this.item.getItemType() != item.getItemType()) {
       throw new Exception("Not the same item type"); //TODO make custom Exception
     }
-    if(itemCount + 1 > maxSize) {
+    if(!(itemCount < maxSize)) {
       throw new Exception("Full itemstack"); //TODO make custom Exception
     }
     itemCount++;
   }
+
+  public void add(Item item, int amount) throws Exception {
+    if(this.item == null) {
+      this.item = item;
+      maxSize = item.getStackSize();
+    }
+    if(this.item.getItemType() != item.getItemType()) {
+      throw new Exception("Not the same item type"); //TODO make custom Exception
+    }
+    if(!(itemCount < maxSize)) {
+      throw new Exception("Full itemstack"); //TODO make custom Exception
+    }
+    itemCount += amount;
+  }
+
   /**
  * TODO: write javadoc
  */
@@ -35,5 +55,17 @@ public class ItemStack {
 
   public PImage getItemTexture() {
     return item.getTexture();
+  }
+
+  /**
+   * Returns if the item is null or not
+   * @return
+   */
+  public boolean hasItem() {
+    return item != null;
+  }
+
+  public void setItem(Item item) {
+    this.item = item;
   }
 }
