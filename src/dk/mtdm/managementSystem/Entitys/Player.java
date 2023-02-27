@@ -3,6 +3,8 @@ package dk.mtdm.managementSystem.Entitys;
 import dk.mtdm.exceptions.MissingDataException;
 import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
+import dk.mtdm.itemsAndMore.items.Pickaxe;
+import dk.mtdm.itemsAndMore.items.Stick;
 import dk.mtdm.itemsAndMore.texureFiles.BlockTextures;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;
@@ -11,6 +13,7 @@ import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.misc.miscTextures.MiscTextures;
+import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class Player extends Entity {
@@ -22,7 +25,7 @@ public class Player extends Entity {
   private boolean left;
   private int moveSpeed = 5;
   private float airRes = 0.8f;
-  private InventoryManager inventory = new InventoryManager();
+  public static InventoryManager inventory = new InventoryManager();
   public static boolean noClip = false;
   public static int gravityAcc = 2;
 
@@ -32,12 +35,10 @@ public class Player extends Entity {
    */
   public Player(WorldWideLocation pos) {
     this.pos = pos;
-    inventory.giveItem();
+    inventory.giveItem(new Stick()); // TODO Remove this
+    inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove this
   }
-  /**
-   * Creates a player object
-   * @param pos start pos
-   */
+
   @Override
   public void draw(PGraphics g) {
     g.push();
@@ -100,11 +101,12 @@ public class Player extends Entity {
   /**
    * TODO: write javadoc
    */
-  public void keyPressed(boolean left , boolean right, boolean up, boolean down) {
+  public void keyPressed(boolean left , boolean right, boolean up, boolean down, boolean e) {
     if (left) this.left = true;
     if (right) this.right = true;
     if (up) this.up = true;
     if (down) this.down = true;
+    if(e) inventory.changeMenu();
   }
   /**
    * TODO: write javadoc
@@ -165,5 +167,13 @@ public class Player extends Entity {
         e.printStackTrace();
       } catch (Exception e){}
     }
+  }
+
+  public InventoryManager getInventory() {
+    return inventory;
+  }
+
+  public void mousePressed(PApplet p) {
+    inventory.mousePressed(p);
   }
 }

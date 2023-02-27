@@ -6,12 +6,15 @@ import processing.core.PImage;
 public class MiscTextures {
   private static PImage player;
   private static PImage hotbar;
+  private static PImage inventory;
   /**
    * TODO: write javadoc
    */
   public static void loadBlockTextures(PApplet p) {
-    player = p.loadImage("src/dk/mtdm/misc/miscTextures/Player.png");
-    hotbar = p.loadImage("src/dk/mtdm/misc/miscTextures/Hotbar.png");
+    String path = "src/dk/mtdm/misc/miscTextures/";
+    player = p.loadImage(path + "Player.png");
+    hotbar = p.loadImage(path + "Hotbar.png");
+    inventory = p.loadImage(path + "Inventory.png");
   }
 
   public static PImage getPlayerTexture() {
@@ -22,4 +25,7 @@ public class MiscTextures {
     return hotbar;
   }
 
+  public static PImage getInventoryTexture() {
+    return inventory;
+  }
 }

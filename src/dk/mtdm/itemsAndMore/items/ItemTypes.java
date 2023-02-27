@@ -4,5 +4,6 @@ public enum ItemTypes {
     grass,
     dirt,
     stone,
-    Stick
+    stick,
+    pickaxe,
 }

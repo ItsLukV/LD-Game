@@ -1,6 +1,7 @@
 package dk.mtdm.itemsAndMore.inventory;
 
 import dk.mtdm.Sketch;
+import dk.mtdm.itemsAndMore.items.Item;
 import dk.mtdm.itemsAndMore.items.ItemStack;
 import dk.mtdm.itemsAndMore.items.Stick;
 import dk.mtdm.misc.miscTextures.MiscTextures;
@@ -16,9 +17,11 @@ public class Hotbar {
   ItemStack[] itemStacks = new ItemStack[3];
 
   public Hotbar() {
-    itemStacks[0] = new ItemStack(new Stick());
-    itemStacks[1] = new ItemStack(new Stick());
-    itemStacks[2] = new ItemStack(new Stick());
+    for (int i = 0; i < itemStacks.length; i++) {
+      itemStacks[i] = new ItemStack(null);
+
+//    itemStacks[i] = new ItemStack(new Stick());
+    }
   }
 
   public void show(PGraphics g) {
@@ -29,6 +32,7 @@ public class Hotbar {
 
     // Show Items on hotbar
     for (int i = 0; i < itemStacks.length; i++) {
+      if(!itemStacks[i].hasItem()) continue;
       PImage texture = itemStacks[i].getItemTexture();
       g.image(texture,x + (margin + slotSize) * i + margin,y + margin,slotSize,slotSize);
     }
@@ -54,4 +58,20 @@ public class Hotbar {
       case 51 -> activeSlot = 2;
     }
   }
+
+  public void setItem(int slot, Item item) {
+    itemStacks[slot].setItem(item);
+  }
+
+  public void giveItem(Item item) throws Exception {
+    for(int i = 0; i < itemStacks.length; i++) {
+      if(itemStacks[i].hasItem()) continue;
+      else {
+        setItem(i, item);
+        return;
+      }
+    }
+    throw new Exception("No empty slot");
+  }
+
 }
