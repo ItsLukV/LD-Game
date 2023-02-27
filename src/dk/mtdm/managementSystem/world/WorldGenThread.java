@@ -3,6 +3,8 @@ package dk.mtdm.managementSystem.world;
 
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.location.LDVector;
+import dk.mtdm.location.LocationTypes;
+import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.Thread;
 /**
  * @author @dendersen
@@ -109,16 +111,17 @@ public class WorldGenThread extends Thread{
     }
 
     
+    WorldWideLocation location = WorldWideLocation.create(x, y, LocationTypes.relative);
     if(noise < World.getBlockAir()) {
-      parent.setBlock(new LDVector(x, y), BlockTypes.air);
+      parent.setBlock(location, BlockTypes.air);
       return;
     }
     if(noise > World.getBlockStone()*3) {
-      parent.setBlock(new LDVector(x, y), BlockTypes.bedrock);
+      parent.setBlock(location, BlockTypes.bedrock);
       return;
     }
     if(noise > World.getBlockStone()) {
-      parent.setBlock(new LDVector(x, y), BlockTypes.stone);
+      parent.setBlock(location, BlockTypes.stone);
       return;
     }
     
@@ -128,7 +131,7 @@ public class WorldGenThread extends Thread{
             this.noise[x][y+1] < World.getBlockAir() ||
             this.noise[x+1][y] < World.getBlockAir() ||
             outNoise[0][y]< World.getBlockAir()){
-              parent.setBlock(new LDVector(x, y), BlockTypes.grass);
+              parent.setBlock(location, BlockTypes.grass);
               return;
             }
       } catch (Exception e) {
@@ -142,7 +145,7 @@ public class WorldGenThread extends Thread{
             this.noise[x-1][y] < World.getBlockAir() ||
             outNoise[1][y]< World.getBlockAir()){
               
-              parent.setBlock(new LDVector(x, y), BlockTypes.grass);
+              parent.setBlock(location, BlockTypes.grass);
               return;
             }
         
@@ -152,17 +155,17 @@ public class WorldGenThread extends Thread{
     }
     try {
       if(this.noise[x][y-1] < World.getBlockAir() || this.noise[x][y-1] < World.getBlockAir() || this.noise[x-1][y] < World.getBlockAir() || this.noise[x+1][y]< World.getBlockAir()){
-        parent.setBlock(new LDVector(x, y), BlockTypes.grass);
+        parent.setBlock(location, BlockTypes.grass);
         return;
       }
     } catch (Exception e) {
       // System.out.println("edge");
     }
-    parent.setBlock(new LDVector(x, y), BlockTypes.dirt);
+    parent.setBlock(location, BlockTypes.dirt);
     return;
   }
   private float noisePoint(int globalX, int globalY){
-    final float discrep = 16f;
+    final float discrep = 8.5f;
     return PerlinNoise.getNoise((float)globalX/discrep, (float)globalY/discrep);
   }
 }

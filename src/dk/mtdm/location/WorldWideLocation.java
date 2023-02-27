@@ -5,28 +5,34 @@ import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.managementSystem.world.World;
 
 /**
- * type should only be float or int
+ * int should only be float or int
  * @param x
  * @param y
  * @param location
  */
-public class WorldWideLocation<type> {
-  type x;
-  type y;
+public class WorldWideLocation {
+  int x;
+  int y;
   LocationTypes location;
   Integer chunkID = null;
   
-  public static WorldWideLocation<Integer> create(LDVector vector, LocationTypes location){
-    return new WorldWideLocation<Integer>(vector.getX(), vector.getY(), location);
+  public static WorldWideLocation create(LDVector vector, LocationTypes location){
+    return new WorldWideLocation(vector.getX(), vector.getY(), location);
   }
-  public static WorldWideLocation<Integer> create(int x, int y, LocationTypes location){
-    return new WorldWideLocation<Integer>(x, y, location);
+  public static WorldWideLocation create(int x, int y, LocationTypes location){
+    return new WorldWideLocation(x, y, location);
   }
-  public static WorldWideLocation<Float> create(float x, float y, LocationTypes location){
-    return new WorldWideLocation<Float>(x, y, location);
+  public static WorldWideLocation create(int x, int y, LocationTypes location, int chunkID){
+    return new WorldWideLocation(x, y, location, chunkID);
   }
-  
-  private WorldWideLocation (type x, type y, LocationTypes location){
+
+  private WorldWideLocation (int x, int y, LocationTypes location, int chunkID){
+    this.x = x;
+    this.y = y;
+    this.location = location;
+    this.chunkID = chunkID;
+  }
+  private WorldWideLocation (int x, int y, LocationTypes location){
     this.x = x;
     this.y = y;
     this.location = location;
@@ -57,9 +63,9 @@ public class WorldWideLocation<type> {
         return globalToChunkID(out);
       
       case unkown:
-        throw new MissingDataException("no known location type given, it is not posible to generate specific information without specific data");
+        throw new MissingDataException("no known location int given, it is not posible to generate specific information without specific data");
       default:
-        throw new MissingDataException("location type not found, likely null, please set location type");
+        throw new MissingDataException("location int not found, likely null, please set location int");
     }
   }
   public LDVector getRelative() throws MissingDataException{
@@ -74,7 +80,7 @@ public class WorldWideLocation<type> {
         return new LDVector(globalToRelative_X(canvasToGlobal_X(x)), canvasToGlobal_Y(y));
       
       case unkown:
-        throw new MissingDataException("no known location type given, it is not posible to generate specific information without specific data");
+        throw new MissingDataException("no known location int given, it is not posible to generate specific information without specific data");
       default:
         throw new MissingDataException();
     }
@@ -95,7 +101,7 @@ public class WorldWideLocation<type> {
       return new LDVector(canvasToGlobal_X(x), canvasToGlobal_Y(y));
     
     case unkown:
-      throw new MissingDataException("no known location type given, it is not posible to generate specific information without specific data");
+      throw new MissingDataException("no known location int given, it is not posible to generate specific information without specific data");
     default:
       throw new MissingDataException();
     }
@@ -116,19 +122,19 @@ public class WorldWideLocation<type> {
         return new LDVector((int) x, (int) y);
       
       case unkown:
-        throw new MissingDataException("no known location type given, it is not posible to generate specific information without specific data");
+        throw new MissingDataException("no known location int given, it is not posible to generate specific information without specific data");
       default:
         throw new MissingDataException();
     }
   }
   
-  private int globalToChunkID(type x) {
+  private int globalToChunkID(int x) {
     return globalToChunkID((float) x);
   }
   private int globalToChunkID(float x) {
     return (int)Math.floor(x / (float)World.get_CHUNK_WIDTH());
   }
-  private int canvasToGlobal_X(type x){
+  private int canvasToGlobal_X(int x){
     return (int) x/Block.getWidth();
   }
   private int globalToRelative_X(int x){
@@ -138,7 +144,7 @@ public class WorldWideLocation<type> {
       return World.get_CHUNK_WIDTH()-Math.abs(x%World.get_CHUNK_WIDTH())-1;
     }
   }
-  private int canvasToGlobal_Y(type y){
+  private int canvasToGlobal_Y(int y){
     int out = (int)((float)y/Block.getHeight());
     out *= -1;
     if(out < 0){
@@ -156,5 +162,40 @@ public class WorldWideLocation<type> {
   }
   private int globalToCanvas_Y(int y){
     return -y*Block.getHeight();
+  }
+
+  public void setPosition(LDVector vector, LocationTypes location){
+    this.x = (int) vector.getX();
+    this.y = vector.getY();
+    this.location = location;
+  }
+  public WorldWideLocation copy(){
+    return new WorldWideLocation(x, y, location, chunkID);
+  }
+  public void add(LDVector vector, LocationTypes location){
+    switch (location) {
+      case relative:
+      case global:
+      case unkown:
+        if(this.location == LocationTypes.relative || this.location == LocationTypes.global || this.location == LocationTypes.unkown){
+          x += vector.getX();
+          y += vector.getY();
+        }else{
+          x += globalToCanvas_X(vector.getX());
+          y += globalToCanvas_Y(vector.getY());
+        }
+        break;
+      case canvas:
+        if (this.location == LocationTypes.canvas) {
+          x += vector.getX();
+          y += vector.getY();
+        }else{
+          x += canvasToGlobal_X(vector.getX());
+          y += canvasToGlobal_Y(vector.getY());
+        }
+    
+      default:
+        break;
+    }
   }
 }

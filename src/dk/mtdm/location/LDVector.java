@@ -6,7 +6,6 @@ package dk.mtdm.location;
 public class LDVector {
   private int x;
   private int y;
-  private LocationTypes location = LocationTypes.unkown;
 
   public LDVector(int x, int y) {
     this.x = x;
