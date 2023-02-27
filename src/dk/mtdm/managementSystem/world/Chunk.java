@@ -56,8 +56,10 @@ public class Chunk {
    * @return the block stored at the given location
    */
   public Block getBlock(int x, int y){
-    if(containedBlocks[x][y] != null)
-    return containedBlocks[x][y];
+    if(containedBlocks[x][y] != null){
+      containedBlocks[x][y].setChunkID(ID);
+      return containedBlocks[x][y];
+    }
     
     if (t == null) {
       t = new WorldGenThread(ID, creationHeight, this);
@@ -70,9 +72,13 @@ public class Chunk {
       chunkError++;
       // System.out.print("\tfailed get block: "+ ID + ";(" + x +","+ y + ")");
     }
-    if(containedBlocks[x][y] != null) return containedBlocks[x][y];
+    if(containedBlocks[x][y] != null){
+      containedBlocks[x][y].setChunkID(ID);
+      return containedBlocks[x][y];
+    } 
     
     WorldWideLocation tempBlockVector = WorldWideLocation.create(x, y, LocationTypes.relative);
+    tempBlockVector.setChunkID(ID);
     return BlockPicker.getAir(BlockTypes.air, tempBlockVector);
   }
   /**
@@ -96,6 +102,7 @@ public class Chunk {
    */
   public void setBlock(WorldWideLocation location,BlockTypes block){
     WorldWideLocation Location = location.copy();
+    Location.setChunkID(ID);
     location.setChunkID(ID);
     try {
       try {

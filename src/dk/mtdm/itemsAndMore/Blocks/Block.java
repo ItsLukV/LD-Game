@@ -45,7 +45,7 @@ public abstract class Block {
     public void show(PGraphics g) {
         try {
             try {
-                g.image(BlockTextures.picker(id), pos.getCanvas().getX()*size.getX(),/* World.get_HEIGHT()*/size.getY()-pos.getCanvas().getY()*size.getY(), size.getX(), size.getY());
+                g.image(BlockTextures.picker(id), pos.getCanvas().getX(),/* World.get_HEIGHT()*/size.getY()-pos.getCanvas().getY(), size.getX(), size.getY());
             } catch (MissingDataException e) {
                 e.printStackTrace();
             }
@@ -109,5 +109,8 @@ public abstract class Block {
     }
     public static void setHeight(int height) {
         size.setY(height);
+    }
+    public void setChunkID(int chunkID){
+        this.pos.setChunkID(chunkID);
     }
 }

@@ -22,7 +22,7 @@ public class WorldWideLocation {
   public static WorldWideLocation create(int x, int y, LocationTypes location){
     return new WorldWideLocation(x, y, location);
   }
-  public static WorldWideLocation create(int x, int y, LocationTypes location, int chunkID){
+  public static WorldWideLocation create(int x, int y, LocationTypes location, Integer chunkID){
     return new WorldWideLocation(x, y, location, chunkID);
   }
 
@@ -110,7 +110,7 @@ public class WorldWideLocation {
     switch (location) {
       case relative:
         if(chunkID != null){
-          return new LDVector(globalToCanvas_X(relativToGlobal_X((int)x)),(int)y);
+          return new LDVector(globalToCanvas_X(relativToGlobal_X((int)x)),(int)y*Block.getHeight());
         }else{
           throw new MissingDataException("relative location is incapable of providing GLOBAL without a set CHUNKID");
         }
@@ -170,7 +170,11 @@ public class WorldWideLocation {
     this.location = location;
   }
   public WorldWideLocation copy(){
-    return new WorldWideLocation(x, y, location, chunkID);
+    if(chunkID == null){
+      return new WorldWideLocation(x, y, location);
+    }else{
+      return new WorldWideLocation(x, y, location, chunkID);
+    }
   }
   public void add(LDVector vector, LocationTypes location){
     switch (location) {
