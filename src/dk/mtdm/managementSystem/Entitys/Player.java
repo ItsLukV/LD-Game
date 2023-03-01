@@ -36,6 +36,8 @@ public class Player extends Entity {
   public Player(WorldWideLocation pos) {
     this.pos = pos;
     inventory.giveItem(new Stick()); // TODO Remove this
+    inventory.giveItem(new Stick()); // TODO Remove this
+
     inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove this
   }
 
@@ -68,7 +70,7 @@ public class Player extends Entity {
     }
   }
 
-  public void ti  ck(PGraphics g) {
+  public void tick(PGraphics g) {
     calcSpeed();
     if(!noClip) {
       addGravity();
