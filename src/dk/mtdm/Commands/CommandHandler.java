@@ -5,6 +5,7 @@ import dk.mtdm.itemsAndMore.items.Item;
 import dk.mtdm.itemsAndMore.items.ItemPicker;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
 import dk.mtdm.itemsAndMore.items.Stick;
+import dk.mtdm.managementSystem.Entitys.Player;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -30,8 +31,15 @@ public class CommandHandler {
             switch (command[0].toUpperCase()) {
                 case "GIVE" -> {
                     Item item = translateStringToItem(command[1]);
-                    Sketch.player.getInventory().giveItem(item,1);
+                    int amount = 1;
+                    try {
+                        amount = command.length == 2 ? 1 : Integer.parseInt(command[2]);
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+                    Sketch.player.getInventory().giveItem(item, amount);
                 }
+                case "NOCLIP" -> Player.noClip = !Player.noClip;
                 case "PING" -> System.out.println("Pong!");
             }
             textInputBox.restartText();
