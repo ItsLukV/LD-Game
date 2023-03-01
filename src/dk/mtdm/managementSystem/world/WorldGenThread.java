@@ -128,44 +128,45 @@ public class WorldGenThread extends Thread{
     if(x == 0){
       try {
         if (this.noise[x][y-1] < World.getBlockAir() ||
-            this.noise[x][y+1] < World.getBlockAir() ||
-            this.noise[x+1][y] < World.getBlockAir() ||
-            outNoise[0][y]< World.getBlockAir()){
-              parent.setBlock(location, BlockTypes.grass);
-              return;
-            }
+          this.noise[x][y+1] < World.getBlockAir() ||
+          this.noise[x+1][y] < World.getBlockAir() ||
+          outNoise[0][y]< World.getBlockAir()
+        ){
+          parent.setBlock(location, BlockTypes.grass);
+          return;
+        }
       } catch (Exception e) {
         // System.out.println("edge");
       }
-    }
-    if(x == World.get_CHUNK_WIDTH()-1){
+    }else if(x == World.get_CHUNK_WIDTH()-1){
       try {
-        if (this.noise[x][y-1] < World.getBlockAir() ||
-            this.noise[x][y-1] < World.getBlockAir() ||
-            this.noise[x-1][y] < World.getBlockAir() ||
-            outNoise[1][y]< World.getBlockAir()){
-              
-              parent.setBlock(location, BlockTypes.grass);
-              return;
-            }
-        
+        if (
+          this.noise[x][y-1] < World.getBlockAir() ||
+          this.noise[x][y-1] < World.getBlockAir() ||
+          this.noise[x-1][y] < World.getBlockAir() ||
+          outNoise[1][y]< World.getBlockAir()
+        ){
+          
+          parent.setBlock(location, BlockTypes.grass);
+          return;
+        }
       } catch (Exception e) {
         // System.out.println("edge");
       }
-    }
-    try {
-      if(this.noise[x][y-1] < World.getBlockAir() || this.noise[x][y-1] < World.getBlockAir() || this.noise[x-1][y] < World.getBlockAir() || this.noise[x+1][y]< World.getBlockAir()){
+    }else if(
+        this.noise[x][y-1] < World.getBlockAir() ||
+        this.noise[x][y-1] < World.getBlockAir() || 
+        this.noise[x-1][y] < World.getBlockAir() || 
+        this.noise[x+1][y]< World.getBlockAir()
+      ){
         parent.setBlock(location, BlockTypes.grass);
         return;
       }
-    } catch (Exception e) {
-      // System.out.println("edge");
-    }
     parent.setBlock(location, BlockTypes.dirt);
     return;
   }
   private float noisePoint(int globalX, int globalY){
     final float discrep = 8.5f;
-    return PerlinNoise.getNoise((float)globalX/discrep, (float)globalY/discrep);
+    return PerlinNoise.getNoise((float)globalX/discrep, (float)globalY/discrep)+1/(globalY+1);
   }
 }

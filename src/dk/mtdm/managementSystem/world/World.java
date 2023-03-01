@@ -62,6 +62,12 @@ public class World {
    * the location of a block that wants to be accessed in the world, this alows acces to blocks whitout needing to find a specific chunk
    * @return // the enum blocktype coresponding to the block at the given position
    */
+  
+  /**
+   * @deprecated to be removed and replace with WWL
+   * @param location
+   * @return
+   */
   public static Block getBlock(LDVector location){
     
     int chunkID = (int)Math.floor((float)location.getX() / (float)CHUNK_WIDTH);
@@ -73,6 +79,12 @@ public class World {
     }
     return getChunk(chunkID).getBlock(WorldWideLocation.create(relativeX, location.getY(),LocationTypes.relative));
   }
+  
+  /**
+   * @deprecated to be removed and replace with WWL
+   * @param location
+   * @return
+   */
   public static Block getBlockCanvas(LDVector location){
     return getBlock(CanvasToGlobal(location));
   }
@@ -150,6 +162,12 @@ public class World {
   public static Chunk standardChunk(int ID){
     return new Chunk(ID, World.get_CHUNK_WIDTH(), World.get_HEIGHT(), World.getGeneratorHeight());
   }
+  
+  /**
+   * @deprecated use WWL as coordinate if koordinate style needs to change
+   * @param location
+   * @return
+   */
   public static LDVector CanvasToGlobal(LDVector location){
     LDVector newLocation = location.copy();
     newLocation.divide(new LDVector(Block.getWidth(), Block.getHeight()));
@@ -163,6 +181,12 @@ public class World {
     newLocation.add(new LDVector(0, 1));
     return newLocation;
   }
+  
+  /**
+   * @deprecated use WWL as coordinate if koordinate style needs to change
+   * @param location
+   * @return
+   */
   public static LDVector GlobalToCanvas(LDVector location){
     LDVector newLocation = location.copy();
     newLocation.multiply(new LDVector(Block.getWidth(), -Block.getHeight()));
