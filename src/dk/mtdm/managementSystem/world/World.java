@@ -22,6 +22,10 @@ public class World {
   private static int seed1 = 3;
   private static int GeneratorHeight = HEIGHT/3;
   private static float BlockStone = 0.5f;
+  private static float BlockBedrock = 1f;
+  public static float getBlockBedrock() {
+    return BlockBedrock;
+  }
   private static float BlockAir = 0.3f;
   /**
    * starts the world without a set seed
