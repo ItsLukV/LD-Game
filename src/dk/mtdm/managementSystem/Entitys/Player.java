@@ -63,11 +63,7 @@ public class Player extends Entity {
    */
   @Override
   public void tick(){
-    calcSpeed();
-    if(!noClip) {
-      addGravity();
-      calcCollision(null);
-    }
+    tick(null);
   }
 
   public void tick(PGraphics g) {
@@ -75,6 +71,13 @@ public class Player extends Entity {
     if(!noClip) {
       addGravity();
       calcCollision(g);
+      try {
+        if(pos.getCanvas().getY() > 0){
+          pos.add(new LDVector(0, -pos.getCanvas().getY()), LocationTypes.canvas);
+        }
+      } catch (MissingDataException e) {
+        e.printStackTrace();
+      }
     }
     inventory.tick();
   }
