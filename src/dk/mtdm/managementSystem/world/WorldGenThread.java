@@ -130,13 +130,15 @@ public class WorldGenThread extends Thread{
     
     if(x == 0){
       try {
-        if (this.noise[x][y-1] < World.getBlockAir() ||
-            this.noise[x][y+1] < World.getBlockAir() ||
-            this.noise[x+1][y] < World.getBlockAir() ||
-            outNoise[0][y]< World.getBlockAir()){
-              parent.setBlock(location, BlockTypes.grass);
-              return;
-            }
+        if (
+          this.noise[x][y-1] < World.getBlockAir() ||
+          this.noise[x][y+1] < World.getBlockAir() ||
+          this.noise[x+1][y] < World.getBlockAir() ||
+          outNoise[0][y]< World.getBlockAir()
+        ){
+          parent.setBlock(location, BlockTypes.grass);
+          return;
+        }
       } catch (Exception e) {
         // System.out.println("edge");
       }
@@ -154,9 +156,7 @@ public class WorldGenThread extends Thread{
       } catch (Exception e) {
         // System.out.println("edge");
       }
-    }
-    try {
-      if(
+    }else if(
         this.noise[x][y-1] < World.getBlockAir() || 
         this.noise[x][y+1] < World.getBlockAir() || 
         this.noise[x-1][y] < World.getBlockAir() || 
@@ -165,9 +165,6 @@ public class WorldGenThread extends Thread{
         parent.setBlock(location, BlockTypes.grass);
         return;
       }
-    } catch (Exception e) {
-      // System.out.println("edge");
-    }
     parent.setBlock(location, BlockTypes.dirt);
     return;
   }
