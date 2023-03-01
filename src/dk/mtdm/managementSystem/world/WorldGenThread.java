@@ -128,8 +128,8 @@ public class WorldGenThread extends Thread{
       return;
     }
     
-    if(x == 0){
-      try {
+    switch (x) {
+      case 0:
         if (
           this.noise[x][y-1] < World.getBlockAir() ||
           this.noise[x][y+1] < World.getBlockAir() ||
@@ -139,31 +139,29 @@ public class WorldGenThread extends Thread{
           parent.setBlock(location, BlockTypes.grass);
           return;
         }
-      } catch (Exception e) {
-        // System.out.println("edge");
-      }
-    }else if(x == World.get_CHUNK_WIDTH()-1){
-      try {
-        if (this.noise[x][y-1] < World.getBlockAir() ||
+        break;
+      default:
+        if (
+          x == World.get_CHUNK_WIDTH()-1 &&(
+            this.noise[x][y-1] < World.getBlockAir() ||
             this.noise[x][y+1] < World.getBlockAir() ||
             this.noise[x-1][y] < World.getBlockAir() ||
-            outNoise[1][y]< World.getBlockAir()){
-              
-              parent.setBlock(location, BlockTypes.grass);
-              return;
-            }
-        
-      } catch (Exception e) {
-        // System.out.println("edge");
-      }
-    }else if(
-        this.noise[x][y-1] < World.getBlockAir() || 
-        this.noise[x][y+1] < World.getBlockAir() || 
-        this.noise[x-1][y] < World.getBlockAir() || 
-        this.noise[x+1][y]< World.getBlockAir()
-      ){
-        parent.setBlock(location, BlockTypes.grass);
-        return;
+            outNoise[1][y]< World.getBlockAir()
+          )
+        ){
+          parent.setBlock(location, BlockTypes.grass);
+          return;
+        }
+        else if(
+          this.noise[x][y-1] < World.getBlockAir() || 
+          this.noise[x][y+1] < World.getBlockAir() || 
+          this.noise[x-1][y] < World.getBlockAir() || 
+          this.noise[x+1][y]< World.getBlockAir()
+        ){
+          parent.setBlock(location, BlockTypes.grass);
+          return;
+        }
+        break;
       }
     parent.setBlock(location, BlockTypes.dirt);
     return;
