@@ -68,4 +68,8 @@ public class ItemStack {
   public void setItem(Item item) {
     this.item = item;
   }
+
+  public int getItemCount() {
+    return itemCount;
+  }
 }

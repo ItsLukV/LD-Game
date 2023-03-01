@@ -122,6 +122,11 @@ public class InventoryManager {
           int imgX = x + borderSize + (borderSize * 2 + slotSize) * i;
           int imgY = y + borderSize + (borderSize * 2 + slotSize) * j;
           g.image(item.getItemTexture(),imgX,imgY,slotSize,slotSize);
+          g.push();
+          g.fill(0);
+          g.textSize(15);
+          g.text(item.getItemCount(),imgX+slotSize - 15,imgY+slotSize - 5);
+          g.pop();
         }
       }
     }
