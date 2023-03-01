@@ -115,15 +115,15 @@ public class WorldGenThread extends Thread{
 
     
     WorldWideLocation location = WorldWideLocation.create(x, y, LocationTypes.relative);
-    if(noise < World.getBlockAir()) {
+    if(noise <= World.getBlockAir()) {
       parent.setBlock(location, BlockTypes.air);
       return;
     }
-    if(noise > World.getBlockBedrock()) {
+    if(noise >= World.getBlockBedrock()) {
       parent.setBlock(location, BlockTypes.bedrock);
       return;
     }
-    if(noise > World.getBlockStone()) {
+    if(noise >= World.getBlockStone()) {
       parent.setBlock(location, BlockTypes.stone);
       return;
     }
@@ -131,10 +131,10 @@ public class WorldGenThread extends Thread{
       switch (x) {
         case 0:
           if (
-            this.noise[x][y-1] < World.getBlockAir() ||
-            this.noise[x][y+1] < World.getBlockAir() ||
-            this.noise[x+1][y] < World.getBlockAir() ||
-            outNoise[0][y]< World.getBlockAir()
+            this.noise[x][y-1] <= World.getBlockAir() ||
+            this.noise[x][y+1] <= World.getBlockAir() ||
+            this.noise[x+1][y] <= World.getBlockAir() ||
+            outNoise[0][y]<= World.getBlockAir()
           ){
             parent.setBlock(location, BlockTypes.grass);
             return;
@@ -143,20 +143,20 @@ public class WorldGenThread extends Thread{
         default:
           if (
             x == World.get_CHUNK_WIDTH()-1 &&(
-              this.noise[x][y-1] < World.getBlockAir() ||
-              this.noise[x][y+1] < World.getBlockAir() ||
-              this.noise[x-1][y] < World.getBlockAir() ||
-              outNoise[1][y]< World.getBlockAir()
+              this.noise[x][y-1] <= World.getBlockAir() ||
+              this.noise[x][y+1] <= World.getBlockAir() ||
+              this.noise[x-1][y] <= World.getBlockAir() ||
+              outNoise[1][y]<= World.getBlockAir()
             )
           ){
             parent.setBlock(location, BlockTypes.grass);
             return;
           }else if(
             x != World.get_CHUNK_WIDTH()-1 && (
-              this.noise[x][y-1] < World.getBlockAir() || 
-              this.noise[x][y+1] < World.getBlockAir() || 
-              this.noise[x-1][y] < World.getBlockAir() || 
-              this.noise[x+1][y]< World.getBlockAir()
+              this.noise[x][y-1] <= World.getBlockAir() || 
+              this.noise[x][y+1] <= World.getBlockAir() || 
+              this.noise[x-1][y] <= World.getBlockAir() || 
+              this.noise[x+1][y]<= World.getBlockAir()
             )
           ){
             parent.setBlock(location, BlockTypes.grass);
@@ -168,6 +168,9 @@ public class WorldGenThread extends Thread{
     parent.setBlock(location, BlockTypes.dirt);
   }
   private float noisePoint(int globalX, int globalY){
+    if(globalY >= World.get_HEIGHT()){
+      return World.getBlockBedrock();
+    }
     final float discrep = 8.5f;
     return PerlinNoise.getNoise((float)globalX/discrep, (float)globalY/discrep) + 2f/((float)globalY+1f);
   }
