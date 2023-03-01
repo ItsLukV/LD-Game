@@ -68,7 +68,7 @@ public class Player extends Entity {
     }
   }
 
-  public void tick(PGraphics g) {
+  public void ti  ck(PGraphics g) {
     calcSpeed();
     if(!noClip) {
       addGravity();
