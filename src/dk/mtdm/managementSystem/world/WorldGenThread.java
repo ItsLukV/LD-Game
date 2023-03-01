@@ -127,44 +127,45 @@ public class WorldGenThread extends Thread{
       parent.setBlock(location, BlockTypes.stone);
       return;
     }
-    
-    switch (x) {
-      case 0:
-        if (
-          this.noise[x][y-1] < World.getBlockAir() ||
-          this.noise[x][y+1] < World.getBlockAir() ||
-          this.noise[x+1][y] < World.getBlockAir() ||
-          outNoise[0][y]< World.getBlockAir()
-        ){
-          parent.setBlock(location, BlockTypes.grass);
-          return;
-        }
-        break;
-      default:
-        if (
-          x == World.get_CHUNK_WIDTH()-1 &&(
+    try{
+      switch (x) {
+        case 0:
+          if (
             this.noise[x][y-1] < World.getBlockAir() ||
             this.noise[x][y+1] < World.getBlockAir() ||
-            this.noise[x-1][y] < World.getBlockAir() ||
-            outNoise[1][y]< World.getBlockAir()
-          )
-        ){
-          parent.setBlock(location, BlockTypes.grass);
-          return;
-        }
-        else if(
-          this.noise[x][y-1] < World.getBlockAir() || 
-          this.noise[x][y+1] < World.getBlockAir() || 
-          this.noise[x-1][y] < World.getBlockAir() || 
-          this.noise[x+1][y]< World.getBlockAir()
-        ){
-          parent.setBlock(location, BlockTypes.grass);
-          return;
-        }
+            this.noise[x+1][y] < World.getBlockAir() ||
+            outNoise[0][y]< World.getBlockAir()
+          ){
+            parent.setBlock(location, BlockTypes.grass);
+            return;
+          }
+        break;
+        default:
+          if (
+            x == World.get_CHUNK_WIDTH()-1 &&(
+              this.noise[x][y-1] < World.getBlockAir() ||
+              this.noise[x][y+1] < World.getBlockAir() ||
+              this.noise[x-1][y] < World.getBlockAir() ||
+              outNoise[1][y]< World.getBlockAir()
+            )
+          ){
+            parent.setBlock(location, BlockTypes.grass);
+            return;
+          }else if(
+            x != World.get_CHUNK_WIDTH()-1 && (
+              this.noise[x][y-1] < World.getBlockAir() || 
+              this.noise[x][y+1] < World.getBlockAir() || 
+              this.noise[x-1][y] < World.getBlockAir() || 
+              this.noise[x+1][y]< World.getBlockAir()
+            )
+          ){
+            parent.setBlock(location, BlockTypes.grass);
+            return;
+          }
         break;
       }
+    } catch(IndexOutOfBoundsException ignored){}
     parent.setBlock(location, BlockTypes.dirt);
-    return;
   }
   private float noisePoint(int globalX, int globalY){
     final float discrep = 8.5f;
