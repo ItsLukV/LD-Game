@@ -140,8 +140,7 @@ public class WorldGenThread extends Thread{
       } catch (Exception e) {
         // System.out.println("edge");
       }
-    }
-    if(x == World.get_CHUNK_WIDTH()-1){
+    }else if(x == World.get_CHUNK_WIDTH()-1){
       try {
         if (this.noise[x][y-1] < World.getBlockAir() ||
             this.noise[x][y+1] < World.getBlockAir() ||
