@@ -144,7 +144,7 @@ public class WorldGenThread extends Thread{
     if(x == World.get_CHUNK_WIDTH()-1){
       try {
         if (this.noise[x][y-1] < World.getBlockAir() ||
-            this.noise[x][y-1] < World.getBlockAir() ||
+            this.noise[x][y+1] < World.getBlockAir() ||
             this.noise[x-1][y] < World.getBlockAir() ||
             outNoise[1][y]< World.getBlockAir()){
               
@@ -157,7 +157,12 @@ public class WorldGenThread extends Thread{
       }
     }
     try {
-      if(this.noise[x][y-1] < World.getBlockAir() || this.noise[x][y-1] < World.getBlockAir() || this.noise[x-1][y] < World.getBlockAir() || this.noise[x+1][y]< World.getBlockAir()){
+      if(
+        this.noise[x][y-1] < World.getBlockAir() || 
+        this.noise[x][y+1] < World.getBlockAir() || 
+        this.noise[x-1][y] < World.getBlockAir() || 
+        this.noise[x+1][y]< World.getBlockAir()
+      ){
         parent.setBlock(location, BlockTypes.grass);
         return;
       }
