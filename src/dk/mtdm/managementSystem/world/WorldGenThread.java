@@ -115,6 +115,7 @@ public class WorldGenThread extends Thread{
 
     
     WorldWideLocation location = WorldWideLocation.create(x, y, LocationTypes.relative);
+    location.setChunkID(ID);
     if(noise <= World.getBlockAir()) {
       parent.setBlock(location, BlockTypes.air);
       return;
