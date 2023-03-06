@@ -1,10 +1,16 @@
 package dk.mtdm.managementSystem.world;
 
+import dk.mtdm.exceptions.MissingBlockTypeException;
+import dk.mtdm.exceptions.MissingDataException;
+import dk.mtdm.itemsAndMore.Blocks.AirBlock;
 import dk.mtdm.itemsAndMore.Blocks.Block;
+import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
+import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
 import processing.core.PGraphics;
+import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
 /*
 //remember: canvas location = processing (pixels)
 //remember: global location = gameWorld (blocks)
@@ -68,29 +74,18 @@ public class World {
    */
   
   /**
-   * @deprecated to be removed and replace with WWL
    * @param location
    * @return
+   * @throws MissingBlockTypeException
    */
-  public static Block getBlock(LDVector location){
-    
-    int chunkID = (int)Math.floor((float)location.getX() / (float)CHUNK_WIDTH);
-    int relativeX;
-    if(location.getX() > 0){
-      relativeX = Math.abs(location.getX()%CHUNK_WIDTH);
-    }else{
-      relativeX = CHUNK_WIDTH-Math.abs(location.getX()%CHUNK_WIDTH)-1;
+  public static Block getBlock(WorldWideLocation location) throws MissingBlockTypeException{
+    try {
+      return getChunk(location.getChunkID()).getBlock(location);
+    } catch (MissingDataException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      return BlockPicker.picker(BlockTypes.air,location);
     }
-    return getChunk(chunkID).getBlock(WorldWideLocation.create(relativeX, location.getY(),LocationTypes.relative));
-  }
-  
-  /**
-   * @deprecated to be removed and replace with WWL
-   * @param location
-   * @return
-   */
-  public static Block getBlockCanvas(LDVector location){
-    return getBlock(CanvasToGlobal(location));
   }
   /**
    * @return a random int between 'Integer.MAX_VALUE' and 'Integer.MIN_VALUE'
@@ -165,35 +160,5 @@ public class World {
   }
   public static Chunk standardChunk(int ID){
     return new Chunk(ID, World.get_CHUNK_WIDTH(), World.get_HEIGHT(), World.getGeneratorHeight());
-  }
-  
-  /**
-   * @deprecated use WWL as coordinate if koordinate style needs to change
-   * @param location
-   * @return
-   */
-  public static LDVector CanvasToGlobal(LDVector location){
-    LDVector newLocation = location.copy();
-    newLocation.divide(new LDVector(Block.getWidth(), Block.getHeight()));
-    newLocation.setY(-newLocation.getY());
-    if (newLocation.getY() < 0){
-      newLocation.setY(-newLocation.getY());
-    }
-    if (newLocation.getY() > get_HEIGHT()){
-      newLocation.setY(get_HEIGHT()-2);
-    }
-    newLocation.add(new LDVector(0, 1));
-    return newLocation;
-  }
-  
-  /**
-   * @deprecated use WWL as coordinate if koordinate style needs to change
-   * @param location
-   * @return
-   */
-  public static LDVector GlobalToCanvas(LDVector location){
-    LDVector newLocation = location.copy();
-    newLocation.multiply(new LDVector(Block.getWidth(), -Block.getHeight()));
-    return newLocation;
   }
 }

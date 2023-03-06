@@ -1,5 +1,6 @@
 package dk.mtdm.managementSystem.Entitys;
 
+import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.exceptions.MissingDataException;
 import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
@@ -153,8 +154,8 @@ public class Player extends Entity {
   private void calcCollision(PGraphics g) {
     Block block = null;
     try {
-      block = World.getBlockCanvas(new LDVector(pos.getCanvas().getX(), pos.getCanvas().getY()));
-    } catch (MissingDataException e) {
+      block = World.getBlock(pos);
+    } catch (MissingBlockTypeException e) {
       e.printStackTrace();
     }
 //    if(!block.getSolidity()) {return; }

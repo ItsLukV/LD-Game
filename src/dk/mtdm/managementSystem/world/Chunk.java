@@ -132,19 +132,6 @@ public class Chunk {
       }
     }
     border(g);
-    LDVector progress = null;
-    try {
-      progress = t.progress.copy();
-    } catch (NullPointerException e) {}
-    if (progress == null) return;
-    progress = World.GlobalToCanvas(progress);
-    try {
-      g.image(BlockTextures.picker(BlockTypes.inWork),progress.getX(),progress.getY(), Block.getWidth(), Block.getHeight());
-    } catch (MissingTextureException e) {
-      System.out.println(e);
-    } catch (NullPointerException f){
-      System.out.println(f);
-    }
   }
 
   public void border(PGraphics g){
