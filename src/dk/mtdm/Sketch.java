@@ -1,7 +1,6 @@
 package dk.mtdm;
 
 import dk.mtdm.Commands.CommandHandler;
-import dk.mtdm.Commands.TextInputBox;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.texureFiles.BlockTextures;
 import dk.mtdm.itemsAndMore.texureFiles.ItemTexture;

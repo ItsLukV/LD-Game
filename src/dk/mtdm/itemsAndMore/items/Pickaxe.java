@@ -1,7 +1,6 @@
 package dk.mtdm.itemsAndMore.items;
 
 import dk.mtdm.itemsAndMore.texureFiles.ItemTexture;
-import processing.core.PImage;
 
 public class Pickaxe extends Item{
     /**

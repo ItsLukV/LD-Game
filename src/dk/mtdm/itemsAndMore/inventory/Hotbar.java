@@ -3,7 +3,6 @@ package dk.mtdm.itemsAndMore.inventory;
 import dk.mtdm.Sketch;
 import dk.mtdm.itemsAndMore.items.Item;
 import dk.mtdm.itemsAndMore.items.ItemStack;
-import dk.mtdm.itemsAndMore.items.Stick;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PGraphics;
 import processing.core.PImage;

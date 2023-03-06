@@ -4,7 +4,6 @@ import dk.mtdm.Sketch;
 import dk.mtdm.itemsAndMore.items.Item;
 import dk.mtdm.itemsAndMore.items.ItemPicker;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
-import dk.mtdm.itemsAndMore.items.Stick;
 import dk.mtdm.managementSystem.Entitys.Player;
 import processing.core.PApplet;
 import processing.core.PGraphics;

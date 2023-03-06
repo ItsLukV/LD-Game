@@ -2,12 +2,9 @@ package dk.mtdm.managementSystem.world;
 
 import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.exceptions.MissingDataException;
-import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
-import dk.mtdm.itemsAndMore.texureFiles.BlockTextures;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
-import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
 import processing.core.PGraphics;

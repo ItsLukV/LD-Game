@@ -1,7 +1,6 @@
 package dk.mtdm.itemsAndMore.items;
 
 import dk.mtdm.itemsAndMore.ability.Ability;
-import processing.core.PGraphics;
 import processing.core.PImage;
 
 public abstract class Item {
