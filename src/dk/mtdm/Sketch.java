@@ -16,7 +16,7 @@ public class Sketch extends PApplet {
   public static Player player;
   public static int KeyCode;
   public static boolean gettingCommand = false;
-  private CommandHandler commandHandler = new CommandHandler(this);
+  private final CommandHandler commandHandler = new CommandHandler(this);
 
 
   // public static int offsetX = player.getPos().getX() + Player.width / 2;
@@ -89,6 +89,7 @@ public class Sketch extends PApplet {
   /**
    * TODO: write javadoc
    */
+  @Override
   public void keyPressed() {
     KeyCode = keyCode;
 
@@ -118,9 +119,13 @@ public class Sketch extends PApplet {
     boolean up = keyCode == 38 || keyCode == 87;
     boolean down = keyCode == 40 || keyCode == 83;
     boolean e = keyCode == 69;
-    player.keyPressed(left, right, up, down, e);
+    boolean one = keyCode == 49;
+    boolean two = keyCode == 50;
+    boolean three = keyCode == 51;
+    player.keyPressed(left, right, up, down, e,one,two,three);
   }
 
+  @Override
   public void mousePressed() {
     player.mousePressed(this);
   }

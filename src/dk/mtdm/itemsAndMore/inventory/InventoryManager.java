@@ -15,7 +15,7 @@ public class InventoryManager {
   private final Hotbar hotbar;
   private Pair<Integer, Integer> selected = new Pair<>(0,0);
   private boolean openMenu = false;
-  
+
   /**
  * TODO: write javadoc
  */
@@ -163,5 +163,13 @@ public class InventoryManager {
     int y = (int) (mouseY / (slotSize + borderSize * 2));
     return new Pair<Integer, Integer>(x, y);
   }
+  public void swapSlot(int slot) {
+        ItemStack stack = slots[selected.getFirst()][selected.getSecond()];
+        slots[selected.getFirst()][selected.getSecond()] = hotbar.itemStacks[slot];
+        hotbar.itemStacks[slot] = stack;
+  }
 
+  public boolean getOpenMenu() {
+    return this.openMenu;
+  }
 }

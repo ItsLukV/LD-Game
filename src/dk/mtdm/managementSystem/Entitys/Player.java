@@ -3,6 +3,8 @@ package dk.mtdm.managementSystem.Entitys;
 import dk.mtdm.exceptions.MissingDataException;
 import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
+import dk.mtdm.itemsAndMore.items.Item;
+import dk.mtdm.itemsAndMore.items.ItemStack;
 import dk.mtdm.itemsAndMore.items.Pickaxe;
 import dk.mtdm.itemsAndMore.items.Stick;
 import dk.mtdm.itemsAndMore.texureFiles.BlockTextures;
@@ -23,8 +25,8 @@ public class Player extends Entity {
   private boolean up;
   private boolean right;
   private boolean left;
-  private int moveSpeed = 5;
-  private float airRes = 0.8f;
+  private final int moveSpeed = 5;
+  private final float airRes = 0.8f;
   public static InventoryManager inventory = new InventoryManager();
   public static boolean noClip = false;
   public static int gravityAcc = 2;
@@ -35,8 +37,6 @@ public class Player extends Entity {
    */
   public Player(WorldWideLocation pos) {
     this.pos = pos;
-    inventory.giveItem(new Stick()); // TODO Remove this
-    inventory.giveItem(new Stick()); // TODO Remove this
 
     inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove this
   }
@@ -81,7 +81,7 @@ public class Player extends Entity {
 
   /**
    * Checks if player collision
-   * 
+   *
    * @param block the block the player will check collision against
    * @return
    */
@@ -103,12 +103,15 @@ public class Player extends Entity {
   /**
    * TODO: write javadoc
    */
-  public void keyPressed(boolean left , boolean right, boolean up, boolean down, boolean e) {
+  public void keyPressed(boolean left , boolean right, boolean up, boolean down, boolean e,boolean one,boolean two,boolean three) {
     if (left) this.left = true;
     if (right) this.right = true;
     if (up) this.up = true;
     if (down) this.down = true;
     if(e) inventory.changeMenu();
+    if(one && inventory.getOpenMenu()) inventory.swapSlot(0);
+    if(two && inventory.getOpenMenu()) inventory.swapSlot(1);
+    if(three && inventory.getOpenMenu()) inventory.swapSlot(2);
   }
   /**
    * TODO: write javadoc
@@ -177,5 +180,9 @@ public class Player extends Entity {
 
   public void mousePressed(PApplet p) {
     inventory.mousePressed(p);
+  }
+
+  public void swapSlot(int slot){
+    inventory.swapSlot(slot);
   }
 }
