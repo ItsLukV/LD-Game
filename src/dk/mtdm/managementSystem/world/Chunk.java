@@ -128,7 +128,6 @@ public class Chunk {
         getBlock(x,y).show(g); 
       }
     }
-    border(g);
   }
 
   public void border(PGraphics g){
