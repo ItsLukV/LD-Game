@@ -33,7 +33,6 @@ public class PseudeRandom {
   private synchronized static float f(float x){
     return 0.5f*(Math.abs(x+1)-Math.abs(x-1));
   }
-  
   public synchronized static float Float(int x, int y,int seed) {
     try {
       long point = hash(x, y,seed);

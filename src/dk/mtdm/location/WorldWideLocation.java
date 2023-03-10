@@ -110,7 +110,7 @@ public class WorldWideLocation {
     switch (location) {
       case relative:
         if(chunkID != null){
-          return new LDVector(globalToCanvas_X(relativToGlobal_X((int)x)),(int)y*Block.getHeight());
+          return new LDVector(globalToCanvas_X(relativToGlobal_X((int)x)),(int)y*Block.getHeight()+Block.getHeight());
         }else{
           throw new MissingDataException("relative location is incapable of providing GLOBAL without a set CHUNKID");
         }
@@ -129,10 +129,7 @@ public class WorldWideLocation {
   }
   
   private int globalToChunkID(int x) {
-    return globalToChunkID((float) x);
-  }
-  private int globalToChunkID(float x) {
-    return (int)Math.floor(x / (float)World.get_CHUNK_WIDTH());
+    return (int)Math.floor((float)x / (float)World.get_CHUNK_WIDTH());
   }
   private int canvasToGlobal_X(int x){
     return (int) x/Block.getWidth();
@@ -145,8 +142,9 @@ public class WorldWideLocation {
     }
   }
   private int canvasToGlobal_Y(int y){
-    int out = (int)((float)y/Block.getHeight());
+    int out = (int)((float)y/(float)(Block.getHeight()));
     out *= -1;
+    // out = ;
     if(out < 0){
       return 0;
     }else if(out > World.get_HEIGHT()){
@@ -161,7 +159,7 @@ public class WorldWideLocation {
     return x*Block.getWidth();
   }
   private int globalToCanvas_Y(int y){
-    return -y*Block.getHeight();
+    return -y*Block.getHeight()-Block.getHeight();
   }
 
   public void setPosition(LDVector vector, LocationTypes location){
