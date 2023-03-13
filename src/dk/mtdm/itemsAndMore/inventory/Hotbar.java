@@ -13,13 +13,13 @@ public class Hotbar {
   private final int margin = 4;
   private final int slotSize = 64;
   private int activeSlot = 0;
-  ItemStack[] itemStacks = new ItemStack[3];
+  private ItemStack[] itemStacks = new ItemStack[3];
 
   public Hotbar() {
     for (int i = 0; i < itemStacks.length; i++) {
       itemStacks[i] = new ItemStack(null);
 
-//    itemStacks[i] = new ItemStack(new Stick());
+      // itemStacks[i] = new ItemStack(new Stick());
     }
   }
 
@@ -27,22 +27,22 @@ public class Hotbar {
     int x = g.width / 2 - width / 2;
     int y = g.height - height;
     // Show hotbar
-    g.image(MiscTextures.getHotbarTexture(),x,y,width,height);
+    g.image(MiscTextures.getHotbarTexture(), x, y, width, height);
 
     // Show Items on hotbar
     for (int i = 0; i < itemStacks.length; i++) {
-      if(!itemStacks[i].hasItem()) continue;
+      if (!itemStacks[i].hasItem())
+        continue;
       PImage texture = itemStacks[i].getItemTexture();
-      g.image(texture,x + (margin + slotSize) * i + margin,y + margin,slotSize,slotSize);
+      g.image(texture, x + (margin + slotSize) * i + margin, y + margin, slotSize, slotSize);
     }
-
 
     // Shows activeSlot
     g.push();
     g.strokeWeight(margin);
-    g.stroke(0,255,0);
+    g.stroke(0, 255, 0);
     g.noFill();
-    g.rect(x  + (slotSize + margin) * activeSlot + margin / 2, y + margin / 2,slotSize + margin,slotSize + margin);
+    g.rect(x + (slotSize + margin) * activeSlot + margin / 2, y + margin / 2, slotSize + margin, slotSize + margin);
     g.pop();
   }
 
@@ -62,9 +62,18 @@ public class Hotbar {
     itemStacks[slot].setItem(item);
   }
 
+  public ItemStack[] getItemStacks() {
+    return itemStacks;
+  }
+
+  public int getActiveSlot() {
+    return activeSlot;
+  }
+
   public void giveItem(Item item) throws Exception {
-    for(int i = 0; i < itemStacks.length; i++) {
-      if(itemStacks[i].hasItem()) continue;
+    for (int i = 0; i < itemStacks.length; i++) {
+      if (itemStacks[i].hasItem())
+        continue;
       else {
         setItem(i, item);
         return;
