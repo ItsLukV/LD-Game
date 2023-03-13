@@ -162,26 +162,27 @@ public class Player extends Entity {
       }
     }
     {//right and left
-      {//right
-        WorldWideLocation rigBot = pos.copy();
-        rigBot.add(new LDVector(Block.getWidth()*2+1,0), LocationTypes.canvas);
+      //TODO: fix, it broke
+      // {//right
+      //   WorldWideLocation rigBot = pos.copy();
+      //   rigBot.add(new LDVector(Block.getWidth()*2+1,0), LocationTypes.canvas);
         
-        WorldWideLocation rigTop = pos.copy();
-        rigTop.add(new LDVector(Block.getWidth()*2+1,0), LocationTypes.canvas);
-        if ((World.getBlock(rigBot).getSolidity() || World.getBlock(rigTop).getSolidity()) && speed.getX()>0){
-          speed.setX(0);
-        }
-      }
-      {//left
-        WorldWideLocation lefBot = pos.copy();
-        lefBot.add(new LDVector(Block.getWidth()+1,0), LocationTypes.canvas);
+      //   WorldWideLocation rigTop = pos.copy();
+      //   rigTop.add(new LDVector(Block.getWidth()*2+1,0), LocationTypes.canvas);
+      //   if ((World.getBlock(rigBot).getSolidity() || World.getBlock(rigTop).getSolidity()) && speed.getX()>0){
+      //     speed.setX(0);
+      //   }
+      // }
+      // {//left
+      //   WorldWideLocation lefBot = pos.copy();
+      //   lefBot.add(new LDVector(Block.getWidth()+1,0), LocationTypes.canvas);
         
-        WorldWideLocation lefTop = pos.copy();
-        lefTop.add(new LDVector(Block.getWidth()+1,0), LocationTypes.canvas);
-        if ((World.getBlock(lefBot).getSolidity() || World.getBlock(lefTop).getSolidity()) && speed.getX()<0){
-          speed.setX(0);
-        }
-      }
+      //   WorldWideLocation lefTop = pos.copy();
+      //   lefTop.add(new LDVector(Block.getWidth()+1,0), LocationTypes.canvas);
+      //   if ((World.getBlock(lefBot).getSolidity() || World.getBlock(lefTop).getSolidity()) && speed.getX()<0){
+      //     speed.setX(0);
+      //   }
+      // }
     }
   }
 
