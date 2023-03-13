@@ -132,7 +132,7 @@ public class WorldWideLocation {
     return (int)Math.floor((float)x / (float)World.get_CHUNK_WIDTH());
   }
   private int canvasToGlobal_X(int x){
-    return (int) x/Block.getWidth();
+    return (int) Math.floor((float)x/(float)Block.getWidth());
   }
   private int globalToRelative_X(int x){
     if(x > 0){

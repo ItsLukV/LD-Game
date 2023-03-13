@@ -113,4 +113,23 @@ public abstract class Block {
     public void setChunkID(int chunkID){
         this.pos.setChunkID(chunkID);
     }
+    
+    /**
+     * 
+     * @return 
+     * [0] topLeft,
+     * [1] bottomLeft,
+     * [2] topRight,
+     * [2] bottomRight
+     * @throws MissingDataException
+     */
+    public LDVector[] getCorners() throws MissingDataException{
+        LDVector[] out = new LDVector[4];
+        out[0] = new LDVector(pos.getCanvas().getX(),pos.getCanvas().getY());
+        out[1] = new LDVector(pos.getCanvas().getX(),pos.getCanvas().getY()-Block.getHeight());
+
+        out[2] = new LDVector(pos.getCanvas().getX()+Block.getWidth(),pos.getCanvas().getY());
+        out[3] = new LDVector(pos.getCanvas().getX()+Block.getWidth(),pos.getCanvas().getY()-Block.getHeight());
+        return out;
+    }
 }

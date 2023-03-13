@@ -12,6 +12,8 @@ import dk.mtdm.itemsAndMore.inventory.InventoryManager;
 import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.managementSystem.world.Chunk;
+import dk.mtdm.managementSystem.world.ChunkList;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PApplet;
@@ -24,7 +26,7 @@ public class Player extends Entity {
   private boolean up;
   private boolean right;
   private boolean left;
-  private int moveSpeed = 5;
+  private int moveSpeed = 4;
   private float airRes = 0.8f;
   public static InventoryManager inventory = new InventoryManager();
   public static boolean noClip = false;
@@ -62,16 +64,16 @@ public class Player extends Entity {
   /**
    * This is a method that updates the player (this needs to be updated every frame)
    */
-  @Override
-  public void tick(){
-    tick(null);
-  }
 
-  public void tick(PGraphics g) {
-    calcSpeed();
+  public void tick() {
+    calcInput();
     if(!noClip) {
       addGravity();
-      calcCollision(g);
+      try{
+        calcCollision();
+      }catch(MissingBlockTypeException e){
+        e.printStackTrace();
+      }
       try {
         if(pos.getCanvas().getY() > 0){
           pos.add(new LDVector(0, -pos.getCanvas().getY()), LocationTypes.canvas);
@@ -80,29 +82,15 @@ public class Player extends Entity {
         e.printStackTrace();
       }
     }
+    calcSpeed();
     inventory.tick();
   }
 
-  /**
-   * Checks if player collision
-   * 
-   * @param block the block the player will check collision against
-   * @return
-   */
-  public boolean collisionWith(Block block) {
-    try{
-      LDVector blockPos = block.getCanvas();
-      if (pos.getCanvas().getX() + width >= blockPos.getX() && // player right edge past block left
-          pos.getCanvas().getX() <= blockPos.getX() + Block.getWidth() && // player left edge past block right
-          pos.getCanvas().getY() + height >= blockPos.getY() && // player top edge past block bottom
-          pos.getCanvas().getY() <= blockPos.getY() + Block.getHeight() // player bottom edge past block top
-      ) {
-        return true;
-      }
-    }catch(MissingDataException e){
-      e.printStackTrace();
-    }
-    return false;
+  private void calcSpeed() {
+    speed.setX((int) (speed.getX() * airRes));
+    speed.setY((int) (speed.getY() * airRes));
+
+    pos.add(speed,LocationTypes.canvas);
   }
   /**
    * TODO: write javadoc
@@ -126,16 +114,11 @@ public class Player extends Entity {
   /**
    * TODO: write javadoc
    */
-  private void calcSpeed() {
+  private void calcInput() {
     if (left) speed.add(new LDVector(-moveSpeed, 0));
     if (right) speed.add(new LDVector(moveSpeed, 0));
     if (up) speed.add(new LDVector(0, -moveSpeed));
     if (down) speed.add(new LDVector(0, moveSpeed));
-
-    speed.setX((int) (speed.getX() * airRes));
-    speed.setY((int) (speed.getY() * airRes));
-
-    pos.add(speed,LocationTypes.canvas);
   }
 
   public LDVector getCanvas() {
@@ -151,27 +134,51 @@ public class Player extends Entity {
     speed.add(new LDVector(0, gravityAcc));
   }
 
-  private void calcCollision(PGraphics g) {
-    Block block = null;
-    try {
-      block = World.getBlock(pos);
-    } catch (MissingBlockTypeException e) {
-      e.printStackTrace();
+  private void calcCollision() throws MissingBlockTypeException {
+    System.out.println(speed.getX());
+    {//up  and down
+      {//up
+        WorldWideLocation botLef = pos.copy();
+        botLef.add(new LDVector(0,1), LocationTypes.canvas);
+        WorldWideLocation botRig = pos.copy();
+        botRig.add(new LDVector(Block.getWidth(),0), LocationTypes.canvas);
+        botRig.add(new LDVector(0, 1),LocationTypes.canvas);
+        if ((World.getBlock(botLef).getSolidity() || World.getBlock(botRig).getSolidity()) && speed.getY()>0){
+          speed.setY(0);
+        }
+      }
+      {//down
+        WorldWideLocation topLef = pos.copy();
+        topLef.add(new LDVector(0,-1-Block.getHeight()), LocationTypes.canvas);
+        WorldWideLocation topRig = pos.copy();
+        topRig.add(new LDVector(Block.getWidth(),Block.getHeight()), LocationTypes.canvas);
+        topRig.add(new LDVector(0, -1),LocationTypes.canvas);
+        if ((World.getBlock(topLef).getSolidity() || World.getBlock(topLef).getSolidity()) && speed.getY()<0){
+          speed.setY(0);
+        }
+      }
     }
-//    if(!block.getSolidity()) {return; }
-//    if(collisionWith(block)) {
-    if(block.getSolidity()) {
-      speed.setY(0);
-      try {
-        LDVector canvas = block.getCanvas();
-        g.image(BlockTextures.picker(BlockTypes.inWork),canvas.getX(),
-                canvas.getY(), Block.getWidth(), Block.getHeight());
-        // System.out.println(canvas.getX() + " " + canvas.getY());
-        // System.out.println((float)this.getPos().getX()/(float)World.getBlockCanvas(new LDVector(pos.getX(), pos.getY())).getPos().getX());
-      } catch (MissingTextureException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      } catch (Exception e){}
+    {//right and left
+      {//right
+        WorldWideLocation rigBot = pos.copy();
+        rigBot.add(new LDVector(Block.getWidth()*2+1,0), LocationTypes.canvas);
+        
+        WorldWideLocation rigTop = pos.copy();
+        rigTop.add(new LDVector(Block.getWidth()*2+1,0), LocationTypes.canvas);
+        if ((World.getBlock(rigBot).getSolidity() || World.getBlock(rigTop).getSolidity()) && speed.getX()>0){
+          speed.setX(0);
+        }
+      }
+      {//left
+        WorldWideLocation lefBot = pos.copy();
+        lefBot.add(new LDVector(Block.getWidth()+1,0), LocationTypes.canvas);
+        
+        WorldWideLocation lefTop = pos.copy();
+        lefTop.add(new LDVector(Block.getWidth()+1,0), LocationTypes.canvas);
+        if ((World.getBlock(lefBot).getSolidity() || World.getBlock(lefTop).getSolidity()) && speed.getX()<0){
+          speed.setX(0);
+        }
+      }
     }
   }
 
