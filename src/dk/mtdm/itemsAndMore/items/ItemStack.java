@@ -1,5 +1,6 @@
 package dk.mtdm.itemsAndMore.items;
 
+import dk.mtdm.itemsAndMore.ability.Ability;
 import processing.core.PImage;
 
 public class ItemStack {
@@ -8,47 +9,50 @@ public class ItemStack {
   private Item item;
 
   /**
- * TODO: write javadoc
- */
+   * TODO: write javadoc
+   */
   public ItemStack(Item item) {
-    if(item == null) {return;}
+    if (item == null) {
+      return;
+    }
     this.item = item;
     maxSize = item.getStackSize();
   }
+
   /**
- * TODO: write javadoc
- */
+   * TODO: write javadoc
+   */
   public void add(Item item) throws Exception {
-    if(this.item == null) {
+    if (this.item == null) {
       this.item = item;
       maxSize = item.getStackSize();
     }
-    if(this.item.getItemType() != item.getItemType()) {
-      throw new Exception("Not the same item type"); //TODO make custom Exception
+    if (this.item.getItemType() != item.getItemType()) {
+      throw new Exception("Not the same item type"); // TODO make custom Exception
     }
-    if(!(itemCount < maxSize)) {
-      throw new Exception("Full itemstack"); //TODO make custom Exception
+    if (!(itemCount < maxSize)) {
+      throw new Exception("Full itemstack"); // TODO make custom Exception
     }
     itemCount += 1;
   }
 
   public void add(Item item, int amount) throws Exception {
-    if(this.item == null) {
+    if (this.item == null) {
       this.item = item;
       maxSize = item.getStackSize();
     }
-    if(this.item.getItemType() != item.getItemType()) {
-      throw new Exception("Not the same item type"); //TODO make custom Exception
+    if (this.item.getItemType() != item.getItemType()) {
+      throw new Exception("Not the same item type"); // TODO make custom Exception
     }
-    if(!(itemCount < maxSize)) {
-      throw new Exception("Full itemstack"); //TODO make custom Exception
+    if (!(itemCount < maxSize)) {
+      throw new Exception("Full itemstack"); // TODO make custom Exception
     }
     itemCount += amount;
   }
 
   /**
- * TODO: write javadoc
- */
+   * TODO: write javadoc
+   */
   public ItemTypes getItemType() {
     return item.getItemType();
   }
@@ -59,6 +63,7 @@ public class ItemStack {
 
   /**
    * Returns if the item is null or not
+   *
    * @return
    */
   public boolean hasItem() {
@@ -71,5 +76,9 @@ public class ItemStack {
 
   public int getItemCount() {
     return itemCount;
+  }
+
+  public Ability getAbility() {
+    return item.ability;
   }
 }

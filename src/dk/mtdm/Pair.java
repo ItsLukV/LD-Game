@@ -1,15 +1,17 @@
 package dk.mtdm;
 
 /**
- * @author Lukas
  * Used to return to values
+ * 
+ * @author Lukas
  * @param <U>
  * @param <V>
  */
 
-public class Pair<U,V> {
+public class Pair<U, V> {
     private final U first;
     private final V second;
+
     public Pair(U first, V second) {
         this.first = first;
         this.second = second;
