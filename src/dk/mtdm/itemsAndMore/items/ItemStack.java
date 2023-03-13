@@ -3,7 +3,7 @@ package dk.mtdm.itemsAndMore.items;
 import processing.core.PImage;
 
 public class ItemStack {
-  private int itemCount;
+  private int itemCount = 0;
   private int maxSize;
   private Item item;
 
@@ -29,7 +29,7 @@ public class ItemStack {
     if(!(itemCount < maxSize)) {
       throw new Exception("Full itemstack"); //TODO make custom Exception
     }
-    itemCount++;
+    itemCount += 1;
   }
 
   public void add(Item item, int amount) throws Exception {
