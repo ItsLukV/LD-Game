@@ -34,6 +34,14 @@ public class Chunk {
   public int getID(){
     return ID;
   }
+  public void joinGen(){
+    try {
+      t.join();
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+  }
   /**
    * @param relativeLocation the relative location of a block 
    * @return the block stored at the given location

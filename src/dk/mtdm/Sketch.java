@@ -7,6 +7,7 @@ import dk.mtdm.itemsAndMore.texureFiles.ItemTexture;
 import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.Entitys.Player;
+import dk.mtdm.managementSystem.world.ChunkList;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PApplet;
@@ -38,7 +39,16 @@ public class Sketch extends PApplet {
     ItemTexture.loadBlockTextures(this);
 
     World.setup(3, World.get_HEIGHT(), 20);
-    player = new Player(WorldWideLocation.create(0, -300, LocationTypes.canvas));
+    ChunkList.getChunk(0).joinGen();
+    int i = 0;
+    while(
+      ChunkList.getChunk(0).getBlock(16, i).getSolidity() || 
+      ChunkList.getChunk(0).getBlock(16, i+1).getSolidity() || 
+      ChunkList.getChunk(0).getBlock(16, i+2).getSolidity()
+    ){
+      i++;
+    }
+    player = new Player(WorldWideLocation.create(16*Block.getWidth(), -(i+1)*Block.getHeight(), LocationTypes.canvas));
   }
 
 

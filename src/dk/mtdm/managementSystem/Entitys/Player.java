@@ -28,7 +28,7 @@ public class Player extends Entity {
   private boolean up;
   private boolean right;
   private boolean left;
-  private int moveSpeed = 4;
+  private int moveSpeed = 6;
   private float airRes = 0.8f;
   public static InventoryManager inventory = new InventoryManager();
   public static boolean noClip = false;
@@ -89,6 +89,7 @@ public class Player extends Entity {
   private void calcSpeed() {
     speed.setX((int) (speed.getX() * airRes));
     speed.setY((int) (speed.getY() * airRes));
+    System.out.println(speed.getX() + ", " + speed.getY());
 
     pos.add(speed,LocationTypes.canvas);
   }
@@ -118,6 +119,7 @@ public class Player extends Entity {
    * TODO: write javadoc
    */
   private void calcInput() {
+    System.out.println(speed.getX() + ", " + speed.getY());
     if (left) speed.add(new LDVector(-moveSpeed, 0));
     if (right) speed.add(new LDVector(moveSpeed, 0));
     if (up) speed.add(new LDVector(0, -moveSpeed));
@@ -138,7 +140,6 @@ public class Player extends Entity {
   }
 
   private void calcCollision() throws MissingBlockTypeException {
-    System.out.println(speed.getX());
     {//up  and down
       {//up
         WorldWideLocation botLef = pos.copy();
