@@ -41,9 +41,11 @@ public class Sketch extends PApplet {
     World.setup(3, World.get_HEIGHT(), 20);
     ChunkList.getChunk(0).joinGen();
     int i = 0;
-    while(
+    while(//spawn conditions
       ChunkList.getChunk(0).getBlock(16, i).getSolidity() || 
       ChunkList.getChunk(0).getBlock(16, i+1).getSolidity() || 
+      ChunkList.getChunk(0).getBlock(16+1, i+1).getSolidity() || 
+      ChunkList.getChunk(0).getBlock(16-1, i+1).getSolidity() || 
       ChunkList.getChunk(0).getBlock(16, i+2).getSolidity()
     ){
       i++;
