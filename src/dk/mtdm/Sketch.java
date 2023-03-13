@@ -62,7 +62,7 @@ public class Sketch extends PApplet {
     World.show(g, (int) (player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth()) - 2,
         (int) (player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth()) + 1);
     player.draw(g);
-    player.tick(g);
+    player.tick();
 
     pop();
     player.drawWithoutTranslate(g);
