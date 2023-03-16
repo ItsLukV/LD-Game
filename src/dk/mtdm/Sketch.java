@@ -16,7 +16,7 @@ public class Sketch extends PApplet {
   public static Player player;
   public static int KeyCode;
   public static boolean gettingCommand = false;
-  private final CommandHandler commandHandler = new CommandHandler(this);
+  private final CommandHandler commandHandler = new CommandHandler();
 
 
   // public static int offsetX = player.getPos().getX() + Player.width / 2;
@@ -74,7 +74,7 @@ public class Sketch extends PApplet {
     World.show(g, (int) (player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth()) - 2,
         (int) (player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth()) + 1);
     player.draw(g);
-    player.tick(g);
+    player.tick();
 
     pop();
     player.drawWithoutTranslate(g);
