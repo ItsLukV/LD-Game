@@ -2,20 +2,12 @@ package dk.mtdm.managementSystem.Entitys;
 
 import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.exceptions.MissingDataException;
-import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
-import dk.mtdm.itemsAndMore.items.Item;
-import dk.mtdm.itemsAndMore.items.ItemStack;
 import dk.mtdm.itemsAndMore.items.Pickaxe;
-import dk.mtdm.itemsAndMore.items.Stick;
-import dk.mtdm.itemsAndMore.texureFiles.BlockTextures;
-import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;
 import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
-import dk.mtdm.managementSystem.world.Chunk;
-import dk.mtdm.managementSystem.world.ChunkList;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PApplet;
@@ -33,6 +25,9 @@ public class Player extends Entity {
   public static InventoryManager inventory = new InventoryManager();
   public static boolean noClip = false;
   public static int gravityAcc = 2;
+  private boolean standing = true;
+  private int jumpTime = 0;
+  private int maxJump = 10;
 
   /**
    * Creates a player object
@@ -65,12 +60,12 @@ public class Player extends Entity {
    * This is a method that updates the player (this needs to be updated every frame)
    */
 
-  public void tick() {
+  public void tick(PGraphics g) {
     calcInput();
     if(!noClip) {
       addGravity();
       try{
-        calcCollision();
+        calcCollision(g);
       }catch(MissingBlockTypeException e){
         e.printStackTrace();
       }
@@ -89,8 +84,6 @@ public class Player extends Entity {
   private void calcSpeed() {
     speed.setX((int) (speed.getX() * airRes));
     speed.setY((int) (speed.getY() * airRes));
-    System.out.println(speed.getX() + ", " + speed.getY());
-
     pos.add(speed,LocationTypes.canvas);
   }
   /**
@@ -112,17 +105,23 @@ public class Player extends Entity {
   public void keyReleased(boolean left , boolean right, boolean up, boolean down) {
     if (left) this.left = false;
     if (right) this.right = false;
-    if (up) this.up = false;
+    if (up) {
+      this.up = false;
+      this.standing = false;
+    }
     if (down) this.down = false;
   }
   /**
    * TODO: write javadoc
    */
   private void calcInput() {
-    System.out.println(speed.getX() + ", " + speed.getY());
     if (left) speed.add(new LDVector(-moveSpeed, 0));
     if (right) speed.add(new LDVector(moveSpeed, 0));
-    if (up) speed.add(new LDVector(0, -moveSpeed));
+    if (up && (noClip || (standing && jumpTime < maxJump))) {
+      speed.add(new LDVector(0, -moveSpeed));
+      jumpTime++;
+      System.out.println(jumpTime + " " + speed.getY());
+    }
     if (down) speed.add(new LDVector(0, moveSpeed));
   }
 
@@ -139,26 +138,34 @@ public class Player extends Entity {
     speed.add(new LDVector(0, gravityAcc));
   }
 
-  private void calcCollision() throws MissingBlockTypeException {
+  private void calcCollision(PGraphics g) throws MissingBlockTypeException {
     {//up  and down
-      {//up
+      {//down
         WorldWideLocation botLef = pos.copy();
         botLef.add(new LDVector(0,1), LocationTypes.canvas);
         WorldWideLocation botRig = pos.copy();
-        botRig.add(new LDVector(Block.getWidth(),0), LocationTypes.canvas);
-        botRig.add(new LDVector(0, 1),LocationTypes.canvas);
+        botRig.add(new LDVector(Block.getWidth(),1), LocationTypes.canvas);
+        try {
+          g.point(botRig.getCanvas().getX(), botRig.getCanvas().getY());
+        } catch (MissingDataException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
         if ((World.getBlock(botLef).getSolidity() || World.getBlock(botRig).getSolidity()) && speed.getY()>0){
           speed.setY(0);
+          standing = true;
+          jumpTime = 0;
         }
       }
-      {//down
+      {//up
         WorldWideLocation topLef = pos.copy();
-        topLef.add(new LDVector(0,-1-Block.getHeight()), LocationTypes.canvas);
+        topLef.add(new LDVector(0,-1 - Block.getHeight()), LocationTypes.canvas);
         WorldWideLocation topRig = pos.copy();
-        topRig.add(new LDVector(Block.getWidth(),Block.getHeight()), LocationTypes.canvas);
-        topRig.add(new LDVector(0, -1),LocationTypes.canvas);
-        if ((World.getBlock(topLef).getSolidity() || World.getBlock(topLef).getSolidity()) && speed.getY()<0){
-          speed.setY(0);
+        topRig.add(new LDVector(Block.getWidth(),-1 - Block.getHeight()), LocationTypes.canvas);
+        if ((World.getBlock(topLef).getSolidity() || World.getBlock(topRig).getSolidity()) && speed.getY()<0){
+          if(!standing){
+            speed.setY(0);
+          }
         }
       }
     }
@@ -197,5 +204,11 @@ public class Player extends Entity {
 
   public void swapSlot(int slot){
     inventory.swapSlot(slot);
+  }
+
+  @Override
+  public void tick() {
+    // TODO Auto-generated method stub
+    throw new UnsupportedOperationException("Unimplemented method 'tick'");
   }
 }
