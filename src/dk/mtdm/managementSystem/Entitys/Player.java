@@ -60,12 +60,12 @@ public class Player extends Entity {
    * This is a method that updates the player (this needs to be updated every frame)
    */
 
-  public void tick(PGraphics g) {
+  public void tick() {
     calcInput();
     if(!noClip) {
       addGravity();
       try{
-        calcCollision(g);
+        calcCollision();
       }catch(MissingBlockTypeException e){
         e.printStackTrace();
       }
@@ -138,19 +138,13 @@ public class Player extends Entity {
     speed.add(new LDVector(0, gravityAcc));
   }
 
-  private void calcCollision(PGraphics g) throws MissingBlockTypeException {
+  private void calcCollision() throws MissingBlockTypeException {
     {//up  and down
       {//down
         WorldWideLocation botLef = pos.copy();
         botLef.add(new LDVector(0,1), LocationTypes.canvas);
         WorldWideLocation botRig = pos.copy();
         botRig.add(new LDVector(Block.getWidth(),1), LocationTypes.canvas);
-        try {
-          g.point(botRig.getCanvas().getX(), botRig.getCanvas().getY());
-        } catch (MissingDataException e) {
-          // TODO Auto-generated catch block
-          e.printStackTrace();
-        }
         if ((World.getBlock(botLef).getSolidity() || World.getBlock(botRig).getSolidity()) && speed.getY()>0){
           speed.setY(0);
           standing = true;
@@ -204,11 +198,5 @@ public class Player extends Entity {
 
   public void swapSlot(int slot){
     inventory.swapSlot(slot);
-  }
-
-  @Override
-  public void tick() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'tick'");
   }
 }

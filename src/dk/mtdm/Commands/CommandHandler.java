@@ -5,14 +5,13 @@ import dk.mtdm.itemsAndMore.items.Item;
 import dk.mtdm.itemsAndMore.items.ItemPicker;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
 import dk.mtdm.managementSystem.Entitys.Player;
-import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class CommandHandler {
     private TextInputBox textInputBox;
 
-    public CommandHandler(PApplet p) {
-        textInputBox = new TextInputBox(p);
+    public CommandHandler() {
+        textInputBox = new TextInputBox();
     }
 
     public void show(PGraphics g) {

@@ -1,20 +1,17 @@
 package dk.mtdm.Commands;
 
 import dk.mtdm.location.LDVector;
-import processing.core.PApplet;
 import processing.core.PGraphics;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class TextInputBox {
-    private final int width;
     private final int height;
     private String text = "";
     Map<Integer,Character> charLookUp = new HashMap<>();
 
-    public TextInputBox(PApplet p) {
-        width = p.width;
+    public TextInputBox() {
         height = 50;
         loadHashmap();
     }
