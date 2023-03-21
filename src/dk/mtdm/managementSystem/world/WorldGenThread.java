@@ -62,10 +62,17 @@ public class WorldGenThread extends Thread{
    */
   private void worldGenerator(){
     noiseGenerator();
-
-    for (int x = 0; x < noise.length; x++) {
-      for (int y = 0; y < noise[x].length; y++) {
-        ChooseBlock(x,y);
+    if(ID >= 0){
+      for (int x = 0; x < noise.length; x++) {
+        for (int y = 0; y < noise[x].length; y++) {
+          ChooseBlock(x,y);
+        }
+      }
+    }else{
+      for (int x = noise.length-1; x >= 0; x--) {
+        for (int y = 0; y < noise[x].length; y++) {
+          ChooseBlock(x,y);
+        }
       }
     }
   }
