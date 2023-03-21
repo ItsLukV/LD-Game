@@ -149,7 +149,7 @@ public class InventoryManager {
     if (openMenu) {
       changeSelected(p);
     }
-    AbilityHandler.mousePressedOnCanvas(hotbar);
+    AbilityHandler.mousePressedOnCanvas(p.mouseX, p.mouseY, hotbar);
   }
 
   public void changeSelected(PApplet p) {

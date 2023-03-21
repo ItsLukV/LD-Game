@@ -48,9 +48,9 @@ public class AbilityHandler {
       slot.getAbility().selected();
   }
 
-  public static void mousePressedOnCanvas(Hotbar hotbar) {
+  public static void mousePressedOnCanvas(int x, int y, Hotbar hotbar) {
     ItemStack slot = hotbar.getItemStacks()[hotbar.getActiveSlot()];
     if (slot.hasItem())
-      slot.getAbility().clicked();
+      slot.getAbility().clicked(x, y);
   }
 }
