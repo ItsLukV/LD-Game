@@ -13,26 +13,33 @@ public abstract class Item {
   /**
    * TODO: write javadoc
    */
-  public Item(ItemTypes id, int stackSize, PImage texture) {
+  public Item(ItemTypes id, int stackSize, PImage texture, Ability ability) {
     this.itemType = id;
     this.stackSize = stackSize;
     this.texture = texture;
-    this.ability = new Ability() {
-      public void tick() {
+    if (ability == null) {
+      this.ability = new Ability() {
+        public void tick() {
+        };
+
+        public void selected() {
+        };
+
+        public void passive() {
+        }
+
+        public void show(PGraphics g) {
+        }
+
+        @Override
+        public void clicked(int x, int y) {
+          // TODO Auto-generated method stub
+          throw new UnsupportedOperationException("Unimplemented method 'clicked'");
+        };
       };
-
-      public void selected() {
-      };
-
-      public void clicked() {
-      }
-
-      public void passive() {
-      }
-
-      public void show(PGraphics g) {
-      };
-    };
+    } else {
+      this.ability = ability;
+    }
   }
 
   /**

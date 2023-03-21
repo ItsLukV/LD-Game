@@ -17,5 +17,7 @@ public class ItemTexture {
         return stick;
     }
 
-    public static PImage getPickaxeTexture() {return pickaxe;}
+    public static PImage getPickaxeTexture() {
+        return pickaxe;
+    }
 }

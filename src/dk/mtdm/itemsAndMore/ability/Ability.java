@@ -24,7 +24,7 @@ public abstract class Ability {
    * Runs when a item that is selected in the hotbar with this ability is selected
    * and clicks on the world
    */
-  public abstract void clicked();
+  public abstract void clicked(int x, int y);
 
   /**
    * Runs even if the item is not selected
