@@ -67,7 +67,7 @@ public class Chunk {
     }
     
     if (t == null) {
-      t = new WorldGenThread(ID, creationHeight, this);
+      t = new WorldGenThread(ID, creationHeight, this);//TODO
     }
     if(!t.atWork){
       if(chunkError > 500){
@@ -90,7 +90,7 @@ public class Chunk {
    * resets the chunk by restarting the worldGenThread
    */
   public void generate(){
-    if(t == null) t = new WorldGenThread(ID,creationHeight,this);
+    if(t == null) t = new WorldGenThread(ID,creationHeight,this);//TODO
         if(!t.atWork){
       try {
         t.start();
