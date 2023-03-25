@@ -1,4 +1,4 @@
-package dk.mtdm.managementSystem.world;
+package dk.mtdm.managementSystem.world.chunk;
 
 
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
@@ -6,6 +6,8 @@ import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.Thread;
+import dk.mtdm.managementSystem.world.PerlinNoise;
+import dk.mtdm.managementSystem.world.World;
 /**
  * @author @dendersen
  */

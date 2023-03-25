@@ -5,7 +5,7 @@ import dk.mtdm.itemsAndMore.items.Item;
 import dk.mtdm.itemsAndMore.items.ItemPicker;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
 import dk.mtdm.managementSystem.Entitys.Player;
-import dk.mtdm.managementSystem.world.ChunkList;
+import dk.mtdm.managementSystem.world.chunk.ChunkList;
 import processing.core.PGraphics;
 
 public class CommandHandler {

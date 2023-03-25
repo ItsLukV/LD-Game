@@ -1,4 +1,4 @@
-package dk.mtdm.managementSystem.world;
+package dk.mtdm.managementSystem.world.chunk;
 
 import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.exceptions.MissingDataException;
@@ -7,13 +7,14 @@ import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.managementSystem.world.World;
 import processing.core.PGraphics;
 public class Chunk {
   final private int ID;
   private Block[][] containedBlocks;
   final private int creationHeight;
   private int chunkError = 0;
-  WorldGenThread t;
+  public WorldGenThread t;
   
   /**
    * creates a new chunk 
