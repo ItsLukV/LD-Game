@@ -45,27 +45,27 @@ public class ChunkList {
       while(dimensionOffset + ID < 0){
         dimensionOffset++;
         PseudeRandom.update(-dimensionOffset);
-        ChunkList.chunks.add(0, new chunkContainer(World.standardChunk(0), 0));
-        try {
-          ChunkList.chunks.get(0).generate(0);
-          ChunkList.chunks.get(0).get(0).t.join(100);//not needed but prevents error from chunk gen delays
-        }catch(InterruptedException empty) {}
+        chunks.add(0, new chunkContainer(World.standardChunk(0), 0));
+        // try {
+        //   chunks.get(0).generate(0);
+        //   chunks.get(0).get(0).t.join(100);//not needed but prevents error from chunk gen delays
+        // }catch(InterruptedException empty) {}
       }
-      while(ID+dimensionOffset >= ChunkList.chunks.size()){
-        PseudeRandom.update(ChunkList.chunks.size()-dimensionOffset);
-        ChunkList.chunks.add(new chunkContainer(World.standardChunk(0), 0));
-        try {
-          ChunkList.chunks.get(ChunkList.chunks.size()-1).generate(0);
-          ChunkList.chunks.get(ChunkList.chunks.size()-1).get(0).t.join(100);//not needed but prevents error from chunk gen delays
-        }catch(InterruptedException empty) {}
+      while(ID+dimensionOffset >= chunks.size()){
+        PseudeRandom.update(chunks.size()-dimensionOffset);
+        chunks.add(new chunkContainer(World.standardChunk(0), 0));
+      //   try {
+      //     // chunks.get(chunks.size()-1).generate(0);
+      //     // chunks.get(chunks.size()-1).get(0).t.join(100);//not needed but prevents error from chunk gen delays
+      //   }catch(InterruptedException empty) {}
       }
       try {
-        ChunkList.chunks.get(ID+dimensionOffset);
-        ChunkList.chunks.get(ID+dimensionOffset).generate(0);
-        ChunkList.dimensionID = ID;
+        chunks.get(ID+dimensionOffset);
+        chunks.get(ID+dimensionOffset).generate(0);
+        dimensionID = ID;
         LOCK = false;
-        ChunkList.chunks.get(ID+dimensionOffset).generate(Sketch.player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth());
-        ChunkList.chunks.get(ID+dimensionOffset).get((Sketch.player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth())).t.join();
+        chunks.get(ID+dimensionOffset).generate(Sketch.player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth());
+        chunks.get(ID+dimensionOffset).get((Sketch.player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth())).t.join();
         return;
       }catch(IndexOutOfBoundsException e){
         e.printStackTrace();
