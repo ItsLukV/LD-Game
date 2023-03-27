@@ -1,4 +1,4 @@
-package dk.mtdm.managementSystem.world;
+package dk.mtdm.managementSystem.world.chunk;
 
 import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.exceptions.MissingDataException;
@@ -7,13 +7,14 @@ import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.managementSystem.world.World;
 import processing.core.PGraphics;
 public class Chunk {
   final private int ID;
   private Block[][] containedBlocks;
   final private int creationHeight;
   private int chunkError = 0;
-  WorldGenThread t;
+  public WorldGenThread t;
   
   /**
    * creates a new chunk 
@@ -67,7 +68,7 @@ public class Chunk {
     }
     
     if (t == null) {
-      t = new WorldGenThread(ID, creationHeight, this);
+      t = new WorldGenThread(ID, creationHeight, this);//TODO
     }
     if(!t.atWork){
       if(chunkError > 500){
@@ -90,7 +91,7 @@ public class Chunk {
    * resets the chunk by restarting the worldGenThread
    */
   public void generate(){
-    if(t == null) t = new WorldGenThread(ID,creationHeight,this);
+    if(t == null) t = new WorldGenThread(ID,creationHeight,this);//TODO
         if(!t.atWork){
       try {
         t.start();

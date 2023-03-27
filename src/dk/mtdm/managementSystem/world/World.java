@@ -6,6 +6,8 @@ import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.managementSystem.world.chunk.Chunk;
+import dk.mtdm.managementSystem.world.chunk.ChunkList;
 import processing.core.PGraphics;
 /*
 //remember: canvas location = processing (pixels)
