@@ -167,4 +167,10 @@ public abstract class Block {
         out[3] = new LDVector(pos.getCanvas().getX() + Block.getWidth(), pos.getCanvas().getY() - Block.getHeight());
         return out;
     }
+
+    public String getState() {
+        String out = "{";
+            out+= id.ordinal() + "," + (soild ? 0:1) + "," +  (breakability ? 0:1) + "," + (hoverability ? 0:1) + "," + itemDrop.ordinal();
+        return out + "}";
+    }
 }

@@ -145,5 +145,16 @@ public class Chunk {
     g.stroke(255,0,0);
     g.rect(ID*World.get_CHUNK_WIDTH()*Block.getWidth(),0,World.get_CHUNK_WIDTH()*Block.getWidth(),-World.get_HEIGHT()*Block.getHeight());
     g.pop();
+  }
+  public String getState() {
+    String out = "";
+    for (int x = 0; x < containedBlocks.length; x++) {
+      for (int y = 0; y < containedBlocks[x].length; y++) {
+        out += containedBlocks[x][y].getState() + ",";
+      }
+      out += "\n";
+    }
+    out+= ID + "," + creationHeight;
+    return out;
   } 
 }

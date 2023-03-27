@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 import dk.mtdm.Sketch;
 import dk.mtdm.itemsAndMore.Blocks.Block;
-import dk.mtdm.managementSystem.Entitys.Player;
 import dk.mtdm.managementSystem.world.PseudeRandom;
 import dk.mtdm.managementSystem.world.World;
 
@@ -82,5 +81,52 @@ public class ChunkList {
   }
   public static int getDimensionID(){
     return dimensionID;
+  }
+  public static String[][] getState() {
+    String[][] out = new String[chunks.size()+1][];
+    for (int i = 0; i < chunks.size(); i++) {
+      int[] edges = findEdges(i);
+      out[i] = new String[edges[1]-edges[0]];
+      for (int j = edges[0]; j < edges[1]; j++) {
+        out[i][j-edges[0]] = chunks.get(i).get(j).getState() + "\n";
+      }
+    }
+    out[chunks.size()] = new String[1];
+    out[chunks.size()][0] = "" + (-dimensionOffset);
+    return out;
+  }
+  private static int[] findEdges(int i) {
+    int ID = chunks.get(i).getID();
+    boolean up = ID > 0;
+    while(true){
+      if(chunks.get(i).get(ID) != null){
+        if(up){
+          ID++;
+        }else{
+          ID--;
+        }
+      }else{
+        break;
+      }
+    }
+    int point = ID;
+    ID = 0;
+    while(true){
+      if(chunks.get(i).get(ID) != null){
+        if(!up){
+          ID++;
+        }else{
+          ID--;
+        }
+      }else{
+        break;
+      }
+    }
+    if(ID <= point){
+      int[] out = {ID,point};
+      return out;
+    }
+    int[] out = {point,ID};
+      return out;
   }
 }
