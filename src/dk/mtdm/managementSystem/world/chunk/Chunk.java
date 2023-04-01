@@ -147,10 +147,16 @@ public class Chunk {
     g.pop();
   }
   public String getState() {
+    try {
+      t.join();
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
     String out = "";
     for (int x = 0; x < containedBlocks.length; x++) {
       for (int y = 0; y < containedBlocks[x].length; y++) {
-        out += containedBlocks[x][y].getState() + ",";
+        out += containedBlocks[x][y].getState() + ";";
       }
       out += "\n";
     }

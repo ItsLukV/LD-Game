@@ -169,8 +169,8 @@ public abstract class Block {
     }
 
     public String getState() {
-        String out = "{";
-            out+= id.ordinal() + "," + (soild ? 0:1) + "," +  (breakability ? 0:1) + "," + (hoverability ? 0:1) + "," + itemDrop.ordinal();
-        return out + "}";
+        String out = "";
+            out+= (id != null ? id.ordinal() : -1) + "," + (soild ? 0:1) + "," +  (breakability ? 0:1) + "," + (hoverability ? 0:1) + "," + (itemDrop != null ? itemDrop.ordinal() : -1);
+        return out;
     }
 }

@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import dk.mtdm.Sketch;
 import dk.mtdm.itemsAndMore.Blocks.Block;
+import dk.mtdm.managementSystem.Entitys.Player;
 import dk.mtdm.managementSystem.world.PseudeRandom;
 import dk.mtdm.managementSystem.world.World;
 
@@ -63,8 +64,8 @@ public class ChunkList {
         chunks.get(ID+dimensionOffset).generate(0);
         dimensionID = ID;
         LOCK = false;
-        chunks.get(ID+dimensionOffset).generate(Sketch.player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth());
-        chunks.get(ID+dimensionOffset).get((Sketch.player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth())).t.join();
+        chunks.get(ID+dimensionOffset).generate(Player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth());
+        chunks.get(ID+dimensionOffset).get((Player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth())).t.join();
         return;
       }catch(IndexOutOfBoundsException e){
         e.printStackTrace();
@@ -123,10 +124,10 @@ public class ChunkList {
       }
     }
     if(ID <= point){
-      int[] out = {ID,point};
+      int[] out = {ID+1,point-1};
       return out;
     }
-    int[] out = {point,ID};
+    int[] out = {point+1,ID-1};
       return out;
   }
 }
