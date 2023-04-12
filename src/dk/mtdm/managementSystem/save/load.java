@@ -16,13 +16,17 @@ import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.managementSystem.world.chunk.Chunk;
+import dk.mtdm.exceptions.IncorrectSaveSettingsLoaded;
+import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.managementSystem.world.chunk.ChunkList;
 
 public class load {
   private String path = "src\\dk\\mtdm\\managementSystem\\world\\saveing\\";
-  
-  public load(String saveName){
+  private String name;
+
+  public load(String saveName) throws IncorrectSaveSettingsLoaded{
     path += saveName + "\\";
+    name = saveName;
     int CHUNK_WIDTH; 
     int HEIGHT;
     int seed1;
@@ -49,6 +53,7 @@ public class load {
         return;
       }
     }
+<<<<<<< HEAD
     World.setState(CHUNK_WIDTH, HEIGHT, seed1, BlockStone, BlockBedrock, BlockAir,GeneratorHeight);
     {
       int dimID = 0;
@@ -100,5 +105,42 @@ public class load {
         }
       }
     }
+=======
+    //int<dim><chunk>[blockx][blocky][item]
+    ArrayList<ArrayList<int[][][]>> blocks = new ArrayList<ArrayList<int[][][]>>();
+    blocks.add(new ArrayList<int[][][]>());
+    {
+      File chunk = new File(path + "dim\\0\\0.chunk");
+      int dimID = 0;
+      int chunkID = 0;
+      while(chunk.exists()){
+        try(Scanner chunkRead = new Scanner(chunk)){
+          String data[][] = new String[CHUNK_WIDTH][]; //x,y
+          for(int i = 0; i < CHUNK_WIDTH && chunkRead.hasNextLine();i++){
+            data[i] = chunkRead.nextLine().split(";");
+            if(data[i].length != HEIGHT){
+              throw new IncorrectSaveSettingsLoaded(HEIGHT,data[i].length,name,true);
+            }
+            if(i+1 >= CHUNK_WIDTH || !chunkRead.hasNextLine()){
+              throw new IncorrectSaveSettingsLoaded(CHUNK_WIDTH,i,name,false);
+            }
+          }
+          int[][][] data2 = new int[CHUNK_WIDTH][HEIGHT][5];
+          for (int x = 0; x < data2.length; x++){
+            for (int y = 0; y < data2[x].length; y++) {
+              String[] tempData = data[x][y].split(",");
+              for (int info = 0; info < data2[x][y].length; info++) {
+                data2[x][y][info] = Integer.parseInt(tempData[info]);
+              }
+            }
+          }
+          blocks.get(dimID).add(data2);
+        } catch (FileNotFoundException e){
+          e.printStackTrace();
+        }
+      }
+    }
+    World.setState(0, 0, 0, 0, 0, 0);
+>>>>>>> 72046ac448d9a17789a17d5d32ee7dfff79c04c9
   }
 }
