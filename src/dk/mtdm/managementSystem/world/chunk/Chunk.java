@@ -29,6 +29,11 @@ public class Chunk {
     this.containedBlocks = new Block [CHUNK_WIDTH][CHUNK_HEIGHT];
     this.creationHeight = maxCreation;
   }
+  public Chunk(Block[][] chunk,int ID,int creationHeight){
+    containedBlocks = chunk;
+    this.ID = ID;
+    this.creationHeight = creationHeight;
+  }
   /**
    * @return the ID of this chunk
    */
@@ -163,4 +168,5 @@ public class Chunk {
     out+= ID + "," + creationHeight;
     return out;
   } 
+
 }
