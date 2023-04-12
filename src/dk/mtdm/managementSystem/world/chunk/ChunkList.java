@@ -24,6 +24,9 @@ public class ChunkList {
     }
     return chunks.get(dimensionID+dimensionOffset).get(ID);
   }
+  public static void setChunk(Chunk chunk, int ID){
+    
+  }
   public static void generate(int ID){
     chunks.get(dimensionID+dimensionOffset).generate(ID);
   }

@@ -3,12 +3,14 @@ package dk.mtdm.itemsAndMore.Blocks;
 import dk.mtdm.itemsAndMore.texureFiles.BlockTextures;
 import dk.mtdm.itemsAndMore.texureFiles.breaking.BreakingTexures;
 import processing.core.PGraphics;
+import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.exceptions.MissingDataException;
 import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
 import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.managementSystem.world.World;
 
 /**
  * @author @ItsLukV
@@ -40,7 +42,21 @@ public abstract class Block {
         this.hoverability = hoverability;
         this.itemDrop = itemDrop;
     }
-
+    public static Block fromState(String state,WorldWideLocation pos) throws MissingBlockTypeException{
+        String[] in = state.split(",");
+        int[] input = new int[in.length];
+        for (int j = 0; j < in.length; j++) {
+            input[j] = Integer.parseInt(in[j]);
+        }
+        Block out = BlockPicker.picker(BlockTypes.values()[input[0]], pos);
+        out.setSolidity(input[1] == 1);
+        out.setBreakability(input[2] == 1);
+        out.setHoverability(input[3] == 1);
+        if(input[4] == -1){
+            out.setItemDrop(ItemTypes.values()[input[4]]);
+        }
+        return out;
+    }
     /**
      * shows the block
      *

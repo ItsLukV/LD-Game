@@ -162,10 +162,10 @@ public class World {
   }
   public static String getState() {
     String out = "";
-    out += CHUNK_WIDTH + "\n" + HEIGHT + "\n" + seed1 + "\n" + BlockStone + "\n" + BlockBedrock + "\n" + BlockAir; 
+    out += CHUNK_WIDTH + "\n" + HEIGHT + "\n" + seed1 + "\n" + BlockStone + "\n" + BlockBedrock + "\n" + BlockAir + "\n" + GeneratorHeight; 
     return out;
   }
-  public static void setState(int CHUNK_WIDTH, int HEIGHT, int seed1, float BlockStone, float BlockBedrock, float BlockAir){
+  public static void setState(int CHUNK_WIDTH, int HEIGHT, int seed1, float BlockStone, float BlockBedrock, float BlockAir,int GeneratorHeight){
     World.CHUNK_WIDTH = CHUNK_WIDTH;
     World.HEIGHT = HEIGHT;
     World.seed1 = seed1;
