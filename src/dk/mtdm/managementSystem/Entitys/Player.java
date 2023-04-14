@@ -14,20 +14,11 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 
 public class Player extends Entity {
-  public static int height = 32;
-  public static int width = 32;
   private boolean down;
   private boolean up;
   private boolean right;
   private boolean left;
-  private int moveSpeed = 6;
-  private float airRes = 0.8f;
   public static InventoryManager inventory = new InventoryManager();
-  public static boolean noClip = false;
-  public static int gravityAcc = 2;
-  private boolean standing = true;
-  private int jumpTime = 0;
-  private int maxJump = 10;
 
   /**
    * Creates a player object
@@ -36,7 +27,8 @@ public class Player extends Entity {
    */
   public Player(WorldWideLocation pos) {
     this.pos = pos;
-
+    this.height = 32;
+    this.width = 32;
     inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove this
   }
 
@@ -58,37 +50,19 @@ public class Player extends Entity {
     inventory.draw(g);
   }
 
+
   /**
    * This is a method that updates the player (this needs to be updated every
    * frame)
    */
-
+  @Override
   public void tick() {
-    calcInput();
-    if (!noClip) {
-      addGravity();
-      try {
-        calcCollision();
-      } catch (MissingBlockTypeException e) {
-        e.printStackTrace();
-      }
-      try {
-        if (pos.getCanvas().getY() > 0) {
-          pos.add(new LDVector(0, -pos.getCanvas().getY()), LocationTypes.canvas);
-        }
-      } catch (MissingDataException e) {
-        e.printStackTrace();
-      }
-    }
-    calcSpeed();
+    super.tick();
     inventory.tick();
+    calcInput();
   }
 
-  private void calcSpeed() {
-    speed.setX((int) (speed.getX() * airRes));
-    speed.setY((int) (speed.getY() * airRes));
-    pos.add(speed, LocationTypes.canvas);
-  }
+
 
   /**
    * TODO: write javadoc
@@ -137,9 +111,9 @@ public class Player extends Entity {
       speed.add(new LDVector(-moveSpeed, 0));
     if (right)
       speed.add(new LDVector(moveSpeed, 0));
-    if (up && (noClip || (standing && jumpTime < maxJump))) {
-      speed.add(new LDVector(0, -moveSpeed));
-      jumpTime++;
+    if (up && (noClip || (standing))) {
+      speed.add(new LDVector(0, -jumpBoost));
+      standing = false;
     }
     if (down)
       speed.add(new LDVector(0, moveSpeed));
@@ -154,35 +128,34 @@ public class Player extends Entity {
     }
   }
 
-  private void addGravity() {
-    speed.add(new LDVector(0, gravityAcc));
-  }
 
-  private void calcCollision() throws MissingBlockTypeException {
-    {// up and down
-      {// down
-        WorldWideLocation botLef = pos.copy();
-        botLef.add(new LDVector(0, 1), LocationTypes.canvas);
-        WorldWideLocation botRig = pos.copy();
-        botRig.add(new LDVector(Block.getWidth(), 1), LocationTypes.canvas);
-        if ((World.getBlock(botLef).getSolidity() || World.getBlock(botRig).getSolidity()) && speed.getY() > 0) {
-          speed.setY(0);
-          standing = true;
-          jumpTime = 0;
-        }
-      }
-      {// up
-        WorldWideLocation topLef = pos.copy();
-        topLef.add(new LDVector(0, -1 - Block.getHeight()), LocationTypes.canvas);
-        WorldWideLocation topRig = pos.copy();
-        topRig.add(new LDVector(Block.getWidth(), -1 - Block.getHeight()), LocationTypes.canvas);
-        if ((World.getBlock(topLef).getSolidity() || World.getBlock(topRig).getSolidity()) && speed.getY() < 0) {
-          if (!standing) {
-            speed.setY(0);
-          }
-        }
-      }
-    }
+  private void calcCollision() throws MissingBlockTypeException, MissingDataException {
+
+    // bottomCollision();
+    // {// up and down
+    //   {// down
+    //     WorldWideLocation botLef = pos.copy();
+    //     botLef.add(new LDVector(0, 1), LocationTypes.canvas);
+    //     WorldWideLocation botRig = pos.copy();
+    //     botRig.add(new LDVector(Block.getWidth(), 1), LocationTypes.canvas);
+    //     if ((World.getBlock(botLef).getSolidity() || World.getBlock(botRig).getSolidity()) && speed.getY() > 0) {
+    //       speed.setY(0);
+    //       standing = true;
+    //       jumpTime = 0;
+    //     }
+    //   }
+    //   {// up
+    //     WorldWideLocation topLef = pos.copy();
+    //     topLef.add(new LDVector(0, -1 - Block.getHeight()), LocationTypes.canvas);
+    //     WorldWideLocation topRig = pos.copy();
+    //     topRig.add(new LDVector(Block.getWidth(), -1 - Block.getHeight()), LocationTypes.canvas);
+    //     if ((World.getBlock(topLef).getSolidity() || World.getBlock(topRig).getSolidity()) && speed.getY() < 0) {
+    //       if (!standing) {
+    //         speed.setY(0);
+    //       }
+    //     }
+    //   }
+    // }
     {// right and left
      // TODO: fix, it broke
      // {//right
@@ -209,6 +182,8 @@ public class Player extends Entity {
       // }
     }
   }
+
+
 
   public InventoryManager getInventory() {
     return inventory;

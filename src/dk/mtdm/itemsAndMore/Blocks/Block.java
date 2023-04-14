@@ -15,7 +15,7 @@ import dk.mtdm.location.WorldWideLocation;
  */
 public abstract class Block {
     private WorldWideLocation pos;
-    private static LDVector size = new LDVector(32, 32);
+    public static LDVector size = new LDVector(32, 32);
     private BlockTypes id;
     protected boolean soild;
     protected boolean breakability;
