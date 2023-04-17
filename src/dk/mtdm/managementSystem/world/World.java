@@ -21,16 +21,17 @@ public class World {
   // private static Chunk worldCentral = null;
   // private static int chunkAxisOffset; // the amount of chunks that are on the left of the global 0, this is needed so that chunk ID can be allowed negative and all chunks can be saved in an array 
   // private static WorldGenThread[] worldGeneraters; 
-  final private static int CHUNK_WIDTH = 32;
+  private static int CHUNK_WIDTH = 32;
   private static int HEIGHT = 100;
   private static int seed1 = 3;
   private static int GeneratorHeight = HEIGHT/3;
   private static float BlockStone = 0.5f;
   private static float BlockBedrock = 1f;
+  private static float BlockAir = 0.3f;
   public static float getBlockBedrock() {
     return BlockBedrock;
   }
-  private static float BlockAir = 0.3f;
+  
   /**
    * starts the world without a set seed
    * @param width the starting width of the world. in chunks <p>
@@ -158,5 +159,18 @@ public class World {
   }
   public static Chunk standardChunk(int ID){
     return new Chunk(ID, World.get_CHUNK_WIDTH(), World.get_HEIGHT(), World.getGeneratorHeight());
+  }
+  public static String getState() {
+    String out = "";
+    out += CHUNK_WIDTH + "\n" + HEIGHT + "\n" + seed1 + "\n" + BlockStone + "\n" + BlockBedrock + "\n" + BlockAir + "\n" + GeneratorHeight; 
+    return out;
+  }
+  public static void setState(int CHUNK_WIDTH, int HEIGHT, int seed1, float BlockStone, float BlockBedrock, float BlockAir,int GeneratorHeight){
+    World.CHUNK_WIDTH = CHUNK_WIDTH;
+    World.HEIGHT = HEIGHT;
+    World.seed1 = seed1;
+    World.BlockStone = BlockStone;
+    World.BlockBedrock = BlockBedrock;
+    World.BlockAir = BlockAir;
   }
 }

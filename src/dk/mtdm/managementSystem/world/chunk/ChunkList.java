@@ -24,6 +24,9 @@ public class ChunkList {
     }
     return chunks.get(dimensionID+dimensionOffset).get(ID);
   }
+  public static void setChunk(Chunk chunk, int ID){
+    
+  }
   public static void generate(int ID){
     chunks.get(dimensionID+dimensionOffset).generate(ID);
   }
@@ -64,8 +67,8 @@ public class ChunkList {
         chunks.get(ID+dimensionOffset).generate(0);
         dimensionID = ID;
         LOCK = false;
-        chunks.get(ID+dimensionOffset).generate(Sketch.player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth());
-        chunks.get(ID+dimensionOffset).get((Sketch.player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth())).t.join();
+        chunks.get(ID+dimensionOffset).generate(Player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth());
+        chunks.get(ID+dimensionOffset).get((Player.getCanvas().getX() / World.get_CHUNK_WIDTH() / Block.getWidth())).t.join();
         return;
       }catch(IndexOutOfBoundsException e){
         e.printStackTrace();
@@ -82,5 +85,52 @@ public class ChunkList {
   }
   public static int getDimensionID(){
     return dimensionID;
+  }
+  public static String[][] getState() {
+    String[][] out = new String[chunks.size()+1][];
+    for (int i = 0; i < chunks.size(); i++) {
+      int[] edges = findEdges(i);
+      out[i] = new String[edges[1]-edges[0]];
+      for (int j = edges[0]; j < edges[1]; j++) {
+        out[i][j-edges[0]] = chunks.get(i).get(j).getState() + "\n";
+      }
+    }
+    out[chunks.size()] = new String[1];
+    out[chunks.size()][0] = "" + (-dimensionOffset);
+    return out;
+  }
+  private static int[] findEdges(int i) {
+    int ID = chunks.get(i).getID();
+    boolean up = ID > 0;
+    while(true){
+      if(chunks.get(i).get(ID) != null){
+        if(up){
+          ID++;
+        }else{
+          ID--;
+        }
+      }else{
+        break;
+      }
+    }
+    int point = ID;
+    ID = 0;
+    while(true){
+      if(chunks.get(i).get(ID) != null){
+        if(!up){
+          ID++;
+        }else{
+          ID--;
+        }
+      }else{
+        break;
+      }
+    }
+    if(ID <= point){
+      int[] out = {ID+1,point-1};
+      return out;
+    }
+    int[] out = {point+1,ID-1};
+      return out;
   }
 }

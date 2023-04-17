@@ -1,11 +1,16 @@
 package dk.mtdm;
 
-import dk.mtdm.managementSystem.world.PerlinNoise;
+import java.io.File;
+import java.io.IOException;
+
+import dk.mtdm.managementSystem.save.Save;
+
 public class test {
   public static void main(String[] args) {
-    int seed = 1253477;
-    PerlinNoise.start(seed);
-    System.out.println(PerlinNoise.getNoise(0.2f, 0.1f));
-    System.out.println(PerlinNoise.getNoise(0.2f, 0.15f));
+    try {
+      new Save("help");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 }

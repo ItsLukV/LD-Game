@@ -29,6 +29,11 @@ public class Chunk {
     this.containedBlocks = new Block [CHUNK_WIDTH][CHUNK_HEIGHT];
     this.creationHeight = maxCreation;
   }
+  public Chunk(Block[][] chunk,int ID,int creationHeight){
+    containedBlocks = chunk;
+    this.ID = ID;
+    this.creationHeight = creationHeight;
+  }
   /**
    * @return the ID of this chunk
    */
@@ -145,5 +150,23 @@ public class Chunk {
     g.stroke(255,0,0);
     g.rect(ID*World.get_CHUNK_WIDTH()*Block.getWidth(),0,World.get_CHUNK_WIDTH()*Block.getWidth(),-World.get_HEIGHT()*Block.getHeight());
     g.pop();
+  }
+  public String getState() {
+    try {
+      t.join();
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
+    String out = "";
+    for (int x = 0; x < containedBlocks.length; x++) {
+      for (int y = 0; y < containedBlocks[x].length; y++) {
+        out += containedBlocks[x][y].getState() + ";";
+      }
+      out += "\n";
+    }
+    out+= ID + "," + creationHeight;
+    return out;
   } 
+
 }

@@ -26,13 +26,13 @@ public class WorldWideLocation {
     return new WorldWideLocation(x, y, location, chunkID);
   }
 
-  private WorldWideLocation (int x, int y, LocationTypes location, int chunkID){
+  public WorldWideLocation (int x, int y, LocationTypes location, int chunkID){
     this.x = x;
     this.y = y;
     this.location = location;
     this.chunkID = chunkID;
   }
-  private WorldWideLocation (int x, int y, LocationTypes location){
+  public WorldWideLocation (int x, int y, LocationTypes location){
     this.x = x;
     this.y = y;
     this.location = location;

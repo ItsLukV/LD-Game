@@ -13,8 +13,8 @@ import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.Entitys.Player;
-import dk.mtdm.managementSystem.world.ChunkList;
 import dk.mtdm.managementSystem.world.World;
+import dk.mtdm.managementSystem.world.chunk.ChunkList;
 import processing.core.PGraphics;
 
 public class Mining extends Ability {
