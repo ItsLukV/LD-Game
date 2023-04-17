@@ -15,7 +15,7 @@ public class WorldWideLocation {
   int y;
   LocationTypes location;
   Integer chunkID = null;
-  
+
   public static WorldWideLocation create(LDVector vector, LocationTypes location){
     return new WorldWideLocation(vector.getX(), vector.getY(), location);
   }
@@ -54,14 +54,14 @@ public class WorldWideLocation {
         }else{
           throw new MissingDataException("relative location is incapable of providing CHUNKID without a set CHUNKID");
         }
-      
+
       case global:
         return globalToChunkID(this.x);
-      
+
       case canvas:
         int out = canvasToGlobal_X(x);
         return globalToChunkID(out);
-      
+
       case unkown:
         throw new MissingDataException("no known location int given, it is not posible to generate specific information without specific data");
       default:
@@ -72,13 +72,13 @@ public class WorldWideLocation {
     switch (location) {
       case relative:
         return new LDVector((int)x, (int)y);
-      
+
       case global:
         return new LDVector(globalToRelative_X((int)x), (int)y);
-      
+
       case canvas:
         return new LDVector(globalToRelative_X(canvasToGlobal_X(x)), canvasToGlobal_Y(y));
-      
+
       case unkown:
         throw new MissingDataException("no known location int given, it is not posible to generate specific information without specific data");
       default:
@@ -93,13 +93,13 @@ public class WorldWideLocation {
       }else{
         throw new MissingDataException("relative location is incapable of providing GLOBAL without a set CHUNKID");
       }
-    
+
     case global:
       return new LDVector((int)x, (int)y);
-    
+
     case canvas:
       return new LDVector(canvasToGlobal_X(x), canvasToGlobal_Y(y));
-    
+
     case unkown:
       throw new MissingDataException("no known location int given, it is not posible to generate specific information without specific data");
     default:
@@ -110,24 +110,25 @@ public class WorldWideLocation {
     switch (location) {
       case relative:
         if(chunkID != null){
-          return new LDVector(globalToCanvas_X(relativToGlobal_X((int)x)),(int)y*Block.getHeight()+Block.getHeight());
+          return new LDVector(globalToCanvas_X(relativToGlobal_X((int)x)),(int)-(y*Block.getHeight()+Block.getHeight()));
+
         }else{
           throw new MissingDataException("relative location is incapable of providing GLOBAL without a set CHUNKID");
         }
-      
+
       case global:
         return new LDVector(globalToCanvas_X((int)x), globalToCanvas_Y((int)y));
-      
+
       case canvas:
         return new LDVector((int) x, (int) y);
-      
+
       case unkown:
         throw new MissingDataException("no known location int given, it is not posible to generate specific information without specific data");
       default:
         throw new MissingDataException();
     }
   }
-  
+
   private int globalToChunkID(int x) {
     return (int) Math.floor((float)x/(float)World.get_CHUNK_WIDTH());
   }
@@ -195,7 +196,7 @@ public class WorldWideLocation {
           x += canvasToGlobal_X(vector.getX());
           y += canvasToGlobal_Y(vector.getY());
         }
-    
+
       default:
         break;
     }

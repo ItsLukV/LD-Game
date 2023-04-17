@@ -16,13 +16,17 @@ public abstract class Entity {
   protected LDVector speed = new LDVector(0, 0);
   protected int moveSpeed = 6;
   protected float airRes = 0.8f;
-  protected static boolean noClip = false;
-  protected static int gravityAcc = 2;
+  public static boolean noClip = false;
+  protected int gravityAcc = 2;
   protected boolean gravity = true;
   protected final int jumpBoost = Block.size.getY() * 2;
   protected boolean standing = true;
 
-
+  public Entity(WorldWideLocation pos, int width, int height) {
+    Entity.pos = pos;
+    Entity.width = width;
+    Entity.height = height;
+  }
 
   /**
    * shows the entity
@@ -76,30 +80,38 @@ public abstract class Entity {
 
 
   private void bottomCollision() throws MissingBlockTypeException, MissingDataException {
-      LDVector globalPlayerPos = pos.getGlobal();
+      LDVector globalPlayerPos = Entity.pos.getGlobal();
       var blockPos = WorldWideLocation.create(globalPlayerPos.getX(), globalPlayerPos.getY(),LocationTypes.global);
       // System.out.println(World.getBlock(blockPos).getBlockType());
-      if(World.getBlock(blockPos).getSolidity()) return;
-
-      // if(playerRect(World.getBlock(blockPos))) {
+      // if(World.getBlock(blockPos).getSolidity()) return;
+      boolean hit = playerRect(World.getBlock(blockPos));
+      if(hit) {
         standing = true;
         gravity = false;
-        Player.pos = WorldWideLocation.create(new LDVector(blockPos.getCanvas().getX(), blockPos.getCanvas().getY()), LocationTypes.canvas);
+        // pos = WorldWideLocation.create(new LDVector(blockPos.getCanvas().getX(), blockPos.getCanvas().getY()), LocationTypes.canvas);
         this.speed = new LDVector(0, 0);
-      // }
+      }
   }
 
   private boolean playerRect(Block block) throws MissingDataException {
-      if (pos.getCanvas().getX() + width >= block.getCanvas().getX() &&    // r1 right edge past r2 left
-      pos.getCanvas().getX() <= block.getCanvas().getX() + Block.getWidth() &&    // r1 left edge past r2 right
-      pos.getCanvas().getY() + height >= block.getCanvas().getY() &&    // r1 top edge past r2 bottom
-      pos.getCanvas().getY() <= block.getCanvas().getY() + Block.getHeight()) {    // r1 bottom edge past r2 top
+      var r1 = pos.getCanvas();
+      var r2 = block.getCanvas();
+      if (
+      r1.getX() + Entity.width >= r2.getX() &&    // r1 right edge past r2 left
+      r1.getX() <= r2.getX() + Block.getWidth() &&    // r1 left edge past r2 right
+      r1.getY() + Entity.height >= r2.getY() &&    // r1 top edge past r2 bottom
+      r1.getY() <= r2.getY() + Block.getHeight()) {    // r1 bottom edge past r2 top
         return true;
       }
     return false;
   }
-// Getters and setters
-  public static WorldWideLocation getPos() {
-    return pos;
+
+  public static LDVector getCanvas() {
+    try {
+      return pos.getCanvas();
+    } catch (MissingDataException e) {
+      e.printStackTrace();
+      return new LDVector(0, 0);
+    }
   }
 }

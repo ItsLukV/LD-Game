@@ -18,6 +18,7 @@ public class Player extends Entity {
   private boolean up;
   private boolean right;
   private boolean left;
+  public static WorldWideLocation pos;
   public static InventoryManager inventory = new InventoryManager();
 
   /**
@@ -26,22 +27,16 @@ public class Player extends Entity {
    * @param pos start pos
    */
   public Player(WorldWideLocation pos) {
-    this.pos = pos;
-    this.height = 32;
-    this.width = 32;
+    super(pos,32,32);
     inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove this
   }
 
   @Override
   public void draw(PGraphics g) {
     g.push();
-    try {
-      g.image(MiscTextures.getPlayerTexture(), pos.getCanvas().getX(), pos.getCanvas().getY());
-      g.strokeWeight(10);
-      g.point(pos.getCanvas().getX(), pos.getCanvas().getY());
-    } catch (MissingDataException e) {
-      e.printStackTrace();
-    }
+    g.image(MiscTextures.getPlayerTexture(), Player.getCanvas().getX(), Player.getCanvas().getY());
+    g.strokeWeight(10);
+    g.point(Player.getCanvas().getX(), Player.getCanvas().getY());
     g.pop();
 
   }
@@ -119,17 +114,10 @@ public class Player extends Entity {
       speed.add(new LDVector(0, moveSpeed));
   }
 
-  public static LDVector getCanvas() {
-    try {
-      return pos.getCanvas();
-    } catch (MissingDataException e) {
-      e.printStackTrace();
-      return new LDVector(0, 0);
-    }
-  }
 
 
-  private void calcCollision() throws MissingBlockTypeException, MissingDataException {
+
+  // private void calcCollision() throws MissingBlockTypeException, MissingDataException {
 
     // bottomCollision();
     // {// up and down
@@ -181,9 +169,12 @@ public class Player extends Entity {
       // }
       // }
     }
-  }
+  // }
 
 
+    public static WorldWideLocation getPos() {
+      return pos;
+    }
 
   public InventoryManager getInventory() {
     return inventory;
