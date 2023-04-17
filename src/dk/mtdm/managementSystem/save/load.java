@@ -19,12 +19,9 @@ import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.managementSystem.world.chunk.ChunkList;
 
 public class load {
-  private String path = "src\\dk\\mtdm\\managementSystem\\world\\saveing\\";
-  private String name;
-
-  public load(String saveName) throws IncorrectSaveSettingsLoaded{
+  public static void load(String saveName) throws IncorrectSaveSettingsLoaded{
+    String path = "src\\dk\\mtdm\\managementSystem\\world\\saveing\\";
     path += saveName + "\\";
-    name = saveName;
     int CHUNK_WIDTH; 
     int HEIGHT;
     int seed1;
@@ -37,10 +34,10 @@ public class load {
       try (Scanner worldReader = new Scanner(world)) {
         CHUNK_WIDTH = worldReader.nextInt();
         HEIGHT = worldReader.nextInt();
-        seed1 = worldReader.nextInt();
-        BlockStone = worldReader.nextFloat();
-        BlockBedrock = worldReader.nextFloat();
-        BlockAir = worldReader.nextFloat();
+        seed1 = worldReader.nextInt();worldReader.nextLine();
+        BlockStone = Float.parseFloat(worldReader.nextLine());
+        BlockBedrock = Float.parseFloat(worldReader.nextLine());
+        BlockAir = Float.parseFloat(worldReader.nextLine());
         GeneratorHeight = worldReader.nextInt();
       } catch (FileNotFoundException e) {
         // TODO Auto-generated catch block
@@ -53,6 +50,7 @@ public class load {
     }
     World.setState(CHUNK_WIDTH, HEIGHT, seed1, BlockStone, BlockBedrock, BlockAir,GeneratorHeight);
     {
+      boolean dimUp = true;
       int dimID = 0;
       while (true) {
         try{
@@ -61,7 +59,8 @@ public class load {
           ArrayList<Chunk> chunks = new ArrayList<Chunk>();
           while(true){
             try{
-              File chunk = new File(path + "dim\\" + dimID + chunkID + ".chunk");
+              File chunk = new File(path + "dim\\" + dimID + "\\" +chunkID + ".chunk");
+              if(!chunk.exists()){break;}
               Scanner chunkReader = new Scanner(chunk);
               ArrayList<String[]> set = new ArrayList<String[]>();
               while (chunkReader.hasNextLine()){
@@ -96,9 +95,21 @@ public class load {
               }
             }
           }
-          dimID++;
+          if(dimUp){
+            dimID++;
+            ChunkList.setDimensionID(dimID);
+          }else{
+            dimID--;
+          }
+          File check = new File(path + "dim\\" + dimID + "\\" + 0 + ".chunk");
+          if(!check.exists()){break;}
         }catch(Exception e){
-          break;
+          if(dimUp){
+            dimID = -1;
+            dimUp = false;
+          }else{
+            break;
+          }
         }
       }
     }

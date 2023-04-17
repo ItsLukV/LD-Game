@@ -3,11 +3,13 @@ package dk.mtdm.Commands;
 import java.io.IOException;
 
 import dk.mtdm.Sketch;
+import dk.mtdm.exceptions.IncorrectSaveSettingsLoaded;
 import dk.mtdm.itemsAndMore.items.Item;
 import dk.mtdm.itemsAndMore.items.ItemPicker;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
 import dk.mtdm.managementSystem.Entitys.Player;
 import dk.mtdm.managementSystem.save.Save;
+import dk.mtdm.managementSystem.save.load;
 import dk.mtdm.managementSystem.world.chunk.ChunkList;
 import processing.core.PGraphics;
 
@@ -57,7 +59,13 @@ public class CommandHandler {
                         Save prog = new Save("hommer");
                         prog.state();
                     } catch (IOException e) {
-                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                case "LOAD" -> {
+                    try {
+                        load.load("hommer");
+                    } catch (IncorrectSaveSettingsLoaded e) {
                         e.printStackTrace();
                     }
                 }
