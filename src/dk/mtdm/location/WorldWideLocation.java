@@ -209,9 +209,20 @@ public class WorldWideLocation implements WWL {
         break;
     }
   }
+  @Override
   public void setToCanvas() throws MissingDataException{
     this.x = this.getCanvas().getX();
-    this.y = this.getCanvas().getX();
+    this.y = this.getCanvas().getY();
     this.location = LocationTypes.canvas;
+  }
+  @Override
+  public void setX(int x, LocationTypes location) {
+   this.x = x;
+   this.location = location;
+  }
+  @Override
+  public void setY(int y, LocationTypes location) {
+    this.y = y;
+    this.location = location;
   }
 }

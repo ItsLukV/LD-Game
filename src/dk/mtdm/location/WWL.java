@@ -26,4 +26,7 @@ public interface WWL {
 
   public void setToCanvas() throws MissingDataException;
 
+  public void setX(int x, LocationTypes location);
+  public void setY(int y, LocationTypes location);
+
 }

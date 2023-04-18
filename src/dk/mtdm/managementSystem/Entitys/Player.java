@@ -52,9 +52,9 @@ public class Player extends Entity {
    */
   @Override
   public void tick() {
+    calcInput();
     super.tick();
     inventory.tick();
-    calcInput();
   }
 
 
@@ -106,9 +106,8 @@ public class Player extends Entity {
       speed.add(new LDVector(-moveSpeed, 0));
     if (right)
       speed.add(new LDVector(moveSpeed, 0));
-    if (up && (noClip || (standing))) {
+    if (up) {
       speed.add(new LDVector(0, -jumpBoost));
-      standing = false;
     }
     if (down)
       speed.add(new LDVector(0, moveSpeed));

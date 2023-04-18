@@ -46,9 +46,11 @@ public class CommandHandler {
                     }
                     Sketch.player.getInventory().giveItem(item, amount);
                 }
-                case "TEST" -> Test();
-                case "NOCLIP" -> Player.noClip = !Player.noClip;
-                case "PING" -> System.out.println("Pong!");
+                case "NOCLIP" -> {
+                    Player.noClip = !Player.noClip;
+                    System.out.println("noClip:" + Player.noClip);
+                }
+                    case "PING" -> System.out.println("Pong!");
                 case "DIM" -> {
                     try{
                         ChunkList.setDimensionID(Integer.parseInt(command[1]));
@@ -75,36 +77,6 @@ public class CommandHandler {
                 }
             }
             textInputBox.restartText();
-        }
-    }
-
-    private void Test() {
-        WorldWideLocation playerPos;
-        playerPos = Player.getPos();
-        try {
-            for(int i = 0; i < World.get_CHUNK_WIDTH(); i++) {
-                for(int j = 0; j < 10; j++) {
-                    WorldWideLocation blockPos = WorldWideLocation.create(i, j, LocationTypes.relative);
-                    ChunkList.getChunk(playerPos.getChunkID()).setBlock(blockPos, BlockTypes.stone);
-                }
-            }
-            for(int i = 1; i < World.get_CHUNK_WIDTH() - 1; i++) {
-                for(int j = 1; j < 9; j++ ) {
-                    WorldWideLocation blockPos = WorldWideLocation.create(i, j, LocationTypes.relative);
-                    ChunkList.getChunk(playerPos.getChunkID()).setBlock(blockPos, BlockTypes.air);
-                }
-            }
-
-            WorldWideLocation blockPos = WorldWideLocation.create(3, 3, LocationTypes.relative);
-            ChunkList.getChunk(playerPos.getChunkID()).setBlock(blockPos, BlockTypes.stone);
-
-
-            blockPos = WorldWideLocation.create(3, 1, LocationTypes.relative);
-            ChunkList.getChunk(playerPos.getChunkID()).setBlock(blockPos, BlockTypes.stone);
-
-
-        } catch (MissingDataException e) {
-            e.printStackTrace();
         }
     }
 
