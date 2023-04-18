@@ -1,8 +1,8 @@
 # LD-Game
 
 ## TODO
-- [ ] World Management
-- [ ] World Gen
+- [x] World Management
+- [x] World Gen
 - [ ] Player Management
-- [ ] Items
-- [ ] Console with commands
+- [x] Items
+- [x] Console with commands
