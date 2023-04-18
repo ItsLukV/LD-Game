@@ -5,7 +5,7 @@ import dk.mtdm.exceptions.MissingDataException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
-import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.location.WWL;
 import dk.mtdm.managementSystem.world.chunk.Chunk;
 import dk.mtdm.managementSystem.world.chunk.ChunkList;
 import processing.core.PGraphics;
@@ -77,11 +77,10 @@ public class World {
    * @return
    * @throws MissingBlockTypeException
    */
-  public static Block getBlock(WorldWideLocation location) throws MissingBlockTypeException{
+  public static Block getBlock(WWL location) throws MissingBlockTypeException{
     try {
       return getChunk(location.getChunkID()).getBlock(location);
     } catch (MissingDataException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
       return BlockPicker.picker(BlockTypes.air,location);
     }

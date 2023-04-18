@@ -1,11 +1,11 @@
 package dk.mtdm.managementSystem.Entitys;
 
 import dk.mtdm.location.LDVector;
-import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.location.WWL;
 import processing.core.PGraphics;
 
 public abstract class Entity {
-  protected static WorldWideLocation pos;
+  protected static WWL pos;
   protected int width;
   protected int height;
   protected LDVector speed = new LDVector(0, 0);

@@ -4,15 +4,13 @@ public class MissingBlockTypeException extends Throwable{
   private String e;
   
   /**
- * TODO: write javadoc
- */
+   * descibes when a blocktype is not found, this primarily happens when using blockpicker and parsing null
+   * @param exception a message of what went wrong
+   */
   public MissingBlockTypeException(String exception){
     super(exception);
     e = exception;
   }
-  /**
- * TODO: write javadoc
- */
   @Override
   public void printStackTrace(){
     System.out.println("\nno block found for this type");

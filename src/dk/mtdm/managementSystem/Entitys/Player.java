@@ -7,7 +7,7 @@ import dk.mtdm.itemsAndMore.items.Pickaxe;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;
 import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
-import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.location.WWL;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PApplet;
@@ -34,7 +34,7 @@ public class Player extends Entity {
    *
    * @param pos start pos
    */
-  public Player(WorldWideLocation pos) {
+  public Player(WWL pos) {
     this.pos = pos;
 
     inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove this
@@ -161,9 +161,9 @@ public class Player extends Entity {
   private void calcCollision() throws MissingBlockTypeException {
     {// up and down
       {// down
-        WorldWideLocation botLef = pos.copy();
+        WWL botLef = pos.copy();
         botLef.add(new LDVector(0, 1), LocationTypes.canvas);
-        WorldWideLocation botRig = pos.copy();
+        WWL botRig = pos.copy();
         botRig.add(new LDVector(Block.getWidth(), 1), LocationTypes.canvas);
         if ((World.getBlock(botLef).getSolidity() || World.getBlock(botRig).getSolidity()) && speed.getY() > 0) {
           speed.setY(0);
@@ -172,9 +172,9 @@ public class Player extends Entity {
         }
       }
       {// up
-        WorldWideLocation topLef = pos.copy();
+        WWL topLef = pos.copy();
         topLef.add(new LDVector(0, -1 - Block.getHeight()), LocationTypes.canvas);
-        WorldWideLocation topRig = pos.copy();
+        WWL topRig = pos.copy();
         topRig.add(new LDVector(Block.getWidth(), -1 - Block.getHeight()), LocationTypes.canvas);
         if ((World.getBlock(topLef).getSolidity() || World.getBlock(topRig).getSolidity()) && speed.getY() < 0) {
           if (!standing) {
