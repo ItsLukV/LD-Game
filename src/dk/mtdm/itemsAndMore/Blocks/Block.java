@@ -50,7 +50,7 @@ public abstract class Block {
         try {
             try {
                 g.image(BlockTextures.picker(id), pos.getCanvas().getX(),
-                        /* World.get_HEIGHT() */-(size.getY() - pos.getCanvas().getY()), size.getX(), size.getY());
+                        /* World.get_HEIGHT() */pos.getCanvas().getY(), size.getX(), size.getY());
                 if (breakLevel != 0)
                     g.image(BreakingTexures.getBreakingTextures()[breakLevel], pos.getCanvas().getX(),
                             size.getY() - pos.getCanvas().getY(), size.getX(), size.getY());

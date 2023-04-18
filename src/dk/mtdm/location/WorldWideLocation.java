@@ -201,4 +201,9 @@ public class WorldWideLocation {
         break;
     }
   }
+  public void setToCanvas() throws MissingDataException{
+    this.x = this.getCanvas().getX();
+    this.y = this.getCanvas().getX();
+    this.location = LocationTypes.canvas;
+  }
 }

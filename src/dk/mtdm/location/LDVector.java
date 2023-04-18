@@ -1,4 +1,7 @@
 package dk.mtdm.location;
+
+import java.lang.module.ResolutionException;
+
 /**
  * a class capable of operating either  as a point in space or a vector of movement.<br>
  * contains the methods needed to move change the vector.
@@ -28,9 +31,10 @@ public class LDVector {
    * increases the size of this vector by the given vector
    * @param vector the vector to be added into this vector
    */
-  public void add(LDVector vector) {
+  public LDVector add(LDVector vector) {
     x += vector.getX();
     y += vector.getY();
+    return this;
   }
   /**
    * multiplies the size of this vector by the given vector

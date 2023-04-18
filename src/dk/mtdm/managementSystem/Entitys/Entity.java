@@ -50,6 +50,9 @@ public abstract class Entity {
       try {
         if (pos.getCanvas().getY() > 0) {
           pos.add(new LDVector(0, -pos.getCanvas().getY()), LocationTypes.canvas);
+        } else if (pos.getGlobal().getY() >=World.get_HEIGHT()-1) {
+          pos.setPosition(pos.getGlobal().add(new LDVector(0,-1)), LocationTypes.global);
+          pos.setToCanvas();
         }
       } catch (MissingDataException e) {
         e.printStackTrace();
@@ -80,16 +83,23 @@ public abstract class Entity {
 
 
   private void bottomCollision() throws MissingBlockTypeException, MissingDataException {
-      LDVector globalPlayerPos = Entity.pos.getGlobal();
-      var blockPos = WorldWideLocation.create(globalPlayerPos.getX(), globalPlayerPos.getY(),LocationTypes.global);
-      // System.out.println(World.getBlock(blockPos).getBlockType());
-      // if(World.getBlock(blockPos).getSolidity()) return;
-      boolean hit = playerRect(World.getBlock(blockPos));
+      var copyPlayerWWL = Entity.pos.copy();
+      copyPlayerWWL.add(new LDVector(0, Entity.height), LocationTypes.canvas);
+      LDVector copyPlayerPos = copyPlayerWWL.getCanvas();
+      var blockPos = WorldWideLocation.create(copyPlayerPos.getX(), copyPlayerPos.getY(),LocationTypes.canvas);
+      var block = World.getBlock(blockPos);
+
+      if(!block.getSolidity()) return;
+
+      boolean hit = playerRect(block);
       if(hit) {
         standing = true;
         gravity = false;
-        // pos = WorldWideLocation.create(new LDVector(blockPos.getCanvas().getX(), blockPos.getCanvas().getY()), LocationTypes.canvas);
-        this.speed = new LDVector(0, 0);
+        // speed = new LDVector(speed.getX(), 0);
+        pos.add(new LDVector(0, -Block.getHeight()),LocationTypes.canvas);
+      } else {
+        standing = false;
+        gravity = true;
       }
   }
 
