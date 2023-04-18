@@ -53,7 +53,10 @@ public abstract class Entity {
       addGravity();
       outOfBounds();
     }
-
+    //This is need because of player can move with keep binds
+    if(this instanceof Player == false) {
+      calcSpeed();
+    }
   }
 
   private void outOfBounds() {
@@ -71,7 +74,7 @@ public abstract class Entity {
 
   private void calcCollision() {
     try {
-      // wallCollision();
+      wallCollision();
       bottomCollision();
     } catch (MissingBlockTypeException | MissingDataException e) {
       e.printStackTrace();
@@ -92,24 +95,27 @@ public abstract class Entity {
 
   private void wallCollision() throws MissingBlockTypeException {
     try {
-      WWL rightPos = WorldWideLocation.create(pos.getGlobal().getX() + 1, pos.getGlobal().getY(), LocationTypes.global, pos.getChunkID());
-      WWL blockPos = WorldWideLocation.create(pos.getGlobal().getX(), pos.getGlobal().getY(), LocationTypes.global, pos.getChunkID());
-      WWL leftPos = WorldWideLocation.create(pos.getGlobal().getX() - 1, pos.getGlobal().getY(), LocationTypes.global, pos.getChunkID());
 
-      // Check right for player
-      if(World.getBlock(rightPos).getSolidity()) {
-        if(pos.getCanvas().getX() + width > (rightPos.getCanvas().getX())) {
-          this.speed.setX(0);
-          this.pos.setPosition(new LDVector(Block.getWidth() - width - 1, pos.getCanvas().getY()), null);
-        }
-      }
+      WWL tilePos = WorldWideLocation.create(pos.getCanvas(),LocationTypes.canvas);
+
+      // WWL rightPos = WorldWideLocation.create(pos.getCanvas().getX() + Entity.width, pos.getGlobal().getY() + Entity.height / 2, LocationTypes.canvas, pos.getChunkID());
+
+      // // Check right for player
+      // if(World.getBlock(rightPos).getSolidity()) {
+      //   if(pos.getCanvas().getX() + width > (rightPos.getCanvas().getX())) {
+      //     speed.setX(0);
+      //     Entity.pos.setPosition(new LDVector(Block.getWidth() - width - 1, pos.getCanvas().getY()), LocationTypes.canvas);
+      //   }
+      // }
 
 
+      // There is a problem, that when the player moves over to the left or right the next block switchs so collsion can not be checked with that block
+      WWL leftPos = WorldWideLocation.create(pos.getCanvas().getX() - Block.getWidth(), pos.getCanvas().getY(), LocationTypes.canvas, pos.getChunkID());
       // Check left for player
-      if(World.getBlock(rightPos).getSolidity()) {
-        if(pos.getCanvas().getX() - width < (rightPos.getCanvas().getX())) {
-          this.speed.setX(0);
-          this.pos.setPosition(new LDVector(Block.getWidth() + width, pos.getCanvas().getY()), null);
+      if(World.getBlock(leftPos).getSolidity()) {
+        if(pos.getCanvas().getX() < tilePos.getCanvas().getX()) {
+          speed.setX(0);
+          pos.setX(World.getBlock(leftPos).getCanvas().getX() + width, LocationTypes.canvas);
         }
       }
 
