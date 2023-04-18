@@ -1,11 +1,14 @@
-package dk.mtdm.managementSystem.world;
+package dk.mtdm.managementSystem.world.chunk;
 
 
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
+import dk.mtdm.location.WWL;
 import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.Thread;
+import dk.mtdm.managementSystem.world.PerlinNoise;
+import dk.mtdm.managementSystem.world.World;
 /**
  * @author @dendersen
  */
@@ -121,7 +124,7 @@ public class WorldGenThread extends Thread{
     }
 
     
-    WorldWideLocation location = WorldWideLocation.create(x, y, LocationTypes.relative);
+    WWL location = WorldWideLocation.create(x, y, LocationTypes.relative);
     location.setChunkID(ID);
     if(noise <= World.getBlockAir()) {
       parent.setBlock(location, BlockTypes.air);

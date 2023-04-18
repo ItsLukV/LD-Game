@@ -4,15 +4,13 @@ import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.exceptions.MissingDataException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.location.LDVector;
-import dk.mtdm.location.LocationTypes;
-import dk.mtdm.location.WorldWideLocation;
-import dk.mtdm.managementSystem.world.World;
+import dk.mtdm.location.WWL;
 import processing.core.PGraphics;
 
 public abstract class Entity {
-  protected static WorldWideLocation pos;
-  public static int width;
-  public static int height;
+  protected static WWL pos;
+  protected int width;
+  protected int height;
   protected LDVector speed = new LDVector(0, 0);
   protected int moveSpeed = 6;
   protected float airRes = 0.8f;

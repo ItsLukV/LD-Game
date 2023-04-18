@@ -8,8 +8,8 @@ import dk.mtdm.itemsAndMore.texureFiles.breaking.BreakingTexures;
 import dk.mtdm.location.LocationTypes;
 import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.Entitys.Player;
-import dk.mtdm.managementSystem.world.ChunkList;
 import dk.mtdm.managementSystem.world.World;
+import dk.mtdm.managementSystem.world.chunk.ChunkList;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PApplet;
 
@@ -21,10 +21,8 @@ public class Sketch extends PApplet {
   public static int height = 450;
   private final CommandHandler commandHandler = new CommandHandler();
 
-  // public static int offsetX = player.getPos().getX() + Player.width / 2;
-  // public static int offsetY = player.getPos().getY() + Player.height / 2;
   /**
-   * TODO: write javadoc
+   * a piece of code that runs as a preparation for PApplet
    */
   @Override
   public void settings() {
@@ -32,7 +30,7 @@ public class Sketch extends PApplet {
   }
 
   /**
-   * TODO: write javadoc
+   * a piece of code that runs once at the start of PApplet
    */
   @Override
   public void setup() {
@@ -57,7 +55,7 @@ public class Sketch extends PApplet {
   }
 
   /**
-   * TODO: write javadoc
+   * a loop that is run by PApplet once on every frame
    */
   @Override
   public void draw() {
@@ -87,7 +85,9 @@ public class Sketch extends PApplet {
   }
 
   /**
-   * TODO: write javadoc
+   * every keyRelease interupt in the program will call this method which will decide what will happen based on which key is pressed <br>
+   * <br>
+   * this is used to stop movements  that are currently happening
    */
   @Override
   public void keyReleased() {
@@ -99,7 +99,9 @@ public class Sketch extends PApplet {
   }
 
   /**
-   * TODO: write javadoc
+   * every keyPress interupt in the program will call this method which will decide what will happen based on which key is pressed <br>
+   * <br>
+   * this is used to stop movements  that are currently happening
    */
   @Override
   public void keyPressed() {

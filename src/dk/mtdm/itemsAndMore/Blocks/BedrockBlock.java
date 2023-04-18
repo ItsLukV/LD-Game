@@ -1,12 +1,13 @@
 package dk.mtdm.itemsAndMore.Blocks;
 
-import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.location.WWL;
 
 public class BedrockBlock extends Block{
   /**
- * TODO: write javadoc
+ * makes a BedrockBlock without the need for all pieces to be specified
+ * @param pos the location of the BedrockBlock
  */
-  public BedrockBlock(WorldWideLocation pos) {
+  public BedrockBlock(WWL pos) {
     super(pos, BlockTypes.bedrock,true,false,true,null);
   }
 }

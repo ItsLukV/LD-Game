@@ -23,6 +23,5 @@ public class PerlinNoise {
   }
   public synchronized static float pseudoRandom(int x, int y){
     return PseudeRandom.attractor_3Cell_CNN(x, y, seed);
-    // return PseudeRandom.Float(x, y,seed);
   }
 }

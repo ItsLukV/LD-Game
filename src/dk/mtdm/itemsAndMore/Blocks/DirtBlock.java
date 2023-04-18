@@ -1,15 +1,15 @@
 package dk.mtdm.itemsAndMore.Blocks;
 
 import dk.mtdm.itemsAndMore.items.ItemTypes;
-import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.location.WWL;
 
 public class DirtBlock extends Block{
   /**
- * TODO: write javadoc
+ * makes a DirtBlock without the need for all pieces to be specified
+ * @param pos the location of the DirtBlock
  */
-  public DirtBlock(WorldWideLocation pos) {
+  public DirtBlock(WWL pos) {
     super(pos, BlockTypes.dirt, true, true, true, ItemTypes.dirt);
-    //TODO Auto-generated constructor stub
   }
   
 }

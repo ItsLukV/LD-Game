@@ -1,70 +1,59 @@
 package dk.mtdm.managementSystem.world;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.function.Function;
 
 public class PseudeRandom {
   private final static float dist = 2f;
-  private final static float a = 10f;
-  private final static float alpha = 10f;
-  private final static float b = 10f;
-  private final static float beta = 10f;
-  private final static float step = 0.1f;
+  private static float a = 10f;
+  private static float alpha = 9f;
+  private static float b = 8f;
+  private static float beta = 7f;
+  private static float step = 0.1f;
+  private static Function<float[],Float> x = in -> (-in[0]+alpha*f(in[0])-b*f(in[1])-b*f(in[2]))*step;
+  private static Function<float[],Float> y = in -> (-in[1]+b*f(in[0])-beta*f(in[1])-a*f(in[2]))*step;
+  private static Function<float[],Float> z = in -> (-in[2]+b*f(in[0])-a*f(in[1])-f(in[2]))*step;
+  private static long dimensionTimer = System.currentTimeMillis();
   /**
-   * 
    * @param x
    * @param y
    * @param z seed
    * @return
    */
   public static float attractor_3Cell_CNN(float x, float y, float z){
-    float out = 0;
     // System.out.println(x + " " + y + " " + z);
+    float[] post = {x,y,z};
+    float[] temp = {x,y,z};
     for (float i = 0; i < dist; i++){
-      x=(-x+alpha*f(x)-b*f(y)-b*f(z))*step;
-      y=(-y+b*f(x)-beta*f(y)-a*f(z))*step;
-      z=(-z+b*f(x)-a*f(y)-f(z))*step;
+      temp[0] = PseudeRandom.x.apply(post);
+      temp[1] = PseudeRandom.y.apply(post);
+      temp[2] = PseudeRandom.z.apply(post);
+      
+      post[0] = temp[0];
+      post[1] = temp[1];
+      post[2] = temp[2];
     }
-    out = Math.abs(x*y*z);
-    out = (float)(out-Math.floor(out));
-    // System.out.println(out + " " + x + " " + y + " " + z);
-    return (float)out; 
+    dimensionTimer = System.currentTimeMillis();
+    return (float) Math.abs(post[0]*post[1]*post[2])%1; 
   }
   private synchronized static float f(float x){
     return 0.5f*(Math.abs(x+1)-Math.abs(x-1));
   }
-  public synchronized static float Float(int x, int y,int seed) {
-    try {
-      long point = hash(x, y,seed);
-      MessageDigest md = MessageDigest.getInstance("MD5");
-      md.update(longToBytes(point));
-      byte[] digest = md.digest();
-      int value = Math.abs(bytesToInt(digest));
-      return ((float) value / Integer.MAX_VALUE)*2-1;
-    } catch (NoSuchAlgorithmException e) {
-      throw new RuntimeException("MD5 algorithm not found", e);
+  public static void update(int dimensionID) {
+    while(System.currentTimeMillis()-PseudeRandom.dimensionTimer < 1000){
+      try {
+        Thread.sleep(200);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
     }
-  }
-  private synchronized static long hash(int x, int y, int seed) {
-    long h = 17;
-    h = h * seed + x;
-    h = h * seed + y;
-    return h;
-  }
-  private synchronized static byte[] longToBytes(long value) {
-    byte[] result = new byte[8];
-    for (int i = 7; i >= 0; i--) {
-      result[i] = (byte) (value & 0xff);
-      value >>>= 8;
-    }
-    return result;
-  }
-  private synchronized static int bytesToInt(byte[] bytes) {
-    int value = 0;
-    for (int i = 0; i < 4; i++) {
-      value <<= 8;
-      value |= bytes[i] & 0xff;
-    }
-    return value;
+    float dimensionalConstant = (dimensionID)/(dist/step);
+    PseudeRandom.a = 10f + 10f * dimensionalConstant;
+    PseudeRandom.alpha = 9f + 9f * dimensionalConstant;
+    PseudeRandom.b = 8f + 8f * dimensionalConstant;
+    PseudeRandom.beta = 7f + 7f * dimensionalConstant;
+    
+    PseudeRandom.x = in -> (-in[0]+alpha*f(in[0])-b*f(in[1])-b*f(in[2]))*step;
+    PseudeRandom.y = in -> (-in[1]+b*f(in[0])-beta*f(in[1])-a*f(in[2]))*step;
+    PseudeRandom.z = in -> (-in[2]+b*f(in[0])-a*f(in[1])-f(in[2]))*step;
   }
 }

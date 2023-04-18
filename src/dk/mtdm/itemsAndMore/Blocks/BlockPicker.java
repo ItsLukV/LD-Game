@@ -2,6 +2,7 @@ package dk.mtdm.itemsAndMore.Blocks;
 
 import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.location.LocationTypes;
+import dk.mtdm.location.WWL;
 import dk.mtdm.location.WorldWideLocation;
 
 public class BlockPicker {
@@ -21,7 +22,7 @@ public class BlockPicker {
 	 * @param pos
 	 * @return
 	 */
-	static public Block getAir(BlockTypes type, WorldWideLocation pos) {
+	static public Block getAir(BlockTypes type, WWL pos) {
 		return new AirBlock(pos);
 		// Block block = new Block(pos, type);
 		// block.setSolidity(false);
@@ -37,7 +38,7 @@ public class BlockPicker {
 	 * @param pos
 	 * @return
 	 */
-	static public Block getGrass(BlockTypes type, WorldWideLocation pos) {
+	static public Block getGrass(BlockTypes type, WWL pos) {
 		return new GrassBlock(pos);
 		// Block block = new Block(pos, type);
 		// block.setSolidity(true);
@@ -53,7 +54,7 @@ public class BlockPicker {
 	 * @param pos
 	 * @return
 	 */
-	static public Block getDirt(BlockTypes type, WorldWideLocation pos) {
+	static public Block getDirt(BlockTypes type, WWL pos) {
 		return new DirtBlock(pos);
 		// Block block = new Block(pos, type);
 		// block.setSolidity(true);
@@ -69,7 +70,7 @@ public class BlockPicker {
 	 * @param pos
 	 * @return
 	 */
-	static public Block getStone(BlockTypes type, WorldWideLocation pos) {
+	static public Block getStone(BlockTypes type, WWL pos) {
 		return new StoneBlock(pos);
 		// Block block = new Block(pos, type);
 		// block.setSolidity(true);
@@ -85,7 +86,7 @@ public class BlockPicker {
 	 * @param pos
 	 * @return
 	 */
-	static public Block getBedrock(BlockTypes type, WorldWideLocation pos) {
+	static public Block getBedrock(BlockTypes type, WWL pos) {
 		return new BedrockBlock(pos);
 		// Block block = new Block(pos, type);
 		// block.setSolidity(true);
@@ -100,7 +101,7 @@ public class BlockPicker {
 	 * @param pos Sets the canvas location of the block
 	 * @param id  id/type of block
 	 */
-	static public Block picker(BlockTypes type, WorldWideLocation pos) throws MissingBlockTypeException {
+	static public Block picker(BlockTypes type, WWL pos) throws MissingBlockTypeException {
 		return switch (type) {
 			case air -> {
 				yield BlockPicker.getAir(type, pos);

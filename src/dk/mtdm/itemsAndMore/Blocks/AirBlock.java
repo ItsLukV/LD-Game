@@ -1,14 +1,14 @@
 package dk.mtdm.itemsAndMore.Blocks;
 
-import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.location.WWL;
 
 public class AirBlock extends Block {
   /**
- * TODO: write javadoc
+ * makes an airblock without the need for all pieces to be specified
+ * @param pos the location of the airblock
  */
-  public AirBlock(WorldWideLocation pos) {
+  public AirBlock(WWL pos) {
     super(pos, BlockTypes.air, false, false, false, null);
-    //TODO Auto-generated constructor stub
   }
   
 }

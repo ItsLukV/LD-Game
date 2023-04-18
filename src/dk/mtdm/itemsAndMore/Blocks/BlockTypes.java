@@ -1,6 +1,6 @@
 package dk.mtdm.itemsAndMore.Blocks;
   /**
- * TODO: write javadoc
+ * all blocktypes, used to describe what style of block without needing a block to exist
  */
 public enum BlockTypes {
   air,

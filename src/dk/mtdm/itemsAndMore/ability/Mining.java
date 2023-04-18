@@ -1,20 +1,18 @@
 package dk.mtdm.itemsAndMore.ability;
 
-import java.util.Vector;
-
 import dk.mtdm.Sketch;
 import dk.mtdm.exceptions.MissingBlockTypeException;
 import dk.mtdm.exceptions.MissingDataException;
 import dk.mtdm.itemsAndMore.Blocks.Block;
-import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.itemsAndMore.texureFiles.breaking.BreakingTexures;
 import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
+import dk.mtdm.location.WWL;
 import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.Entitys.Player;
-import dk.mtdm.managementSystem.world.ChunkList;
 import dk.mtdm.managementSystem.world.World;
+import dk.mtdm.managementSystem.world.chunk.ChunkList;
 import processing.core.PGraphics;
 
 public class Mining extends Ability {
@@ -37,9 +35,9 @@ public class Mining extends Ability {
     public void clicked(int x, int y) {
         x -= -Player.getCanvas().getX() - Player.width / 2 + Sketch.width / 2;
         y -= -Player.getCanvas().getY() - Player.height / 2 + Sketch.height / 2;
-        WorldWideLocation pos = WorldWideLocation.create(x, y, LocationTypes.canvas);
+        WWL pos = WorldWideLocation.create(x, y, LocationTypes.canvas);
         Block block;
-        pos.add(new LDVector(0, -32), LocationTypes.canvas); // TODO fix this problem @dendersen
+        pos.add(new LDVector(0, -32), LocationTypes.canvas);
         try {
             block = World.getBlock(pos);
         } catch (MissingBlockTypeException e) {
@@ -54,7 +52,6 @@ public class Mining extends Ability {
             try {
                 ChunkList.getChunk(pos.getChunkID()).setBlock(pos, BlockTypes.air);
             } catch (MissingDataException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

@@ -11,7 +11,11 @@ public abstract class Item {
   protected final PImage texture;
 
   /**
-   * TODO: write javadoc
+   * generates an item of the  specified  type with the specified parameters
+   * @param id what item is this
+   * @param stackSize how forcan it stack
+   * @param texture what texture should be used
+   * @param ability what can this item do
    */
   public Item(ItemTypes id, int stackSize, PImage texture, Ability ability) {
     this.itemType = id;
@@ -33,7 +37,6 @@ public abstract class Item {
 
         @Override
         public void clicked(int x, int y) {
-          // TODO Auto-generated method stub
           throw new UnsupportedOperationException("Unimplemented method 'clicked'");
         };
       };
@@ -43,13 +46,10 @@ public abstract class Item {
   }
 
   /**
-   * TODO: write javadoc
+   * an action this item should do every fram it is in use
    */
   public abstract void tick();
 
-  /**
-   * TODO: write javadoc
-   */
   public int getStackSize() {
     return stackSize;
   }

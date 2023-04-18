@@ -1,5 +1,6 @@
 package dk.mtdm.itemsAndMore.items;
 
+import dk.mtdm.exceptions.MissingItemType;
 import dk.mtdm.itemsAndMore.ability.Ability;
 import processing.core.PImage;
 
@@ -9,7 +10,8 @@ public class ItemStack {
   private Item item;
 
   /**
-   * TODO: write javadoc
+   * a group of items with the same type
+   * @param item the first item to be in the stack, also determines the intire stacks type
    */
   public ItemStack(Item item) {
     if (item == null) {
@@ -20,18 +22,18 @@ public class ItemStack {
   }
 
   /**
-   * TODO: write javadoc
+   * add another item to the stack, this will also check for compatibility
    */
-  public void add(Item item) throws Exception {
+  public void add(Item item) throws MissingItemType,IndexOutOfBoundsException {
     if (this.item == null) {
       this.item = item;
       maxSize = item.getStackSize();
     }
     if (this.item.getItemType() != item.getItemType()) {
-      throw new Exception("Not the same item type"); // TODO make custom Exception
+      throw new MissingItemType("Not the same item type"); // TODO make custom Exception
     }
     if (!(itemCount < maxSize)) {
-      throw new Exception("Full itemstack"); // TODO make custom Exception
+      throw new IndexOutOfBoundsException("Full itemstack"); // TODO make custom Exception
     }
     itemCount += 1;
   }

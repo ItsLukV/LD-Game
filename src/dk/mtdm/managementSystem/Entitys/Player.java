@@ -7,7 +7,7 @@ import dk.mtdm.itemsAndMore.items.Pickaxe;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;
 import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
-import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.location.WWL;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PApplet;
@@ -26,8 +26,9 @@ public class Player extends Entity {
    *
    * @param pos start pos
    */
-  public Player(WorldWideLocation pos) {
-    super(pos,32,32);
+  public Player(WWL pos) {
+    this.pos = pos;
+
     inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove this
   }
 
