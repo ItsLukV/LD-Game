@@ -24,4 +24,6 @@ public interface WWL {
 
   void add(LDVector vector, LocationTypes location);
 
+  public void setToCanvas() throws MissingDataException;
+
 }

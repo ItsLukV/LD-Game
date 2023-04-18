@@ -18,7 +18,7 @@ public class Player extends Entity {
   private boolean up;
   private boolean right;
   private boolean left;
-  public static WorldWideLocation pos;
+  public static WWL pos;
   public static InventoryManager inventory = new InventoryManager();
 
   /**
@@ -27,8 +27,7 @@ public class Player extends Entity {
    * @param pos start pos
    */
   public Player(WWL pos) {
-    this.pos = pos;
-
+    super(pos, 32, 32);
     inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove this
   }
 
@@ -173,7 +172,7 @@ public class Player extends Entity {
   // }
 
 
-    public static WorldWideLocation getPos() {
+    public static WWL getPos() {
       return pos;
     }
 

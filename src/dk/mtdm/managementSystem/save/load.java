@@ -20,7 +20,7 @@ public class Load {
   public static void loadWorld(String saveName) throws IncorrectSaveSettingsLoaded{
     String path = "src\\dk\\mtdm\\managementSystem\\world\\saveing\\";
     path += saveName + "\\";
-    int CHUNK_WIDTH; 
+    int CHUNK_WIDTH;
     int HEIGHT;
     int seed1;
     float BlockStone;
