@@ -54,7 +54,6 @@ public abstract class Entity {
       outOfBounds();
     }
 
-    calcSpeed();
   }
 
   private void outOfBounds() {
@@ -85,10 +84,7 @@ public abstract class Entity {
     speed.add(new LDVector(0, gravityAcc));
   }
 
-
-
-
-  private void calcSpeed() {
+  protected void calcSpeed() {
     speed.setX((int) (speed.getX() * airRes));
     speed.setY((int) (speed.getY() * airRes));
     pos.add(speed, LocationTypes.canvas);
@@ -122,8 +118,6 @@ public abstract class Entity {
       // TODO Auto-generated catch block
       e.printStackTrace();
     }
-    World.getBlock(pos);
-
   }
 
   private void bottomCollision() throws MissingBlockTypeException, MissingDataException {
@@ -135,7 +129,9 @@ public abstract class Entity {
         gravity = false;
         standing = true;
         speed.setY(0);
-        pos.setY(World.getBlock(leftCorner).getCanvas().getY() - Block.getHeight(), LocationTypes.canvas);
+        pos.setY(World.getBlock(rightCorner).getCanvas().getY() - Block.getHeight() + 1, LocationTypes.canvas);
+        // pos.add(new LDVector(0,1),LocationTypes.global);
+        // World.getBlock(rightCorner).getWWL().setToCanvas();
       } else {
         gravity = true;
         standing = false;

@@ -34,6 +34,8 @@ public class Sketch extends PApplet {
    */
   @Override
   public void setup() {
+    frameRate(60);
+
     BlockTextures.loadBlockTextures(this);
     MiscTextures.loadBlockTextures(this);
     ItemTexture.loadBlockTextures(this);

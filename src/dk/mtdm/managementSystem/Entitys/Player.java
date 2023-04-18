@@ -52,8 +52,10 @@ public class Player extends Entity {
    */
   @Override
   public void tick() {
-    calcInput();
     super.tick();
+    calcInput();
+    calcSpeed();
+
     inventory.tick();
   }
 

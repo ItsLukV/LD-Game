@@ -141,6 +141,10 @@ public abstract class Block {
         }
     }
 
+    public WWL getWWL() {
+        return pos;
+    }
+
     public void setCanvas(LDVector vector) {
         this.pos.setPosition(vector, LocationTypes.canvas);
     }
