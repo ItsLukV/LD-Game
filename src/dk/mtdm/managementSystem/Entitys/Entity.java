@@ -49,13 +49,12 @@ public abstract class Entity {
    */
   public void tick() {
     if (!noClip) {
+      calcCollision();
       addGravity();
-      // calcCollision();
       outOfBounds();
     }
 
     calcSpeed();
-
   }
 
   private void outOfBounds() {
@@ -128,17 +127,18 @@ public abstract class Entity {
   }
 
   private void bottomCollision() throws MissingBlockTypeException, MissingDataException {
-      WWL leftCorner = WorldWideLocation.create(pos.getGlobal().getX() + width, pos.getGlobal().getY() + height, LocationTypes.global, pos.getChunkID());
-      WWL rightCorner = WorldWideLocation.create(pos.getGlobal().getX(), pos.getGlobal().getY() + height, LocationTypes.global, pos.getChunkID());
+
+      WWL leftCorner = WorldWideLocation.create(pos.getCanvas().getX() + width, pos.getCanvas().getY() + height, LocationTypes.canvas, pos.getChunkID());
+      WWL rightCorner = WorldWideLocation.create(pos.getCanvas().getX(), pos.getCanvas().getY() + height, LocationTypes.canvas, pos.getChunkID());
 
       if(World.getBlock(leftCorner).getSolidity() || World.getBlock(rightCorner).getSolidity()) {
         gravity = false;
-        // jump = true;
+        standing = true;
         speed.setY(0);
-        pos.setPosition(new LDVector(pos.getGlobal().getX(), pos.getGlobal().getY() - height),LocationTypes.global);
+        pos.setY(World.getBlock(leftCorner).getCanvas().getY() - Block.getHeight(), LocationTypes.canvas);
       } else {
         gravity = true;
-        // jump = false;
+        standing = false;
       }
 
     }

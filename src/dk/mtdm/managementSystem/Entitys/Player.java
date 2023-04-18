@@ -106,7 +106,7 @@ public class Player extends Entity {
       speed.add(new LDVector(-moveSpeed, 0));
     if (right)
       speed.add(new LDVector(moveSpeed, 0));
-    if (up) {
+    if (up && (standing || noClip)) {
       speed.add(new LDVector(0, -jumpBoost));
     }
     if (down)
