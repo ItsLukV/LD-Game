@@ -10,19 +10,19 @@ import dk.mtdm.managementSystem.world.World;
  * @param y
  * @param location
  */
-public class WorldWideLocation implements WWL {
+public class WorldWideLocation {
   int x;
   int y;
   LocationTypes location;
   Integer chunkID = null;
 
-  public static WWL create(LDVector vector, LocationTypes location){
+  public static WorldWideLocation create(LDVector vector, LocationTypes location){
     return new WorldWideLocation(vector.getX(), vector.getY(), location);
   }
-  public static WWL create(int x, int y, LocationTypes location){
+  public static WorldWideLocation create(int x, int y, LocationTypes location){
     return new WorldWideLocation(x, y, location);
   }
-  public static WWL create(int x, int y, LocationTypes location, Integer chunkID){
+  public static WorldWideLocation create(int x, int y, LocationTypes location, Integer chunkID){
     return new WorldWideLocation(x, y, location, chunkID);
   }
 
@@ -42,12 +42,10 @@ public class WorldWideLocation implements WWL {
    * only relevant for coordinates given in relative
    * @param ID
    */
-  @Override
   public void setChunkID(int ID){
     chunkID = ID;
   }
 
-  @Override
   public int getChunkID() throws MissingDataException{
     switch (location) {
       case relative:
@@ -70,7 +68,6 @@ public class WorldWideLocation implements WWL {
         throw new MissingDataException("location int not found, likely null, please set location int");
     }
   }
-  @Override
   public LDVector getRelative() throws MissingDataException{
     switch (location) {
       case relative:
@@ -88,7 +85,6 @@ public class WorldWideLocation implements WWL {
         throw new MissingDataException();
     }
   }
-  @Override
   public LDVector getGlobal() throws MissingDataException{
     switch (location) {
       case relative:
@@ -110,7 +106,6 @@ public class WorldWideLocation implements WWL {
       throw new MissingDataException();
     }
   }
-  @Override
   public LDVector getCanvas() throws MissingDataException{
     switch (location) {
       case relative:
@@ -168,21 +163,18 @@ public class WorldWideLocation implements WWL {
     return -y*Block.getHeight()-Block.getHeight();
   }
 
-  @Override
   public void setPosition(LDVector vector, LocationTypes location){
     this.x = (int) vector.getX();
     this.y = vector.getY();
     this.location = location;
   }
-  @Override
-  public WWL copy(){
+  public WorldWideLocation copy(){
     if(chunkID == null){
       return new WorldWideLocation(x, y, location);
     }else{
       return new WorldWideLocation(x, y, location, chunkID);
     }
   }
-  @Override
   public void add(LDVector vector, LocationTypes location){
     switch (location) {
       case relative:
@@ -209,18 +201,15 @@ public class WorldWideLocation implements WWL {
         break;
     }
   }
-  @Override
   public void setToCanvas() throws MissingDataException{
     this.x = this.getCanvas().getX();
     this.y = this.getCanvas().getY();
     this.location = LocationTypes.canvas;
   }
-  @Override
   public void setX(int x, LocationTypes location) {
    this.x = x;
    this.location = location;
   }
-  @Override
   public void setY(int y, LocationTypes location) {
     this.y = y;
     this.location = location;

@@ -40,7 +40,7 @@ public class WorldGenThread extends Thread{
   /**
    * allows one to change the location of the chunk
    * @param ID the ID of the chunk
-   * @param attachedChunk the chunk that 
+   * @param attachedChunk the chunk that
    */
   public synchronized void changeID(int ID,Chunk attachedChunk){
     this.ID = ID;
@@ -61,7 +61,7 @@ public class WorldGenThread extends Thread{
     super.start();
   }
   /**
-   * generates the world 
+   * generates the world
    */
   private void worldGenerator(){
     noiseGenerator();
@@ -83,7 +83,7 @@ public class WorldGenThread extends Thread{
    * generates the noise for all  coordinates in the chunk
    */
   public void noiseGenerator(){
-    
+
     //inside noise
     for (int x = 0; x < World.get_CHUNK_WIDTH(); x++) {
       for (int y = 0; y < World.get_HEIGHT(); y++) {
@@ -109,13 +109,13 @@ public class WorldGenThread extends Thread{
    * @param x the relative x coordinate of the block
    * @param y the relative y coordinate of the block
    */
-  private void ChooseBlock(int x, int y) {    
+  private void ChooseBlock(int x, int y) {
     progress = new LDVector(x, y);
     ChooseBlock(noise[x][y],x, y);
   }
 
   public void ChooseBlock(float noise, int x, int y){
-    
+
     //outside noise
     float[][] outNoise = new float[2][World.get_HEIGHT()];
     for (int Y = 0; Y < World.get_HEIGHT(); Y++) {
@@ -123,8 +123,8 @@ public class WorldGenThread extends Thread{
       outNoise[1][Y] = noisePoint(chunkEnd, Y);
     }
 
-    
-    WWL location = WorldWideLocation.create(x, y, LocationTypes.relative);
+
+    WWL location = WWL.create(x, y, LocationTypes.relative);
     location.setChunkID(ID);
     if(noise <= World.getBlockAir()) {
       parent.setBlock(location, BlockTypes.air);
@@ -164,9 +164,9 @@ public class WorldGenThread extends Thread{
             return;
           }else if(
             x != World.get_CHUNK_WIDTH()-1 && (
-              this.noise[x][y-1] <= World.getBlockAir() || 
-              this.noise[x][y+1] <= World.getBlockAir() || 
-              this.noise[x-1][y] <= World.getBlockAir() || 
+              this.noise[x][y-1] <= World.getBlockAir() ||
+              this.noise[x][y+1] <= World.getBlockAir() ||
+              this.noise[x-1][y] <= World.getBlockAir() ||
               this.noise[x+1][y]<= World.getBlockAir()
             )
           ){

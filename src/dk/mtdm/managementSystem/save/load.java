@@ -68,7 +68,7 @@ public class Load {
               for (int y = 0; y < set.size(); y++) {
                 for (int x = 0; x < blocks.length; x++) {
                   try {
-                  WWL pos = new WorldWideLocation(x,y,LocationTypes.relative,chunkID);
+                  WWL pos = new WWL(x,y,LocationTypes.relative,chunkID);
                     blocks[x][y] = Block.fromState(set.get(y)[x],pos);
                   } catch (MissingBlockTypeException e) {
                     e.printStackTrace();

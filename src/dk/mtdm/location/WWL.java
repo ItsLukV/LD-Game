@@ -2,32 +2,31 @@ package dk.mtdm.location;
 
 import dk.mtdm.exceptions.MissingDataException;
 
-public interface WWL {
+public class WWL extends WorldWideLocation {
 
-  /**
-   * only relevant for coordinates given in relative
-   * @param ID
-   */
-  void setChunkID(int ID);
+  public WWL(int x, int y, LocationTypes location) {
+    super(x, y, location);
+  }
+  public WWL(int x, int y, LocationTypes location, int chunkID) {
+    super( x, y, location, chunkID);
+  }
 
-  int getChunkID() throws MissingDataException;
+  public static WWL create(LDVector vector, LocationTypes location){
+    return new WWL(vector.getX(),vector.getY(), location);
+  }
 
-  LDVector getRelative() throws MissingDataException;
+  public static WWL create(int x, int y, LocationTypes location){
+    return new WWL(x, y, location);
+  }
+  public static WWL create(int x, int y, LocationTypes location, Integer chunkID){
+    return new WWL(x, y, location, chunkID);
+  }
 
-  LDVector getGlobal() throws MissingDataException;
-
-  LDVector getCanvas() throws MissingDataException;
-
-  void setPosition(LDVector vector, LocationTypes location);
-
-  WWL copy();
-
-  public void add(LDVector vector, LocationTypes location);
-
-  public void setToCanvas() throws MissingDataException;
-
-  public void setX(int x, LocationTypes location);
-
-  public void setY(int y, LocationTypes location);
-
+  public WWL copy(){
+    if(chunkID == null){
+      return new WWL(x, y, location);
+    }else{
+      return new WWL(x, y, location, chunkID);
+    }
+  }
 }

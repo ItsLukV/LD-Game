@@ -13,7 +13,7 @@ import dk.mtdm.managementSystem.world.World;
 import processing.core.PGraphics;
 
 public abstract class Entity {
-  protected static WWL pos;
+  protected static WorldWideLocation pos;
   public static int width;
   public static int height;
   protected LDVector speed = new LDVector(0, 0);
@@ -96,7 +96,7 @@ public abstract class Entity {
   private void wallCollision() throws MissingBlockTypeException {
     try {
 
-      WWL tilePos = WorldWideLocation.create(pos.getCanvas(),LocationTypes.canvas);
+      WWL tilePos = WWL.create(pos.getCanvas(),LocationTypes.canvas);
 
       // WWL rightPos = WorldWideLocation.create(pos.getCanvas().getX() + Entity.width, pos.getGlobal().getY() + Entity.height / 2, LocationTypes.canvas, pos.getChunkID());
 
@@ -110,7 +110,7 @@ public abstract class Entity {
 
 
       // There is a problem, that when the player moves over to the left or right the next block switchs so collsion can not be checked with that block
-      WWL leftPos = WorldWideLocation.create(pos.getCanvas().getX() - Block.getWidth(), pos.getCanvas().getY(), LocationTypes.canvas, pos.getChunkID());
+      WWL leftPos = WWL.create(pos.getCanvas().getX() - Block.getWidth(), pos.getCanvas().getY(), LocationTypes.canvas, pos.getChunkID());
       // Check left for player
       if(World.getBlock(leftPos).getSolidity()) {
         if(pos.getCanvas().getX() < tilePos.getCanvas().getX()) {
@@ -128,14 +128,14 @@ public abstract class Entity {
 
   private void bottomCollision() throws MissingBlockTypeException, MissingDataException {
 
-      WWL leftCorner = WorldWideLocation.create(pos.getCanvas().getX() + width, pos.getCanvas().getY() + height, LocationTypes.canvas, pos.getChunkID());
-      WWL rightCorner = WorldWideLocation.create(pos.getCanvas().getX(), pos.getCanvas().getY() + height, LocationTypes.canvas, pos.getChunkID());
+      WWL leftCorner = WWL.create(pos.getCanvas().getX() + width, pos.getCanvas().getY() + height / 2, LocationTypes.canvas, pos.getChunkID());
+      WWL rightCorner = WWL.create(pos.getCanvas().getX(), pos.getCanvas().getY() + height / 2, LocationTypes.canvas, pos.getChunkID());
 
       if(World.getBlock(leftCorner).getSolidity() || World.getBlock(rightCorner).getSolidity()) {
         gravity = false;
         standing = true;
         speed.setY(0);
-        pos.setY(World.getBlock(rightCorner).getCanvas().getY() - Block.getHeight() + 1, LocationTypes.canvas);
+        pos.setY(World.getBlock(rightCorner).getCanvas().getY() - Block.getHeight() / 2 + 1, LocationTypes.canvas);
         // pos.add(new LDVector(0,1),LocationTypes.global);
         // World.getBlock(rightCorner).getWWL().setToCanvas();
       } else {

@@ -1,14 +1,9 @@
 package dk.mtdm.managementSystem.Entitys;
 
-import dk.mtdm.exceptions.MissingBlockTypeException;
-import dk.mtdm.exceptions.MissingDataException;
-import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.items.Pickaxe;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;
 import dk.mtdm.location.LDVector;
-import dk.mtdm.location.LocationTypes;
-import dk.mtdm.location.WWL;
-import dk.mtdm.managementSystem.world.World;
+import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PApplet;
 import processing.core.PGraphics;
@@ -18,7 +13,7 @@ public class Player extends Entity {
   private boolean up;
   private boolean right;
   private boolean left;
-  public static WWL pos;
+  public static WorldWideLocation pos;
   public static InventoryManager inventory = new InventoryManager();
 
   /**
@@ -26,7 +21,7 @@ public class Player extends Entity {
    *
    * @param pos start pos
    */
-  public Player(WWL pos) {
+  public Player(WorldWideLocation pos) {
     super(pos, 32, 32);
     inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove this
   }
@@ -34,6 +29,7 @@ public class Player extends Entity {
   @Override
   public void draw(PGraphics g) {
     g.push();
+    g.imageMode(PApplet.CENTER);
     g.image(MiscTextures.getPlayerTexture(), Player.getCanvas().getX(), Player.getCanvas().getY());
     g.strokeWeight(10);
     g.point(Player.getCanvas().getX(), Player.getCanvas().getY());
@@ -173,7 +169,7 @@ public class Player extends Entity {
   // }
 
 
-    public static WWL getPos() {
+    public static WorldWideLocation getPos() {
       return pos;
     }
 

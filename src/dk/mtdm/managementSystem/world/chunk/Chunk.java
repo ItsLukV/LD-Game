@@ -16,9 +16,9 @@ public class Chunk {
   final private int creationHeight;
   private int chunkError = 0;
   public WorldGenThread t;
-  
+
   /**
-   * creates a new chunk 
+   * creates a new chunk
    * @param ID the ID of the chunk, used to calculate global coordinates
    * @param CHUNK_WIDTH the width of a chunk
    * @param CHUNK_HEIGHT the height of a chunk
@@ -49,7 +49,7 @@ public class Chunk {
     }
   }
   /**
-   * @param relativeLocation the relative location of a block 
+   * @param relativeLocation the relative location of a block
    * @return the block stored at the given location
    */
   public Block getBlock(WWL Location){
@@ -61,9 +61,9 @@ public class Chunk {
     }
   }
   /**
-   * 
-   * @param x the relative location of a block 
-   * @param y the relative location of a block 
+   *
+   * @param x the relative location of a block
+   * @param y the relative location of a block
    * @return the block stored at the given location
    */
   public Block getBlock(int x, int y){
@@ -71,7 +71,7 @@ public class Chunk {
       containedBlocks[x][y].setChunkID(ID);
       return containedBlocks[x][y];
     }
-    
+
     if (t == null) {
       t = new WorldGenThread(ID, creationHeight, this);
     }
@@ -86,9 +86,9 @@ public class Chunk {
     if(containedBlocks[x][y] != null){
       containedBlocks[x][y].setChunkID(ID);
       return containedBlocks[x][y];
-    } 
-    
-    WWL tempBlockVector = WorldWideLocation.create(x, y, LocationTypes.relative);
+    }
+
+    WWL tempBlockVector = WWL.create(x, y, LocationTypes.relative);
     tempBlockVector.setChunkID(ID);
     return BlockPicker.getAir(BlockTypes.air, tempBlockVector);
   }
@@ -103,7 +103,7 @@ public class Chunk {
       } catch (Exception e) {
         t=null;
         generate();
-      } 
+      }
     }
   }
   /**
@@ -138,7 +138,7 @@ public class Chunk {
   public void show(PGraphics g){
     for (int x = 0; x < containedBlocks.length;x++) {
       for (int y = 0; y < containedBlocks[x].length;y++) {
-        getBlock(x,y).show(g); 
+        getBlock(x,y).show(g);
       }
     }
   }
@@ -165,6 +165,6 @@ public class Chunk {
     }
     out+= ID + "," + creationHeight;
     return out;
-  } 
+  }
 
 }
