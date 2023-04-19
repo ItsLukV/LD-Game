@@ -35,9 +35,9 @@ public class Player extends Entity {
    * @param pos start pos
    */
   public Player(WWL pos) {
-    this.pos = pos;
+    Player.pos = pos;
 
-    inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove this
+    inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove when crafting system is added
   }
 
   @Override
@@ -91,10 +91,17 @@ public class Player extends Entity {
   }
 
   /**
-   * TODO: write javadoc
+   * starts actions based on which actions are performed
+   * @param left starts the player moving left
+   * @param right starts the player moving right
+   * @param up starts the player moving up
+   * @param down starts the player moving down
+   * @param e opens inventory
+   * @param one chooses hotbar 1
+   * @param two chooses hotbar 2s
+   * @param three chooses hotbar 3
    */
-  public void keyPressed(boolean left, boolean right, boolean up, boolean down, boolean e, boolean one, boolean two,
-      boolean three) {
+  public void keyPressed(boolean left, boolean right, boolean up, boolean down, boolean e, boolean one, boolean two,boolean three) {
     if (left)
       this.left = true;
     if (right)
@@ -113,8 +120,16 @@ public class Player extends Entity {
       inventory.swapSlot(2);
   }
 
-  /**
-   * TODO: write javadoc
+    /**
+   * ends actions based on which actions are performed
+   * @param left ends the player moving left
+   * @param right ends the player moving right
+   * @param up ends the player moving up
+   * @param down ends the player moving down
+   * @param e no action
+   * @param one no action
+   * @param two no action
+   * @param three no action
    */
   public void keyReleased(boolean left, boolean right, boolean up, boolean down) {
     if (left)
@@ -130,7 +145,7 @@ public class Player extends Entity {
   }
 
   /**
-   * TODO: write javadoc
+   * calculates speed based on current player movement
    */
   private void calcInput() {
     if (left)
@@ -153,11 +168,17 @@ public class Player extends Entity {
       return new LDVector(0, 0);
     }
   }
-
+/**
+ * adds gravity to player speed
+ */
   private void addGravity() {
     speed.add(new LDVector(0, gravityAcc));
   }
 
+  /**
+   * checks for collision
+   * @throws MissingBlockTypeException a blocktype is unsupported
+   */
   private void calcCollision() throws MissingBlockTypeException {
     {// up and down
       {// down
@@ -184,7 +205,7 @@ public class Player extends Entity {
       }
     }
     {// right and left
-     // TODO: fix, it broke
+     //  fix, it broke
      // {//right
      // WorldWideLocation rigBot = pos.copy();
      // rigBot.add(new LDVector(Block.getWidth()*2+1,0), LocationTypes.canvas);

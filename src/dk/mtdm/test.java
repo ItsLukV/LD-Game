@@ -1,6 +1,5 @@
 package dk.mtdm;
 
-import java.io.File;
 import java.io.IOException;
 
 import dk.mtdm.managementSystem.save.Save;

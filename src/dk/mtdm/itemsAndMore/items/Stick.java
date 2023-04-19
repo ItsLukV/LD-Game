@@ -5,18 +5,16 @@ import dk.mtdm.itemsAndMore.texureFiles.ItemTexture;
 public class Stick extends Item {
 
   /**
-   * TODO: write javadoc
+   * does nothing (placeholder item)
    */
   public Stick() {
     super(ItemTypes.stick, 99, ItemTexture.getStickTexture(), null);
   }
 
   /**
-   * TODO: write javadoc
+   * an eempty tick with no effect
    */
-  @Override
   public void tick() {
-    // TODO Auto-generated method stub
 
   }
 

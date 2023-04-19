@@ -1,6 +1,7 @@
 package dk.mtdm.itemsAndMore.items;
 
 import dk.mtdm.exceptions.MissingItemType;
+import dk.mtdm.exceptions.TypeMissMatch;
 import dk.mtdm.itemsAndMore.ability.Ability;
 import processing.core.PImage;
 
@@ -30,31 +31,28 @@ public class ItemStack {
       maxSize = item.getStackSize();
     }
     if (this.item.getItemType() != item.getItemType()) {
-      throw new MissingItemType("Not the same item type"); // TODO make custom Exception
+      throw new MissingItemType("Not the same item type");
     }
     if (!(itemCount < maxSize)) {
-      throw new IndexOutOfBoundsException("Full itemstack"); // TODO make custom Exception
+      throw new IndexOutOfBoundsException("Full itemstack");
     }
     itemCount += 1;
   }
 
-  public void add(Item item, int amount) throws Exception {
+  public void add(Item item, int amount) throws TypeMissMatch,IndexOutOfBoundsException {
     if (this.item == null) {
       this.item = item;
       maxSize = item.getStackSize();
     }
     if (this.item.getItemType() != item.getItemType()) {
-      throw new Exception("Not the same item type"); // TODO make custom Exception
+      throw new TypeMissMatch("Not the same item type",item.getItemType(),this.item.getItemType());
     }
     if (!(itemCount < maxSize)) {
-      throw new Exception("Full itemstack"); // TODO make custom Exception
+      throw new IndexOutOfBoundsException("Full itemstack");
     }
     itemCount += amount;
   }
 
-  /**
-   * TODO: write javadoc
-   */
   public ItemTypes getItemType() {
     return item.getItemType();
   }

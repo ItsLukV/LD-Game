@@ -4,8 +4,8 @@ public abstract class Thread extends java.lang.Thread{
   
   public boolean atWork = false;
   /**
- * TODO: write javadoc
- */
+   * builds ontop of thread system to allow all operations to completete smoothly
+   */
   @Override
   public void run() {
     if(atWork) return;

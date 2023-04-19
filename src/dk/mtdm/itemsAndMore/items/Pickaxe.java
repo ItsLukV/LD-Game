@@ -4,13 +4,9 @@ import dk.mtdm.itemsAndMore.ability.Mining;
 import dk.mtdm.itemsAndMore.texureFiles.ItemTexture;
 
 public class Pickaxe extends Item {
-    /**
-     * TODO: write javadoc
-     *
-     * @param id
-     * @param stackSize
-     * @param texture
-     */
+/**
+ * an item that allows the player to break blocks in the world
+ */
     public Pickaxe() {
         super(ItemTypes.pickaxe, 1, ItemTexture.getPickaxeTexture(), new Mining());
     }

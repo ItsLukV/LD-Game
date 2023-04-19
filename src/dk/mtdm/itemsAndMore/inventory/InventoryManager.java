@@ -3,6 +3,7 @@ package dk.mtdm.itemsAndMore.inventory;
 import dk.mtdm.Pair;
 import dk.mtdm.exceptions.MissingItemType;
 import dk.mtdm.exceptions.NoSlotsException;
+import dk.mtdm.exceptions.TypeMissMatch;
 import dk.mtdm.itemsAndMore.ability.AbilityHandler;
 import dk.mtdm.itemsAndMore.items.Item;
 import dk.mtdm.itemsAndMore.items.ItemStack;
@@ -65,9 +66,8 @@ public class InventoryManager {
     }
     try {
       slots[slot.getFirst()][slot.getSecond()].add(item, amount);
-    } catch (Exception e) {
+    } catch (IndexOutOfBoundsException | TypeMissMatch e) {
       e.printStackTrace();
-
     }
   }
 /**
