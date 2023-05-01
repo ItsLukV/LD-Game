@@ -9,14 +9,13 @@ import dk.mtdm.exceptions.MissingTextureException;
 import dk.mtdm.itemsAndMore.items.ItemTypes;
 import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
-import dk.mtdm.location.WorldWideLocation;
-import dk.mtdm.managementSystem.world.World;
+import dk.mtdm.location.WWL;
 
 /**
  * @author @ItsLukV
  */
 public abstract class Block {
-    private WorldWideLocation pos;
+    private WWL pos;
     private static LDVector size = new LDVector(32, 32);
     private BlockTypes id;
     protected boolean soild;
@@ -26,14 +25,15 @@ public abstract class Block {
     private int breakLevel = 0;
 
     /**
-     * Creates a block//TODO:redo comments
-     *
-     * @param x  sets x-canvas location value of the block
-     * @param y  sets y-canvas location value of the block
-     * @param id id/type of block
+     * creates a block based on the given paramiters
+     * @param pos the location of the block
+     * @param id the type of block
+     * @param soild should the block have collision
+     * @param breakability should the block be able to be broken by the player
+     * @param hoverability should something special happen if you hover the mouse over the block
+     * @param itemDrop what should be droped when the block is mined
      */
-    public Block(WorldWideLocation pos, BlockTypes id, boolean soild, boolean breakability, boolean hoverability,
-            ItemTypes itemDrop) {
+    public Block(WWL pos, BlockTypes id, boolean soild, boolean breakability, boolean hoverability, ItemTypes itemDrop) {
         this.pos = pos;
 
         this.id = id;
@@ -42,7 +42,7 @@ public abstract class Block {
         this.hoverability = hoverability;
         this.itemDrop = itemDrop;
     }
-    public static Block fromState(String state,WorldWideLocation pos) throws MissingBlockTypeException{
+    public static Block fromState(String state,WWL pos) throws MissingBlockTypeException{
         String[] in = state.split(",");
         int[] input = new int[in.length];
         for (int j = 0; j < in.length; j++) {

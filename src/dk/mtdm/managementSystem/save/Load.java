@@ -7,19 +7,17 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import dk.mtdm.exceptions.MissingBlockTypeException;
-import dk.mtdm.itemsAndMore.Blocks.AirBlock;
-import dk.mtdm.itemsAndMore.Blocks.BedrockBlock;
 import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.location.LocationTypes;
+import dk.mtdm.location.WWL;
 import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.managementSystem.world.chunk.Chunk;
 import dk.mtdm.exceptions.IncorrectSaveSettingsLoaded;
-import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.managementSystem.world.chunk.ChunkList;
 
-public class load {
-  public static void load(String saveName) throws IncorrectSaveSettingsLoaded{
+public class Load {
+  public static void loadWorld(String saveName) throws IncorrectSaveSettingsLoaded{
     String path = "src\\dk\\mtdm\\managementSystem\\world\\saveing\\";
     path += saveName + "\\";
     int CHUNK_WIDTH; 
@@ -40,7 +38,6 @@ public class load {
         BlockAir = Float.parseFloat(worldReader.nextLine());
         GeneratorHeight = worldReader.nextInt();
       } catch (FileNotFoundException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
         return;
       } catch (NoSuchElementException e){
@@ -71,7 +68,7 @@ public class load {
               for (int y = 0; y < set.size(); y++) {
                 for (int x = 0; x < blocks.length; x++) {
                   try {
-                  WorldWideLocation pos = new WorldWideLocation(x,y,LocationTypes.relative,chunkID);
+                  WWL pos = new WorldWideLocation(x,y,LocationTypes.relative,chunkID);
                     blocks[x][y] = Block.fromState(set.get(y)[x],pos);
                   } catch (MissingBlockTypeException e) {
                     e.printStackTrace();

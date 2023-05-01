@@ -1,6 +1,9 @@
 package dk.mtdm.itemsAndMore.inventory;
 
 import dk.mtdm.Pair;
+import dk.mtdm.exceptions.MissingItemType;
+import dk.mtdm.exceptions.NoSlotsException;
+import dk.mtdm.exceptions.TypeMissMatch;
 import dk.mtdm.itemsAndMore.ability.AbilityHandler;
 import dk.mtdm.itemsAndMore.items.Item;
 import dk.mtdm.itemsAndMore.items.ItemStack;
@@ -18,7 +21,7 @@ public class InventoryManager {
   private boolean openMenu = false;
 
   /**
-   * TODO: write javadoc
+   * initializes and empty inventory
    */
   public InventoryManager() {
     slots = new ItemStack[5][3];
@@ -31,39 +34,46 @@ public class InventoryManager {
   }
 
   /**
-   * TODO: write javadoc
+   * adds and item into the inventory 
+   * @param item the item that will be added
    */
   public void giveItem(Item item) {
     Pair<Integer, Integer> slot = null;
     try {
       slot = getSlot(item.getItemType());
-    } catch (Exception e) {
+    } catch (NoSlotsException e) {
       e.printStackTrace();
+      return;
     }
     try {
-      assert slot != null;
       slots[slot.getFirst()][slot.getSecond()].add(item);
-    } catch (Exception e) {
+    } catch (IndexOutOfBoundsException | MissingItemType e) {
       e.printStackTrace();
-
     }
   }
 
+  /**
+   * adds a specified amount of a new item into the inventory
+   * @param item the item that will be added
+   * @param amount the amount of that item to be added
+   */
   public void giveItem(Item item, int amount) {
     Pair<Integer, Integer> slot = null;
     try {
       slot = getSlot(item.getItemType());
-    } catch (Exception e) {
+    } catch (NoSlotsException e) {
       e.printStackTrace();
     }
     try {
       slots[slot.getFirst()][slot.getSecond()].add(item, amount);
-    } catch (Exception e) {
+    } catch (IndexOutOfBoundsException | TypeMissMatch e) {
       e.printStackTrace();
-
     }
   }
-
+/**
+ * adds an item into the hotbar
+ * @param item the item to be added to the hotbar
+ */
   public void giveItemIntoHotbar(Item item) {
     try {
       hotbar.giveItem(new Pickaxe());
@@ -73,10 +83,13 @@ public class InventoryManager {
 
   }
 
-  /**
-   * TODO: write javadoc
-   */
-  private Pair<Integer, Integer> getSlot(ItemTypes type) throws Exception {
+/**
+ * 
+ * @param type
+ * @return
+ * @throws NoSlotsException
+ */
+  private Pair<Integer, Integer> getSlot(ItemTypes type) throws NoSlotsException {
     for (int i = 0; i < slots.length; ++i) {
       for (int j = 0; j < slots[i].length; ++j) {
         if (slots[i][j].hasItem()) {
@@ -94,7 +107,7 @@ public class InventoryManager {
         }
       }
     }
-    throw new Exception("No empty slot");
+    throw new NoSlotsException("No valid slot found");
   }
 
   public void draw(PGraphics g) {

@@ -8,7 +8,8 @@ public class MiscTextures {
   private static PImage hotbar;
   private static PImage inventory;
   /**
-   * TODO: write javadoc
+   * loads textures for miscelainius things (overlays)
+   * @param p
    */
   public static void loadBlockTextures(PApplet p) {
     String path = "src/dk/mtdm/misc/miscTextures/";

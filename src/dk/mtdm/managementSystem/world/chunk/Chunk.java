@@ -6,6 +6,7 @@ import dk.mtdm.itemsAndMore.Blocks.Block;
 import dk.mtdm.itemsAndMore.Blocks.BlockPicker;
 import dk.mtdm.itemsAndMore.Blocks.BlockTypes;
 import dk.mtdm.location.LocationTypes;
+import dk.mtdm.location.WWL;
 import dk.mtdm.location.WorldWideLocation;
 import dk.mtdm.managementSystem.world.World;
 import processing.core.PGraphics;
@@ -44,7 +45,6 @@ public class Chunk {
     try {
       t.join();
     } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
@@ -52,7 +52,7 @@ public class Chunk {
    * @param relativeLocation the relative location of a block 
    * @return the block stored at the given location
    */
-  public Block getBlock(WorldWideLocation Location){
+  public Block getBlock(WWL Location){
     try {
       return getBlock(Location.getRelative().getX(), Location.getRelative().getY());
     } catch (MissingDataException e) {
@@ -73,7 +73,7 @@ public class Chunk {
     }
     
     if (t == null) {
-      t = new WorldGenThread(ID, creationHeight, this);//TODO
+      t = new WorldGenThread(ID, creationHeight, this);
     }
     if(!t.atWork){
       if(chunkError > 500){
@@ -88,7 +88,7 @@ public class Chunk {
       return containedBlocks[x][y];
     } 
     
-    WorldWideLocation tempBlockVector = WorldWideLocation.create(x, y, LocationTypes.relative);
+    WWL tempBlockVector = WorldWideLocation.create(x, y, LocationTypes.relative);
     tempBlockVector.setChunkID(ID);
     return BlockPicker.getAir(BlockTypes.air, tempBlockVector);
   }
@@ -96,7 +96,7 @@ public class Chunk {
    * resets the chunk by restarting the worldGenThread
    */
   public void generate(){
-    if(t == null) t = new WorldGenThread(ID,creationHeight,this);//TODO
+    if(t == null) t = new WorldGenThread(ID,creationHeight,this);
         if(!t.atWork){
       try {
         t.start();
@@ -111,15 +111,14 @@ public class Chunk {
    * @param location the relative location of the chunk
    * @param block the block to place at the given location
    */
-  public void setBlock(WorldWideLocation location,BlockTypes block){
-    WorldWideLocation Location = location.copy();
+  public void setBlock(WWL location,BlockTypes block){
+    WWL Location = location.copy();
     Location.setChunkID(ID);
     location.setChunkID(ID);
     try {
       try {
         containedBlocks[location.getRelative().getX()][location.getRelative().getY()] = BlockPicker.picker(block,Location);
       } catch (MissingDataException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
     } catch (MissingBlockTypeException e) {
@@ -155,7 +154,6 @@ public class Chunk {
     try {
       t.join();
     } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     String out = "";

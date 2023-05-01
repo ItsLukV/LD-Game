@@ -7,7 +7,7 @@ import dk.mtdm.itemsAndMore.items.Pickaxe;
 import dk.mtdm.itemsAndMore.inventory.InventoryManager;
 import dk.mtdm.location.LDVector;
 import dk.mtdm.location.LocationTypes;
-import dk.mtdm.location.WorldWideLocation;
+import dk.mtdm.location.WWL;
 import dk.mtdm.managementSystem.world.World;
 import dk.mtdm.misc.miscTextures.MiscTextures;
 import processing.core.PApplet;
@@ -34,10 +34,10 @@ public class Player extends Entity {
    *
    * @param pos start pos
    */
-  public Player(WorldWideLocation pos) {
-    this.pos = pos;
+  public Player(WWL pos) {
+    Player.pos = pos;
 
-    inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove this
+    inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove when crafting system is added
   }
 
   @Override
@@ -91,10 +91,17 @@ public class Player extends Entity {
   }
 
   /**
-   * TODO: write javadoc
+   * starts actions based on which actions are performed
+   * @param left starts the player moving left
+   * @param right starts the player moving right
+   * @param up starts the player moving up
+   * @param down starts the player moving down
+   * @param e opens inventory
+   * @param one chooses hotbar 1
+   * @param two chooses hotbar 2s
+   * @param three chooses hotbar 3
    */
-  public void keyPressed(boolean left, boolean right, boolean up, boolean down, boolean e, boolean one, boolean two,
-      boolean three) {
+  public void keyPressed(boolean left, boolean right, boolean up, boolean down, boolean e, boolean one, boolean two,boolean three) {
     if (left)
       this.left = true;
     if (right)
@@ -113,8 +120,16 @@ public class Player extends Entity {
       inventory.swapSlot(2);
   }
 
-  /**
-   * TODO: write javadoc
+    /**
+   * ends actions based on which actions are performed
+   * @param left ends the player moving left
+   * @param right ends the player moving right
+   * @param up ends the player moving up
+   * @param down ends the player moving down
+   * @param e no action
+   * @param one no action
+   * @param two no action
+   * @param three no action
    */
   public void keyReleased(boolean left, boolean right, boolean up, boolean down) {
     if (left)
@@ -130,7 +145,7 @@ public class Player extends Entity {
   }
 
   /**
-   * TODO: write javadoc
+   * calculates speed based on current player movement
    */
   private void calcInput() {
     if (left)
@@ -153,17 +168,23 @@ public class Player extends Entity {
       return new LDVector(0, 0);
     }
   }
-
+/**
+ * adds gravity to player speed
+ */
   private void addGravity() {
     speed.add(new LDVector(0, gravityAcc));
   }
 
+  /**
+   * checks for collision
+   * @throws MissingBlockTypeException a blocktype is unsupported
+   */
   private void calcCollision() throws MissingBlockTypeException {
     {// up and down
       {// down
-        WorldWideLocation botLef = pos.copy();
+        WWL botLef = pos.copy();
         botLef.add(new LDVector(0, 1), LocationTypes.canvas);
-        WorldWideLocation botRig = pos.copy();
+        WWL botRig = pos.copy();
         botRig.add(new LDVector(Block.getWidth(), 1), LocationTypes.canvas);
         if ((World.getBlock(botLef).getSolidity() || World.getBlock(botRig).getSolidity()) && speed.getY() > 0) {
           speed.setY(0);
@@ -172,9 +193,9 @@ public class Player extends Entity {
         }
       }
       {// up
-        WorldWideLocation topLef = pos.copy();
+        WWL topLef = pos.copy();
         topLef.add(new LDVector(0, -1 - Block.getHeight()), LocationTypes.canvas);
-        WorldWideLocation topRig = pos.copy();
+        WWL topRig = pos.copy();
         topRig.add(new LDVector(Block.getWidth(), -1 - Block.getHeight()), LocationTypes.canvas);
         if ((World.getBlock(topLef).getSolidity() || World.getBlock(topRig).getSolidity()) && speed.getY() < 0) {
           if (!standing) {
@@ -184,7 +205,7 @@ public class Player extends Entity {
       }
     }
     {// right and left
-     // TODO: fix, it broke
+     //  fix, it broke
      // {//right
      // WorldWideLocation rigBot = pos.copy();
      // rigBot.add(new LDVector(Block.getWidth()*2+1,0), LocationTypes.canvas);

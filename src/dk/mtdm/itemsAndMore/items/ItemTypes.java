@@ -1,5 +1,7 @@
 package dk.mtdm.itemsAndMore.items;
-//TODO: add comments
+/**
+ * describes the different itemTypes that exist in this program
+ */
 public enum ItemTypes {
     grass,
     dirt,

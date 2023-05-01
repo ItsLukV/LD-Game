@@ -8,8 +8,9 @@ import processing.core.PImage;
 public class BlockTextures {
     private static PImage air, bedrock, dirt, grass, stone,inWork;
     /**
-   * TODO: write javadoc
-   */
+     * loads and prepares all PImages for fast use in the program, is a central location for all textures so they don't get generated multiple times and don't need to be stored multiple times
+     * @param p
+     */
     public static void loadBlockTextures(PApplet p) {
         String path = "src/dk/mtdm/itemsAndMore/texureFiles/";
         air = p.loadImage(path+"air.png");
@@ -20,8 +21,11 @@ public class BlockTextures {
         inWork = p.loadImage(path+"work.png");
     }
     /**
-   * TODO: write javadoc
-   */
+     * returns the approptriet texture for the given block
+     * @param type the type of the block to be drawn
+     * @return the texture fitting the block
+     * @throws MissingTextureException no texture was found for the given blocktype
+     */
     public static PImage picker(BlockTypes type) throws MissingTextureException {
         return switch (type) {
             case air -> air;
