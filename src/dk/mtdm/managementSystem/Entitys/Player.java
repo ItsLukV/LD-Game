@@ -36,8 +36,6 @@ public class Player extends Entity {
    */
   public Player(WWL pos) {
     Player.pos = pos;
-
-    inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove when crafting system is added
   }
 
   @Override
@@ -63,6 +61,7 @@ public class Player extends Entity {
    * frame)
    */
 
+  @Override
   public void tick() {
     calcInput();
     if (!noClip) {
