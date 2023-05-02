@@ -8,16 +8,16 @@ import dk.mtdm.location.WorldWideLocation;
 public class BlockPicker {
 	/**
 	 * Creates a block from BlockTypes
-	 * 
+	 *
 	 * @param type the type of block
 	 * @param x,y  sets x,y-canvas location value of the block
 	 */
 	static public Block picker(BlockTypes type, int x, int y,LocationTypes location) throws MissingBlockTypeException {
-		return BlockPicker.picker(type, WorldWideLocation.create(x,y, location));
+		return BlockPicker.picker(type, WWL.create(x,y, location));
 	}
 	/**
 	 * Returns a air block
-	 * 
+	 *
 	 * @param type
 	 * @param pos
 	 * @return
@@ -33,7 +33,7 @@ public class BlockPicker {
 	}
 	/**
 	 * Returns a grass block
-	 * 
+	 *
 	 * @param type
 	 * @param pos
 	 * @return
@@ -49,7 +49,7 @@ public class BlockPicker {
 	}
 	/**
 	 * Returns a dirt block
-	 * 
+	 *
 	 * @param type
 	 * @param pos
 	 * @return
@@ -65,7 +65,7 @@ public class BlockPicker {
 	}
 	/**
 	 * Returns a stone block
-	 * 
+	 *
 	 * @param type
 	 * @param pos
 	 * @return
@@ -81,7 +81,7 @@ public class BlockPicker {
 	}
 	/**
 	 * Returns a bedrock block
-	 * 
+	 *
 	 * @param type
 	 * @param pos
 	 * @return
@@ -97,7 +97,7 @@ public class BlockPicker {
 	}
 	/**
 	 * Creates a block from BlockTypes
-	 * 
+	 *
 	 * @param pos Sets the canvas location of the block
 	 * @param id  id/type of block
 	 */

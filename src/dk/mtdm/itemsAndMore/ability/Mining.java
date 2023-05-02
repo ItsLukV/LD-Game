@@ -35,7 +35,7 @@ public class Mining extends Ability {
     public void clicked(int x, int y) {
         x -= -Player.getCanvas().getX() - Player.width / 2 + Sketch.width / 2;
         y -= -Player.getCanvas().getY() - Player.height / 2 + Sketch.height / 2;
-        WWL pos = WorldWideLocation.create(x, y, LocationTypes.canvas);
+        WWL pos = WWL.create(x, y, LocationTypes.canvas);
         Block block;
         pos.add(new LDVector(0, -32), LocationTypes.canvas);
         try {
