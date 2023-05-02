@@ -30,8 +30,6 @@ public class Player extends Entity {
     g.push();
     g.imageMode(PApplet.CENTER);
     g.image(MiscTextures.getPlayerTexture(), Player.getCanvas().getX(), Player.getCanvas().getY());
-    g.strokeWeight(10);
-    g.point(Player.getCanvas().getX(), Player.getCanvas().getY());
     g.pop();
 
   }
