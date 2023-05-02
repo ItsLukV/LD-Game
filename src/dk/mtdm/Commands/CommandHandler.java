@@ -50,7 +50,7 @@ public class CommandHandler {
                     Player.noClip = !Player.noClip;
                     System.out.println("noClip:" + Player.noClip);
                 }
-                    case "PING" -> System.out.println("Pong!");
+                case "PING" -> System.out.println("Pong!");
                 case "DIM" -> {
                     try{
                         ChunkList.setDimensionID(Integer.parseInt(command[1]));
