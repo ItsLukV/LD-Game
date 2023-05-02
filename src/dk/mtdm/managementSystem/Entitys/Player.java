@@ -23,7 +23,6 @@ public class Player extends Entity {
    */
   public Player(WorldWideLocation pos) {
     super(pos, 32, 32);
-    inventory.giveItemIntoHotbar(new Pickaxe()); // TODO remove this
   }
 
   @Override
